@@ -13,6 +13,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import models.entities.services.DadosTesteService;
+import models.entities.tables.DadosProcessador;
 
 public class MainViewController {
 
@@ -46,7 +48,10 @@ public class MainViewController {
 
 	@FXML
 	public void onMenuItemTestesAction() {
-
+		loadView("/gui/TestesView.fxml", (DadosTesteController controller) -> {
+			controller.setDadosTesteService(new DadosTesteService());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML
