@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="475.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessadorController">
+   <children>
+      <Label text="Processadores">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="5.0" top="5.0" />
+         </VBox.margin>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" text="Novo" />
+            <Button mnemonicParsing="false" text="Editar" />
+            <Button mnemonicParsing="false" text="Atualizar" />
+            <Button mnemonicParsing="false" text="Excluir" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tvProcessador" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tcIdProcessador" prefWidth="120.0" text="idProcessador" />
+          <TableColumn fx:id="tcNomeFabricante" minWidth="6.0" prefWidth="169.0" text="nomeFabricante" />
+            <TableColumn fx:id="tcNomeModelo" prefWidth="75.0" text="nomeModelo" />
+            <TableColumn fx:id="tcNroCores" prefWidth="75.0" text="nroCores" />
+            <TableColumn fx:id="tcNroThreads" prefWidth="75.0" text="nroThreads" />
+            <TableColumn fx:id="tcTdp" prefWidth="75.0" text="tdp" />
+            <TableColumn fx:id="tcFrequencia" prefWidth="75.0" text="frequencia" />
+            <TableColumn fx:id="tcTurbofrequencia" prefWidth="75.0" text="turboFrequencia" />
+            <TableColumn fx:id="tcCodename" prefWidth="75.0" text="codename" />
+            <TableColumn fx:id="tcSocket" prefWidth="75.0" text="socket" />
+            <TableColumn fx:id="tcGraficoIntegrado" prefWidth="75.0" text="graficoIntegrado" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

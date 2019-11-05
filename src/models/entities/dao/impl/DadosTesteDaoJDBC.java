@@ -28,7 +28,9 @@ public class DadosTesteDaoJDBC implements DadosTesteDao {
 		ResultSet rs = null;
 		
 		try {
-			st = conn.prepareStatement("SELECT * FROM DadosTestes");
+			st = conn.prepareStatement("SELECT * "
+					+ "FROM  DadosTestes a "
+					+ "order by a.nomeJogo, a.qualidadeGrafica, a.resolucaoAbrev, a.avgfps desc");
 			rs = st.executeQuery();
 			
 			List<DadosTeste> lista = new ArrayList<>();

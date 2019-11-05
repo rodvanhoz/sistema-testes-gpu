@@ -21,7 +21,10 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button mnemonicParsing="false" text="Novo" />
+            <Button mnemonicParsing="false" text="Editar" />
+            <Button mnemonicParsing="false" text="Atualizar" />
+            <Button mnemonicParsing="false" text="Excluir" />
         </items>
       </ToolBar>
       <TableView fx:id="tvDadosTeste" prefHeight="200.0" prefWidth="200.0">
