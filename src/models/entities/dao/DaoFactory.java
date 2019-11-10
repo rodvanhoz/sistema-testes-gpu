@@ -1,9 +1,12 @@
 package models.entities.dao;
 
 import db.DB;
+import models.entities.dao.impl.ConfiguracoesDaoJDBC;
 import models.entities.dao.impl.DadosTesteDaoJDBC;
+import models.entities.dao.impl.JogoDaoJDBC;
 import models.entities.dao.impl.PlacaDeVideoDaoJDBC;
 import models.entities.dao.impl.ProcessadorDaoJDBC;
+import models.entities.tables.Configuracoes;
 
 public class DaoFactory {
 
@@ -17,5 +20,13 @@ public class DaoFactory {
 	
 	public static PlacaDeVideoDao createPlacaDeVideoDao() {
 		return new PlacaDeVideoDaoJDBC(DB.getConnection());
+	}
+	
+	public static JogoDao createJogoDao() {
+		return new JogoDaoJDBC(DB.getConnection());
+	}
+	
+	public static ConfiguracoesDao createConfiguracoesDao() {
+		return new ConfiguracoesDaoJDBC(DB.getConnection());
 	}
 }

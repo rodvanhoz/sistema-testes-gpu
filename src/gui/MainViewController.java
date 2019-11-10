@@ -13,7 +13,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import models.entities.services.ConfiguracoesService;
 import models.entities.services.DadosTesteService;
+import models.entities.services.JogoService;
 import models.entities.services.PlacaDeVideoService;
 import models.entities.services.ProcessadorService;
 import models.entities.tables.DadosProcessador;
@@ -65,12 +67,18 @@ public class MainViewController {
 
 	@FXML
 	public void onMenuItemJogosAction() {
-
+		loadView("/gui/JogosView.fxml", (JogoController controller) -> {
+			controller.setJogoService(new JogoService());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML
 	public void onMenuItemConfiguracoesAction() {
-
+		loadView("/gui/ConfiguracoesView.fxml", (ConfiguracoesController controller) -> {
+			controller.setConfiguracoesService(new ConfiguracoesService());
+			controller.updateTableView();
+		});
 	}
 
 	@FXML
@@ -95,7 +103,8 @@ public class MainViewController {
 			T controller = loader.getController();
 			initializingAction.accept(controller);
 		} catch (IOException e) {
-			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+			//Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 
