@@ -8,11 +8,13 @@ import gui.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesService;
 import models.entities.services.DadosTesteService;
 import models.entities.services.JogoService;
@@ -99,13 +101,13 @@ public class MainViewController {
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializingAction.accept(controller);
 		} catch (IOException e) {
-			//Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
-			e.printStackTrace();
+			 Alerts.showAlert("IOException", "Error loading view", e.getMessage(),
+			 AlertType.ERROR);
+			//e.printStackTrace();
 		}
 	}
-
 }

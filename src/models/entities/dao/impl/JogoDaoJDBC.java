@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +66,41 @@ public class JogoDaoJDBC implements JogoDao {
 
 	@Override
 	public void inserir(Jogos jogo) {
-		// TODO Auto-generated method stub
+
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement("insert into Jogos (nomeJogo, dtLancto) "
+					+ "values (?, ?)", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, jogo.getNomeJogo());
+			st.setDate(2, new java.sql.Date(jogo.getDtLancto().getTime()));
+			
+			if (st.executeUpdate() > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				
+				if (rs.next()) {
+					System.out.println("Inserido! Id: " + rs.getInt(1));
+				}
+				DB.closeResultSet(rs);
+				conn.commit();
+			}
+			else {
+				try {
+					conn.rollback();
+				}
+				catch (SQLException e1) {
+					throw new DbException("Erro inexperado ao fazer o rollback: " + e1.getMessage());
+				}
+				throw new DbException("Erro inexperado ao inserir o jogo");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 
 	}
 

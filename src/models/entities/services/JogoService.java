@@ -13,4 +13,8 @@ public class JogoService {
 	public List<Jogos> findAll() {
 		return dao.findAll();
 	}
+	
+	public void inserir(Jogos jogo) {
+		dao.inserir(jogo);
+	}
 }
