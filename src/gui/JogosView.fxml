@@ -24,7 +24,7 @@
           <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
             <Button fx:id="btEditar" mnemonicParsing="false" onAction="#onBtEditarAction" text="Editar" />
             <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="Atualizar" />
-            <Button mnemonicParsing="false" text="Excluir" />
+            <Button fx:id="btExcluir" mnemonicParsing="false" onAction="#onBtExcluirAction" text="Excluir" />
         </items>
       </ToolBar>
       <TableView fx:id="tvJogo" prefHeight="200.0" prefWidth="200.0">

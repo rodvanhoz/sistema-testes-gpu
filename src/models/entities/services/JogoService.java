@@ -17,4 +17,12 @@ public class JogoService {
 	public void inserir(Jogos jogo) {
 		dao.inserir(jogo);
 	}
+	
+	public void atualizar(Jogos jogo) {
+		dao.atualizar(jogo);
+	}
+	
+	public void remover(Jogos jogo) {
+		dao.remover(jogo);
+	}
 }
