@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.LoadSeparatedScenne;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Service;
@@ -79,10 +80,8 @@ public class JogoController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resources) {
-		if (getArqFXML(url.getFile()).toLowerCase().equals("jogosview.fxml")) {
+		if (Constraints.getArqFXML(url.getFile()).toLowerCase().equals("jogosview.fxml")) {
 			iniciarNodes();
-		}
-		if (getArqFXML(url.getFile()).toLowerCase().equals("jogosedit.fxml")) {
 		}
 	}
 
@@ -206,9 +205,5 @@ public class JogoController implements Initializable {
 		}
 	}
 	
-	private String getArqFXML(String path) {
-		String[] p = path.split("/");
-		return p[p.length - 1];
-	}
 
 }

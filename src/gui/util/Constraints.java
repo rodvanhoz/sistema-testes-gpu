@@ -27,4 +27,23 @@ public class Constraints {
 			}
 		});
 	}
+	
+	public static String getArqFXML(String path) {
+		String[] p = path.split("/");
+		return p[p.length - 1];
+	}
+
+	public static Boolean isChecked(String inf) {
+		return (inf.equals("S"));
+	}
+	
+	public static String isSelected(Boolean check) {
+		if (check) {
+			return "S";
+		}
+		else {
+			return "";
+		}
+	}
+
 }
