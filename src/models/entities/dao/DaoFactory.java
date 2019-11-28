@@ -2,6 +2,7 @@ package models.entities.dao;
 
 import db.DB;
 import models.entities.dao.impl.ConfiguracoesDaoJDBC;
+import models.entities.dao.impl.ConfiguracoesJogosDaoJDBC;
 import models.entities.dao.impl.DadosTesteDaoJDBC;
 import models.entities.dao.impl.JogoDaoJDBC;
 import models.entities.dao.impl.PlacaDeVideoDaoJDBC;
@@ -28,5 +29,9 @@ public class DaoFactory {
 	
 	public static ConfiguracoesDao createConfiguracoesDao() {
 		return new ConfiguracoesDaoJDBC(DB.getConnection());
+	}
+	
+	public static ConfiguracoesJogosDao createConfiguracoesJogosDao() {
+		return new ConfiguracoesJogosDaoJDBC(DB.getConnection());
 	}
 }

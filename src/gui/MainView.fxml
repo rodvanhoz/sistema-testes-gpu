@@ -23,6 +23,7 @@
                         <MenuItem fx:id="menuItemTestes" mnemonicParsing="false" onAction="#onMenuItemTestesAction" text="Testes" />
                       <MenuItem fx:id="menuItemJogos" mnemonicParsing="false" onAction="#onMenuItemJogosAction" text="Jogos" />
                         <MenuItem fx:id="menuItemConfiguracoes" mnemonicParsing="false" onAction="#onMenuItemConfiguracoesAction" text="Configurações" />
+                        <MenuItem fx:id="menuItemConfiguracoesJogos" mnemonicParsing="false" onAction="#onMenuItemConfiguracoesJogosAction" text="Relacionar Jogo / Configuração" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ajuda">

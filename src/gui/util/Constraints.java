@@ -42,7 +42,7 @@ public class Constraints {
 			return "S";
 		}
 		else {
-			return "";
+			return "N";
 		}
 	}
 
