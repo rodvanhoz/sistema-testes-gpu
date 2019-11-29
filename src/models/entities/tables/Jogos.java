@@ -46,7 +46,7 @@ public class Jogos implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Jogos [idJogo=" + idJogo + ", nomeJogo=" + nomeJogo + ", dtLancto=" + dtLancto + "]";
+		return idJogo + " - " + nomeJogo;
 	}
 	
 }

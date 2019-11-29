@@ -126,10 +126,9 @@ public class Configuracoes implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Configuracoes [idConfiguracao=" + idConfiguracao + ", resolucaoAbrev=" + resolucaoAbrev
-				+ ", resolucaoDetalhe=" + resolucaoDetalhe + ", api=" + api + ", qualidadeGrafica=" + qualidadeGrafica
-				+ ", ssao=" + ssao + ", fxaa=" + fxaa + ", taa=" + taa + ", rt=" + rt + ", aa=" + aa + ", NVidiaTec="
-				+ NVidiaTec + "]";
+		return idConfiguracao + " - " + resolucaoAbrev + "p - " + api + " - " + qualidadeGrafica
+				+ ", ssao: " + ssao + ", fxaa: " + fxaa + ", taa: " + taa + ", rt: " + rt + ", aa: " + aa + ", NVidiaTec: "
+				+ NVidiaTec;
 	}	
 	
 }

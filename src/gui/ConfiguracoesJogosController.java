@@ -2,12 +2,15 @@ package gui;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.util.ComboBoxAutoComplete;
 import gui.util.Constraints;
+import gui.util.LoadSeparatedScenne;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,10 +18,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesJogosService;
 import models.entities.services.ConfiguracoesService;
+import models.entities.services.JogoService;
 import models.entities.tables.Configuracoes;
 import models.entities.tables.ConfiguracoesJogos;
 import models.entities.tables.Jogos;
@@ -149,14 +154,70 @@ public class ConfiguracoesJogosController implements Initializable {
 		tvConfiguracoesJogos.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
-	public void onBtSalvarAction() {
+	public void onBtNovoAction() {
+		ConfiguracoesService configuracaoService = new ConfiguracoesService();
+		JogoService jogoService = new JogoService();
 		
+		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Inserir Nova Relação Configuração / Jogo",
+				(ConfiguracoesJogosController controller) -> {
+					controller.cboxConfiguracoes.setItems(FXCollections.observableArrayList(configuracaoService.findAll()));
+					controller.cboxJogos.setItems(FXCollections.observableArrayList(jogoService.findAll()));
+					
+					controller.setNewOrEdit('N');
+				});
+	}
+	
+	
+	public void onBtSalvarAction() {
+		service = new ConfiguracoesJogosService();
+		if (service == null) {
+			throw new IllegalStateException("Service está null");
+		}
+
+		ConfiguracoesJogos c = new ConfiguracoesJogos(null, cboxJogos.getValue(), 
+				cboxConfiguracoes.getValue());
+		
+		System.out.println(c.toString());
+		service.inserir(c);
+		
+		Stage stage = (Stage) btSalvar.getScene().getWindow();
+		stage.close();
 	}
 	
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
+	
+	public void onCBoxJogosKeyPressedAction() {
+		ComboBoxAutoComplete.getComboBoxValue(cboxJogos);
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxJogos, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+	}
+	
+	public void onCBoxConfiguracoesKeyPressesAction() {
+		ComboBoxAutoComplete.getComboBoxValue(cboxConfiguracoes);
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoes, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+	}
 
+	public char getNewOrEdit() {
+		return newOrEdit;
+	}
+
+	public void setNewOrEdit(char newOrEdit) {
+		this.newOrEdit = newOrEdit;
+	}
+
+	
+	public ConfiguracoesJogosW getConfiguracaoJogosSelected() {
+		return configuracaoJogosSelected;
+	}
+
+	public void setConfiguracaoJogoSelected(ConfiguracoesJogosW configuracaoJogosSelected) {
+		this.configuracaoJogosSelected = configuracaoJogosSelected;
+	}
+
+	public void onBtAtualizarAction() {
+		this.updateTableView();
+	}
 
 }
