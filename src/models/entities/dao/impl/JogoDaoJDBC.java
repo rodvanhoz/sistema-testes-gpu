@@ -11,7 +11,6 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
-import gui.util.Alerts;
 import models.entities.dao.JogoDao;
 import models.entities.tables.Jogos;
 

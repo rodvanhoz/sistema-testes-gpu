@@ -13,8 +13,8 @@ public class ComboBoxAutoComplete {
 		boolean matches(String typedText, T objectToCompare);
 	}
 
-	public static <T> void autoCompleteComboBoxPlus(ComboBox<T> comboBox, AutoCompleteComparator<T> comparatorMethod) {
-		ObservableList<T> data = comboBox.getItems();
+	public static <T> void autoCompleteComboBoxPlus(ComboBox<T> comboBox, ObservableList<T> items, AutoCompleteComparator<T> comparatorMethod) {
+		ObservableList<T> data = items;
 
 		comboBox.setEditable(true);
 		comboBox.getEditor().focusedProperty().addListener(observable -> {

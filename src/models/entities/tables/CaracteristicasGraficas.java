@@ -86,9 +86,8 @@ public class CaracteristicasGraficas implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CaracteristicasGraficas [idCaracGrafica=" + idCaracGrafica + ", directX=" + directX + ", openGL="
-				+ openGL + ", openCL=" + openCL + ", vulkan=" + vulkan + ", cuda=" + cuda + ", shaderModel="
-				+ shaderModel + "]";
+		return idCaracGrafica + ": Dx " + directX + " / openGL " + openGL + " / vulkan " + vulkan + " / cuda " + cuda
+				+ " / shaderModel " + shaderModel;
 	}
 	
 }

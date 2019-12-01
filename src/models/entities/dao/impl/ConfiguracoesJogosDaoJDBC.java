@@ -10,7 +10,6 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
-import models.entities.dao.ConfiguracoesDao;
 import models.entities.dao.ConfiguracoesJogosDao;
 import models.entities.tables.Configuracoes;
 import models.entities.tables.ConfiguracoesJogos;

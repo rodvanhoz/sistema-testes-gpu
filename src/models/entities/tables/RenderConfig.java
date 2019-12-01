@@ -106,8 +106,6 @@ public class RenderConfig implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RenderConfig [idRenderConfig=" + idRenderConfig + ", shadingUnits=" + shadingUnits + ", tmus=" + tmus
-				+ ", rops=" + rops + ", smCount=" + smCount + ", L1Cache=" + L1Cache + ", L2Cache=" + L2Cache
-				+ ", tensorCores=" + tensorCores + ", rtCores=" + rtCores + "]";
+		return idRenderConfig + ": " + shadingUnits + " / TMUs: " + tmus + " / ROPs: " + rops;
 	}
 }

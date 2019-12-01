@@ -96,9 +96,7 @@ public class ProcessadorGrafico implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProcessadorGrafico [idProcGrafico=" + idProcGrafico + ", nomeGpu=" + nomeGpu + ", variantGpu="
-				+ variantGpu + ", arquitetura=" + arquitetura + ", fundicao=" + fundicao + ", nnProcessador="
-				+ nnProcessador + ", nroTransistors=" + nroTransistors + ", mmProcessador=" + mmProcessador + "]";
+		return idProcGrafico + ": " + nomeGpu + " / " + variantGpu;
 	}
 	
 }

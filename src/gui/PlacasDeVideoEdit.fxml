@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="598.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PlacaDeVideoController">
+   <children>
+      <Label text="Editar Placa de Video">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="178.0" prefWidth="814.0">
+         <children>
+            <TitledPane collapsible="false" prefHeight="218.0" prefWidth="402.0" text="Características Gráficas">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <content>
+                  <VBox prefHeight="134.0" prefWidth="395.0">
+                     <children>
+                        <ComboBox fx:id="cboxCaracGraficas" onAction="#onCboxCaracGraficasAction" prefHeight="25.0" prefWidth="388.0" promptText="Caracteristicas Gráficas (ID)" />
+                        <HBox prefHeight="33.0" prefWidth="375.0">
+                           <children>
+                              <TextField fx:id="txtDirectX" editable="false" prefHeight="25.0" prefWidth="141.0" promptText="Direct X">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtOpenGL" editable="false" prefHeight="25.0" prefWidth="122.0" promptText="OpenGL">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtOpenCL" editable="false" prefHeight="25.0" prefWidth="112.0" promptText="OpenCL">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="36.0" prefWidth="375.0">
+                           <children>
+                              <TextField fx:id="txtVulkan" editable="false" prefHeight="25.0" prefWidth="141.0" promptText="Vulkan">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtCudaCores" editable="false" prefHeight="25.0" prefWidth="122.0" promptText="Cuda Cores">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtShaderModel" editable="false" prefHeight="25.0" prefWidth="112.0" promptText="Shader Model">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                          <buttons>
+                            <Button fx:id="btNovoCaracGrafica" mnemonicParsing="false" text="Novo" />
+                              <Button fx:id="btExcluirCaracGrafica" mnemonicParsing="false" text="Excluir" />
+                          </buttons>
+                        </ButtonBar>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <TitledPane prefHeight="218.0" prefWidth="402.0" text="Render Config">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <content>
+                  <VBox prefHeight="134.0" prefWidth="395.0">
+                     <children>
+                        <ComboBox fx:id="cboxRenderConfig" onAction="#onCboxRenderConfigAction" prefHeight="25.0" prefWidth="388.0" promptText="Render Config (ID)" />
+                        <HBox prefHeight="33.0" prefWidth="375.0">
+                           <children>
+                              <TextField fx:id="txtShadingUnits" editable="false" prefHeight="25.0" prefWidth="94.0" promptText="Shading Units">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtTMUs" editable="false" prefHeight="25.0" prefWidth="86.0" promptText="TMUs">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtROPs" editable="false" prefHeight="25.0" prefWidth="80.0" promptText="ROPs">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtSmCount" editable="false" prefHeight="25.0" prefWidth="80.0" promptText="SM Count">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="36.0" prefWidth="375.0">
+                           <children>
+                              <TextField fx:id="txtL1Cache" editable="false" prefHeight="25.0" prefWidth="94.0" promptText="L1 Cache">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtL2Cache" editable="false" prefHeight="25.0" prefWidth="85.0" promptText="L2 Cache">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtTensorCores" editable="false" prefHeight="25.0" prefWidth="80.0" promptText="Tensor Cores">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtRtCores" editable="false" prefHeight="25.0" prefWidth="80.0" promptText="RT Cores">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                           <buttons>
+                              <Button fx:id="btNovoRenderConfig" mnemonicParsing="false" text="Novo" />
+                              <Button fx:id="btExcluirRenderConfig" mnemonicParsing="false" text="Excluir" />
+                           </buttons>
+                        </ButtonBar>
+                     </children>
+                  </VBox>
+               </content>
+            </TitledPane>
+         </children>
+      </HBox>
+      <TitledPane prefHeight="185.0" prefWidth="804.0" text="Processador Gráfico">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <content>
+            <VBox prefHeight="192.0" prefWidth="802.0">
+               <children>
+                  <HBox prefHeight="62.0" prefWidth="802.0">
+                     <children>
+                        <ComboBox fx:id="cboxProcessadorGrafico" onAction="#onCboxProcessadorGraficoAction" prefHeight="25.0" prefWidth="261.0" promptText="Processador Gráfico (ID)" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtNomeGpu" editable="false" prefHeight="25.0" prefWidth="248.0" promptText="Nome GPU">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtVariantGpu" editable="false" prefHeight="25.0" prefWidth="257.0" promptText="Variant GPU">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtArquitetura" editable="false" prefHeight="25.0" prefWidth="247.0" promptText="Arquitetura">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtFundicao" editable="false" prefHeight="25.0" prefWidth="320.0" promptText="Fundição">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtLitografia" editable="false" prefHeight="25.0" prefWidth="108.0" promptText="Litografia (nm)">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtNroTransistores" editable="false" prefHeight="25.0" prefWidth="158.0" promptText="Nº Transistores">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtTamanhoChip" editable="false" prefHeight="25.0" prefWidth="158.0" promptText="Tamanho do Chip (mm) ">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+                      <Button fx:id="btNovoProcessadorGrafico" mnemonicParsing="false" text="Novo" />
+                        <Button fx:id="btExcluirProcessadorGrafico" mnemonicParsing="false" text="Excluir" />
+                    </buttons>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ButtonBar>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane prefHeight="210.0" prefWidth="814.0" text="GPU">
+         <content>
+            <VBox prefHeight="192.0" prefWidth="802.0">
+               <children>
+                  <TextField fx:id="txtNomeFabricante" prefHeight="25.0" prefWidth="248.0" promptText="Nome do Fabricante">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="txtDescricaoModelo" prefHeight="25.0" prefWidth="248.0" promptText="Descrição do Modelo">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtTamanhoMemoria" editable="false" prefHeight="25.0" prefWidth="248.0" promptText="Tamanho da Memória (KB)">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtTipoMemoria" editable="false" prefHeight="25.0" prefWidth="257.0" promptText="Tipo da Memória">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtTamanhoBanda" editable="false" prefHeight="25.0" prefWidth="247.0" promptText="Tamanho da Banda (KB)">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtTDP" editable="false" prefHeight="25.0" prefWidth="142.0" promptText="TDP">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtGpuClock" editable="false" prefHeight="25.0" prefWidth="108.0" promptText="GPU Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField editable="false" prefHeight="25.0" prefWidth="158.0" promptText="Boost GPU Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryClock" editable="false" prefHeight="25.0" prefWidth="131.0" promptText="Memory Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryClockEfective" editable="false" prefHeight="25.0" prefWidth="140.0" promptText="Memory Clock (Efetivo)">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtBusInterface" editable="false" prefHeight="25.0" prefWidth="142.0" promptText="Bus Interface">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtDtLancto" editable="false" prefHeight="25.0" prefWidth="278.0" promptText="Data de Lançamento">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button fx:id="btSalvar" mnemonicParsing="false" text="Salvar" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+        </buttons>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </ButtonBar>
+   </children>
+</VBox>

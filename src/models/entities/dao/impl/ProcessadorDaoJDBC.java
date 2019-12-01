@@ -9,7 +9,6 @@ import java.util.List;
 
 import db.DbException;
 import models.entities.dao.ProcessadorDao;
-import models.entities.views.DadosTeste;
 import models.entities.views.Processador;
 
 public class ProcessadorDaoJDBC implements ProcessadorDao {

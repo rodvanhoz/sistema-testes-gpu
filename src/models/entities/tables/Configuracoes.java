@@ -29,7 +29,21 @@ public class Configuracoes implements Serializable {
 		this.taa = taa;
 		this.rt = rt;
 		this.aa = aa;
-		NVidiaTec = nVidiaTec;
+		this.NVidiaTec = nVidiaTec;
+	}
+	
+	public Configuracoes(Configuracoes configuracoes) {
+		this.idConfiguracao = configuracoes.getIdConfiguracao();
+		this.resolucaoAbrev = configuracoes.getResolucaoAbrev();
+		this.resolucaoDetalhe = configuracoes.getResolucaoDetalhe();
+		this.api = configuracoes.getApi();
+		this.qualidadeGrafica = configuracoes.getQualidadeGrafica();
+		this.ssao = configuracoes.getSsao();
+		this.fxaa = configuracoes.getFxaa();
+		this.taa = configuracoes.getTaa();
+		this.rt = configuracoes.getRt();
+		this.aa = configuracoes.getAa();
+		this.NVidiaTec = configuracoes.getNVidiaTec();
 	}
 
 	public Integer getIdConfiguracao() {

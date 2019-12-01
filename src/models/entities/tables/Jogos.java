@@ -15,6 +15,12 @@ public class Jogos implements Serializable {
 		this.nomeJogo = nomeJogo;
 		this.dtLancto = dtLancto;
 	}
+	
+	public Jogos(Jogos jogo) {
+		this.idJogo = jogo.getIdJogo();
+		this.nomeJogo = jogo.getNomeJogo();
+		this.dtLancto = jogo.getDtLancto();
+	}
 
 	public Integer getIdJogo() {
 		return idJogo;

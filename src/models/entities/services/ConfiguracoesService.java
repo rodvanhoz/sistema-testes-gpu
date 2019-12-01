@@ -5,7 +5,6 @@ import java.util.List;
 import models.entities.dao.ConfiguracoesDao;
 import models.entities.dao.DaoFactory;
 import models.entities.tables.Configuracoes;
-import models.entities.tables.Jogos;
 
 public class ConfiguracoesService {
 	private ConfiguracoesDao dao = DaoFactory.createConfiguracoesDao();

@@ -66,27 +66,30 @@ public class ConfiguracoesDaoJDBC implements ConfiguracoesDao {
 		ResultSet rs = null;
 
 		try {
-			st = conn.prepareStatement("select *\r\n" + 
-					"  from configuracoes a\r\n" + 
+			st = conn.prepareStatement("select * " + 
+					"  from configuracoes a " + 
 					" where a.idConfiguracao = ?");
 
 			st.setInt(1, idConfiguracao);
 			rs = st.executeQuery();
 
-			Configuracoes c = new Configuracoes(rs.getInt("idConfiguracao"), 
-												rs.getInt("resolucaoAbrev"),
-												rs.getString("resolucaoDetalhe"), 
-												rs.getString("api"), 
-												rs.getString("qualidadeGrafica"),
-												rs.getString("ssao"), 
-												rs.getString("fxaa"), 
-												rs.getString("taa"), 
-												rs.getString("rt"),
-												rs.getString("aa"), 
-												rs.getString("nVidiaTec"));
-			
-			return c;
+			if (rs.next()) {
+				Configuracoes c = new Configuracoes(rs.getInt("idConfiguracao"), 
+						rs.getInt("resolucaoAbrev"),
+						rs.getString("resolucaoDetalhe"), 
+						rs.getString("api"), 
+						rs.getString("qualidadeGrafica"),
+						rs.getString("ssao"), 
+						rs.getString("fxaa"), 
+						rs.getString("taa"), 
+						rs.getString("rt"),
+						rs.getString("aa"), 
+						rs.getString("nVidiaTec"));
 
+				return c;
+			}
+			return null;
+			
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {

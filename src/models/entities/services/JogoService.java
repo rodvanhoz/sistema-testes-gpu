@@ -14,6 +14,10 @@ public class JogoService {
 		return dao.findAll();
 	}
 	
+	public Jogos findById(int idJogo) {
+		return dao.findById(idJogo);
+	}
+	
 	public void inserir(Jogos jogo) {
 		dao.inserir(jogo);
 	}

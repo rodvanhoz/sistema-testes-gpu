@@ -5,14 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import db.DbException;
 import models.entities.dao.DadosTesteDao;
 import models.entities.views.DadosTeste;
-import models.entities.views.PlacaDeVideo;
 
 public class DadosTesteDaoJDBC implements DadosTesteDao {
 	

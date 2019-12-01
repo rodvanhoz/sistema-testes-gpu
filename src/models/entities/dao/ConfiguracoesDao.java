@@ -3,7 +3,6 @@ package models.entities.dao;
 import java.util.List;
 
 import models.entities.tables.Configuracoes;
-import models.entities.tables.Jogos;
 
 public interface ConfiguracoesDao {
 	

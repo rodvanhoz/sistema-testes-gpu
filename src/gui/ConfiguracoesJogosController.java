@@ -2,9 +2,9 @@ package gui;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -12,13 +12,16 @@ import gui.util.ComboBoxAutoComplete;
 import gui.util.Constraints;
 import gui.util.LoadSeparatedScenne;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesJogosService;
@@ -36,6 +39,11 @@ public class ConfiguracoesJogosController implements Initializable {
 	private ConfiguracoesJogosW configuracaoJogosSelected;
 	private char newOrEdit;
 
+	private ConfiguracoesService configuracaoService = new ConfiguracoesService();
+	private JogoService jogoService = new JogoService();
+
+	private ObservableList<Jogos> jogosList = FXCollections.observableArrayList(jogoService.findAll());
+	private ObservableList<Configuracoes> configuracoesList = FXCollections.observableArrayList(configuracaoService.findAll());
 	
 	public void setConfiguracoesJogosService(ConfiguracoesJogosService service) {
 		this.service = service;
@@ -155,30 +163,101 @@ public class ConfiguracoesJogosController implements Initializable {
 	}
 	
 	public void onBtNovoAction() {
-		ConfiguracoesService configuracaoService = new ConfiguracoesService();
-		JogoService jogoService = new JogoService();
-		
 		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Inserir Nova Relação Configuração / Jogo",
 				(ConfiguracoesJogosController controller) -> {
-					controller.cboxConfiguracoes.setItems(FXCollections.observableArrayList(configuracaoService.findAll()));
-					controller.cboxJogos.setItems(FXCollections.observableArrayList(jogoService.findAll()));
+					controller.cboxConfiguracoes.setItems(configuracoesList);
+					controller.cboxJogos.setItems(jogosList);
 					
 					controller.setNewOrEdit('N');
 				});
 	}
 	
+	public void onBtEditarAction() {
+		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
+		
+		if (configuracaoJogosSelected != null) {
+			System.out.println(configuracaoJogosSelected.toString());
+			
+			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Editar Relação Configuração / Jogo",
+					(ConfiguracoesJogosController controller) -> {
+						controller.setConfiguracaoJogoSelected(configuracaoJogosSelected);
+						controller.cboxJogos.setItems(jogosList);
+						controller.cboxJogos.getSelectionModel().select(jogoService.findById(configuracaoJogosSelected.getIdJogo()));
+						controller.cboxJogos.getSelectionModel().select(jogosList.indexOf(jogoService.findById(configuracaoJogosSelected.getIdJogo())));
+						controller.cboxConfiguracoes.getSelectionModel().select(configuracaoService.findById(configuracaoJogosSelected.getIdConfiguracao()));
+						controller.cboxConfiguracoes.setItems(configuracoesList);
+						controller.cboxConfiguracoes.getSelectionModel().select(configuracoesList.indexOf(configuracaoService.findById(configuracaoJogosSelected.getIdConfiguracaoJogo())));
+						controller.setNewOrEdit('E');
+					});
+		}
+	}
+	
+	public void onBtAtualizarAction() {
+		System.out.println("Atualizando Grid...");
+		this.updateTableView();
+	}
+	
+	public void onBtExcluirAction() {
+		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Deletar Configuração de Jogo");
+		alert.setHeaderText(null);
+		alert.setContentText("Deseja realmente excluir a Relação Jogo / Configuração de jogo " 
+		        + configuracaoJogosSelected.getNomeJogo() + " - " 
+		        + configuracaoJogosSelected.getResolucaoAbrev().toString() + "p - "
+				+ configuracaoJogosSelected.getQualidadeGrafica() + " ???");
+		
+		ButtonType btSim = new ButtonType("Sim");
+		ButtonType btNao = new ButtonType("Não");
+		alert.getButtonTypes().setAll(btSim, btNao);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == btSim){
+		    service.remover(new ConfiguracoesJogos(configuracaoJogosSelected.getIdConfiguracaoJogo(), null, null));
+		} 
+	}
+
 	
 	public void onBtSalvarAction() {
 		service = new ConfiguracoesJogosService();
 		if (service == null) {
 			throw new IllegalStateException("Service está null");
 		}
-
-		ConfiguracoesJogos c = new ConfiguracoesJogos(null, cboxJogos.getValue(), 
-				cboxConfiguracoes.getValue());
 		
-		System.out.println(c.toString());
-		service.inserir(c);
+//		Jogos j = new Jogos(cboxJogos.getSelectionModel().getSelectedItem().getIdJogo(),
+//				cboxJogos.getSelectionModel().getSelectedItem().getNomeJogo(),
+//				cboxJogos.getSelectionModel().getSelectedItem().getDtLancto());
+//		
+//		Configuracoes conf = new Configuracoes(cboxConfiguracoes.getSelectionModel().getSelectedItem().getIdConfiguracao(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getResolucaoAbrev(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getResolucaoDetalhe(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getApi(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getQualidadeGrafica(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getSsao(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getFxaa(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getTaa(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getRt(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getAa(), 
+//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getNVidiaTec());
+		
+		Jogos j = jogoService.findById(Integer.parseInt(cboxJogos.getEditor().getText().split("-")[0].trim()));
+		Configuracoes conf = configuracaoService.findById(Integer.parseInt(cboxConfiguracoes.getEditor().getText().split("-")[0].trim()));
+
+		ConfiguracoesJogos c = new ConfiguracoesJogos(null, j, conf);
+		
+		if (this.newOrEdit == 'N') {
+			System.out.println(c.toString());
+			service.inserir(c);
+		} else if (this.newOrEdit == 'E') {
+			c.setIdConfiguracaoJogo(this.configuracaoJogosSelected.getIdConfiguracaoJogo());
+			System.out.println(c.toString());
+			service.atualizar(c);
+		} else {
+			throw new IllegalStateException("Variavel newOrEdit esta null");
+		}
+		
 		
 		Stage stage = (Stage) btSalvar.getScene().getWindow();
 		stage.close();
@@ -190,15 +269,13 @@ public class ConfiguracoesJogosController implements Initializable {
 	}
 	
 	public void onCBoxJogosKeyPressedAction() {
-		ComboBoxAutoComplete.getComboBoxValue(cboxJogos);
-		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxJogos, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxJogos, jogosList, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
 	public void onCBoxConfiguracoesKeyPressesAction() {
-		ComboBoxAutoComplete.getComboBoxValue(cboxConfiguracoes);
-		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoes, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoes, configuracoesList, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
-
+	
 	public char getNewOrEdit() {
 		return newOrEdit;
 	}
@@ -215,9 +292,5 @@ public class ConfiguracoesJogosController implements Initializable {
 	public void setConfiguracaoJogoSelected(ConfiguracoesJogosW configuracaoJogosSelected) {
 		this.configuracaoJogosSelected = configuracaoJogosSelected;
 	}
-
-	public void onBtAtualizarAction() {
-		this.updateTableView();
-	}
-
+	
 }
