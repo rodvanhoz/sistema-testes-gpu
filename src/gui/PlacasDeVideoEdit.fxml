@@ -17,17 +17,20 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <VBox.margin>
+            <Insets left="5.0" right="5.0" />
+         </VBox.margin>
       </Label>
       <HBox prefHeight="178.0" prefWidth="814.0">
          <children>
-            <TitledPane collapsible="false" prefHeight="218.0" prefWidth="402.0" text="Características Gráficas">
+            <TitledPane prefHeight="218.0" prefWidth="402.0" text="Características Gráficas">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
                <content>
                   <VBox prefHeight="134.0" prefWidth="395.0">
                      <children>
-                        <ComboBox fx:id="cboxCaracGraficas" onAction="#onCboxCaracGraficasAction" prefHeight="25.0" prefWidth="388.0" promptText="Caracteristicas Gráficas (ID)" />
+                        <ComboBox fx:id="cboxCaracGraficas" editable="true" onAction="#onCboxCaracGraficasAction" onKeyReleased="#onCboxCaracGraficasKeyPressedAction" prefHeight="25.0" prefWidth="388.0" promptText="Caracteristicas Gráficas (ID)" />
                         <HBox prefHeight="33.0" prefWidth="375.0">
                            <children>
                               <TextField fx:id="txtDirectX" editable="false" prefHeight="25.0" prefWidth="141.0" promptText="Direct X">
@@ -68,7 +71,8 @@
                         </HBox>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
                           <buttons>
-                            <Button fx:id="btNovoCaracGrafica" mnemonicParsing="false" text="Novo" />
+                            <Button fx:id="btNovoCaracGrafica" mnemonicParsing="false" onAction="#onBtNovoCaracGraficaAction" text="Novo" />
+                              <Button fx:id="btEditarCaracGrafica" mnemonicParsing="false" onAction="#onBtEditarCaracGraficaAction" text="Editar" />
                               <Button fx:id="btExcluirCaracGrafica" mnemonicParsing="false" text="Excluir" />
                           </buttons>
                         </ButtonBar>
@@ -83,10 +87,10 @@
                <content>
                   <VBox prefHeight="134.0" prefWidth="395.0">
                      <children>
-                        <ComboBox fx:id="cboxRenderConfig" onAction="#onCboxRenderConfigAction" prefHeight="25.0" prefWidth="388.0" promptText="Render Config (ID)" />
+                        <ComboBox fx:id="cboxRenderConfig" editable="true" onAction="#onCboxRenderConfigAction" onKeyReleased="#onCboxCboxRenderConfigKeyPressedAction" prefHeight="25.0" prefWidth="388.0" promptText="Render Config (ID)" />
                         <HBox prefHeight="33.0" prefWidth="375.0">
                            <children>
-                              <TextField fx:id="txtShadingUnits" editable="false" prefHeight="25.0" prefWidth="94.0" promptText="Shading Units">
+                              <TextField fx:id="txtShadingUnits" accessibleText="Shading Units" editable="false" prefHeight="25.0" prefWidth="94.0" promptText="Shading Units">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -134,7 +138,8 @@
                         </HBox>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0">
                            <buttons>
-                              <Button fx:id="btNovoRenderConfig" mnemonicParsing="false" text="Novo" />
+                              <Button fx:id="btNovoRenderConfig" mnemonicParsing="false" onAction="#onBtNovoRenderConfigAction" text="Novo" />
+                              <Button fx:id="btEditarRenderConfig" mnemonicParsing="false" onAction="#onBtEditarRenderConfigAction" text="Editar" />
                               <Button fx:id="btExcluirRenderConfig" mnemonicParsing="false" text="Excluir" />
                            </buttons>
                         </ButtonBar>
@@ -153,7 +158,7 @@
                <children>
                   <HBox prefHeight="62.0" prefWidth="802.0">
                      <children>
-                        <ComboBox fx:id="cboxProcessadorGrafico" onAction="#onCboxProcessadorGraficoAction" prefHeight="25.0" prefWidth="261.0" promptText="Processador Gráfico (ID)" />
+                        <ComboBox fx:id="cboxProcessadorGrafico" editable="true" onAction="#onCboxProcessadorGraficoAction" onKeyReleased="#onCboxProcessadorGraficoKeyPressedAction" prefHeight="25.0" prefWidth="261.0" promptText="Processador Gráfico (ID)" />
                      </children>
                   </HBox>
                   <HBox prefHeight="34.0" prefWidth="782.0">
@@ -201,7 +206,8 @@
                   </HBox>
                   <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                      <Button fx:id="btNovoProcessadorGrafico" mnemonicParsing="false" text="Novo" />
+                      <Button fx:id="btNovoProcessadorGrafico" mnemonicParsing="false" onAction="#onBtNovoProcessadorGraficoAction" text="Novo" />
+                        <Button fx:id="btEditarProcessadorGrafico" mnemonicParsing="false" onAction="#onBtEditarProcessadorGraficoAction" text="Editar" />
                         <Button fx:id="btExcluirProcessadorGrafico" mnemonicParsing="false" text="Excluir" />
                     </buttons>
                      <VBox.margin>
@@ -228,46 +234,17 @@
                   </TextField>
                   <HBox prefHeight="34.0" prefWidth="782.0">
                      <children>
-                        <TextField fx:id="txtTamanhoMemoria" editable="false" prefHeight="25.0" prefWidth="248.0" promptText="Tamanho da Memória (KB)">
+                        <TextField fx:id="txtTamanhoMemoria" prefHeight="25.0" prefWidth="248.0" promptText="Tamanho da Memória (KB)">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="txtTipoMemoria" editable="false" prefHeight="25.0" prefWidth="257.0" promptText="Tipo da Memória">
+                        <TextField fx:id="txtTipoMemoria" prefHeight="25.0" prefWidth="257.0" promptText="Tipo da Memória">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="txtTamanhoBanda" editable="false" prefHeight="25.0" prefWidth="247.0" promptText="Tamanho da Banda (KB)">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="34.0" prefWidth="782.0">
-                     <children>
-                        <TextField fx:id="txtTDP" editable="false" prefHeight="25.0" prefWidth="142.0" promptText="TDP">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="txtGpuClock" editable="false" prefHeight="25.0" prefWidth="108.0" promptText="GPU Clock">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="158.0" promptText="Boost GPU Clock">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="txtMemoryClock" editable="false" prefHeight="25.0" prefWidth="131.0" promptText="Memory Clock">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField fx:id="txtMemoryClockEfective" editable="false" prefHeight="25.0" prefWidth="140.0" promptText="Memory Clock (Efetivo)">
+                        <TextField fx:id="txtTamanhoBanda" prefHeight="25.0" prefWidth="247.0" promptText="Tamanho da Banda (KB)">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -276,12 +253,41 @@
                   </HBox>
                   <HBox prefHeight="34.0" prefWidth="782.0">
                      <children>
-                        <TextField fx:id="txtBusInterface" editable="false" prefHeight="25.0" prefWidth="142.0" promptText="Bus Interface">
+                        <TextField fx:id="txtTDP" prefHeight="25.0" prefWidth="142.0" promptText="TDP">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="txtDtLancto" editable="false" prefHeight="25.0" prefWidth="278.0" promptText="Data de Lançamento">
+                        <TextField fx:id="txtGpuClock" prefHeight="25.0" prefWidth="108.0" promptText="GPU Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtGpuBoostClock" prefHeight="25.0" prefWidth="158.0" promptText="Boost GPU Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryClock" prefHeight="25.0" prefWidth="131.0" promptText="Memory Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryClockEfective" prefHeight="25.0" prefWidth="140.0" promptText="Memory Clock (Efetivo)">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="782.0">
+                     <children>
+                        <TextField fx:id="txtBusInterface" prefHeight="25.0" prefWidth="142.0" promptText="Bus Interface">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtDtLancto" prefHeight="25.0" prefWidth="278.0" promptText="Data de Lançamento">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -291,11 +297,14 @@
                </children>
             </VBox>
          </content>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </TitledPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="btSalvar" mnemonicParsing="false" text="Salvar" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+          <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" />
         </buttons>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

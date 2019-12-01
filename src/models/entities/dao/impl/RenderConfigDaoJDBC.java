@@ -146,7 +146,7 @@ public class RenderConfigDaoJDBC implements RenderConfigDao {
 			
 			st = conn.prepareStatement("update a set a.shadingUnits = ?, a.tmus = ?, a.rops = ?, a.smCount = ?, a.L1Cache = ?, "
 					+ "a.L2Cache = ?, a.tensorCores = ?, a.rtCores = ? "
-					+ "from RenderConfig a"
+					+ "from RenderConfig a "
 					+ "where a.idRenderConfig = ?", Statement.RETURN_GENERATED_KEYS);
 			
 			st.setInt(1, renderConfig.getShadingUnits());

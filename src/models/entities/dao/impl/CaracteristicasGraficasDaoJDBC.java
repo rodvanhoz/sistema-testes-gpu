@@ -282,7 +282,7 @@ public class CaracteristicasGraficasDaoJDBC implements CaracteristicasGraficasDa
 		try {
 			st = conn.prepareStatement(
 					"insert into CaracteristicasGraficas (directX, openGL, openCL, vulkan, cuda, shaderModel) "
-							+ "values (?, ?, ?, ?, ?, ?, ?)",
+							+ "values (?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, caracGrafica.getDirectX());
@@ -339,7 +339,7 @@ public class CaracteristicasGraficasDaoJDBC implements CaracteristicasGraficasDa
 				ResultSet rs = st.getGeneratedKeys();
 
 				if (rs.next()) {
-					System.out.println("Alterado! Id: " + rs.getInt(1));
+					System.out.println("Alterado! Id: " + caracGrafica.getIdCaracGrafica());
 				}
 				conn.commit();
 				DB.closeResultSet(rs);
@@ -375,7 +375,7 @@ public class CaracteristicasGraficasDaoJDBC implements CaracteristicasGraficasDa
 				ResultSet rs = st.getGeneratedKeys();
 
 				if (rs.next()) {
-					System.out.println("Deletado! Id: " + rs.getInt(1));
+					System.out.println("Deletado! Id: " + caracGrafica.getIdCaracGrafica());
 				}
 				conn.commit();
 				DB.closeResultSet(rs);

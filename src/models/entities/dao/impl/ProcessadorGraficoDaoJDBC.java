@@ -62,7 +62,7 @@ public class ProcessadorGraficoDaoJDBC implements ProcessadorGraficoDao {
 		
 		try {
 			st = conn.prepareStatement("select * from ProcessadorGrafico a "
-					+ "where a.idProcessadorGrafico = ?");
+					+ "where a.idProcGrafico = ?");
 			st.setInt(1, idProcessadorGrafico);
 			
 			rs = st.executeQuery();

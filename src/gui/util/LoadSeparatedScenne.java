@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 
 public class LoadSeparatedScenne {
 	
-	public static <T> void loadSeparatedView(String absoluteName, int width, int height, String title, Consumer<T> initializingAction) {
+	public synchronized static <T> void loadSeparatedView(String absoluteName, int width, int height, String title, Consumer<T> initializingAction) {
 
 		try {
 
@@ -22,7 +22,7 @@ public class LoadSeparatedScenne {
 			Stage stage = new Stage();
 			Scene scene = new Scene(loader, width, height);
 			stage.setScene(scene);
-			stage.setAlwaysOnTop(true);
+			//stage.setAlwaysOnTop(true);
 			stage.initStyle(StageStyle.UTILITY);
 			stage.setTitle(title);
 			stage.show();

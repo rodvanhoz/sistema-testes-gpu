@@ -373,7 +373,7 @@ public class PlacaDeVideoDaoJDBC implements PlacaDeVideoDao {
 		RenderConfigService renderConfigService = new RenderConfigService();
 
 		try {
-			st = conn.prepareStatement("SELECT * FROM PlacaDeVideo a "
+			st = conn.prepareStatement("SELECT * FROM Gpus a "
 					+ "where a.idGpu = ?");
 			st.setInt(1, idGpu);
 			
@@ -383,7 +383,7 @@ public class PlacaDeVideoDaoJDBC implements PlacaDeVideoDao {
 				
 				Gpus gpu = new Gpus(rs.getInt("idGpu"), 
 						procGraficoService.findById(rs.getInt("idProcessadorGrafico")), 
-						caracGraficaService.findById(rs.getInt("idCaracGrafica")), 
+						caracGraficaService.findById(rs.getInt("idCaracteristicasGraficas")), 
 						renderConfigService.findById(rs.getInt("idRenderConfig")),
 						rs.getString("nomeFabricante"),
 						rs.getString("nomeModelo"),

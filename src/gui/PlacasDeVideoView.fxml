@@ -22,8 +22,8 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
-            <Button fx:id="btEditar" mnemonicParsing="false" text="Editar" />
-            <Button fx:id="btAtualizar" mnemonicParsing="false" text="Atualizar" />
+            <Button fx:id="btEditar" mnemonicParsing="false" onAction="#onBtEditarAction" text="Editar" />
+            <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="Atualizar" />
             <Button fx:id="btExcluir" mnemonicParsing="false" text="Excluir" />
         </items>
       </ToolBar>

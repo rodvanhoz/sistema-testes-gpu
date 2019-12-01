@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -8,12 +9,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.util.Alerts;
+import gui.util.ComboBoxAutoComplete;
 import gui.util.Constraints;
 import gui.util.LoadSeparatedScenne;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -33,14 +37,14 @@ import models.entities.views.PlacaDeVideo;
 
 public class PlacaDeVideoController implements Initializable {
 
-	private PlacaDeVideoService service;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private char newOrEdit;
 	
 	private ProcessadorGraficoService procGraficoService = new ProcessadorGraficoService();
 	private CaracteristicasGraficasService caracGraficasService = new CaracteristicasGraficasService();
 	private RenderConfigService renderConfigService = new RenderConfigService();
-
+	private PlacaDeVideoService service = new PlacaDeVideoService();
+	
 	private ObservableList<ProcessadorGrafico> listaProcGrafico = FXCollections.observableArrayList(procGraficoService.findAll());
 	private ObservableList<CaracteristicasGraficas> listaCaracGraficas = FXCollections.observableArrayList(caracGraficasService.findAll());
 	private ObservableList<RenderConfig> listaRenderConfig = FXCollections.observableArrayList(renderConfigService.findAll());
@@ -48,6 +52,7 @@ public class PlacaDeVideoController implements Initializable {
 	private CaracteristicasGraficas caracGraficasSelected;
 	private ProcessadorGrafico procGraficoSelected;
 	private RenderConfig renderConfigSelected;
+	private Gpus gpuSelected;
 	
 	@FXML
 	private TableView<PlacaDeVideo> tvPlacaDeVideo;
@@ -147,7 +152,10 @@ public class PlacaDeVideoController implements Initializable {
 	
 	@FXML
 	private Button btNovoCaracGrafica;
-	
+
+	@FXML
+	private Button btEditarCaracGrafica;
+
 	@FXML
 	private Button btExcluirCaracGrafica;
 	
@@ -183,6 +191,9 @@ public class PlacaDeVideoController implements Initializable {
 
 	@FXML
 	private Button btNovoRenderConfig;
+
+	@FXML
+	private Button btEditarRenderConfig;
 	
 	@FXML
 	private Button btExcluirRenderConfig;
@@ -216,7 +227,10 @@ public class PlacaDeVideoController implements Initializable {
 	
 	@FXML
 	private Button btNovoProcessadorGrafico;
-	
+
+	@FXML
+	private Button btEditarProcessadorGrafico;
+
 	@FXML
 	private Button btExcluirProcessadorGrafico;
 	
@@ -308,7 +322,7 @@ public class PlacaDeVideoController implements Initializable {
 	
 	
 	public void onBtNovoAction() { 
-		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 600, "Inserir Nova Placa de Vídeo",
+		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de Vídeo",
 				(PlacaDeVideoController controller) -> {
 					controller.cboxProcessadorGrafico.setItems(listaProcGrafico);
 					controller.cboxCaracGraficas.setItems(listaCaracGraficas);
@@ -317,9 +331,123 @@ public class PlacaDeVideoController implements Initializable {
 					controller.setNewOrEdit('N');
 				});
 	}
+	
+	public void onBtEditarAction() {
+		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
+		
+		caracGraficasSelected = caracGraficasService.findById(gpuSelected.getCaracteristicasGraficas().getIdCaracGrafica());
+		procGraficoSelected = procGraficoService.findById(gpuSelected.getProcessadorGrafico().getIdProcGrafico());
+		renderConfigSelected = renderConfigService.findById(gpuSelected.getRenderConfig().getIdRenderConfig());
+		
+		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de Vídeo",
+				(PlacaDeVideoController controller) -> {
+					controller.cboxProcessadorGrafico.setItems(listaProcGrafico);
+					controller.cboxCaracGraficas.setItems(listaCaracGraficas);
+					controller.cboxRenderConfig.setItems(listaRenderConfig);
+					
+					controller.txtDirectX.setText(procGraficoSelected.getNomeGpu());
+					controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
+					controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
+					controller.txtFundicao.setText(procGraficoSelected.getFundicao());
+					controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
+					controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
+					controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
+					controller.cboxProcessadorGrafico.getSelectionModel().select(procGraficoSelected);
+					controller.setProcGraficoSelected(procGraficoSelected);
+					
+					controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
+					controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
+					controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
+					controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
+					controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
+					controller.txtTensorCores.setText(caracGraficasSelected.getShaderModel());
+					controller.cboxCaracGraficas.getSelectionModel().select(caracGraficasSelected);
+					controller.setCaracGraficasSelected(caracGraficasSelected);
+					
+					controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
+					controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
+					controller.txtROPs.setText(renderConfigSelected.getRops().toString());
+					controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
+					controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
+					controller.txtL2Cache.setText(renderConfigSelected.getL1Cache().toString());
+					controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
+					controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
+					controller.cboxRenderConfig.getSelectionModel().select(renderConfigSelected);
+					controller.setRenderConfigSelected(renderConfigSelected);
+					
+					controller.txtNomeFabricante.setText(gpuSelected.getNomeFabricante());
+					controller.txtDescricaoModelo.setText(gpuSelected.getNomeModelo());
+					controller.txtTamanhoMemoria.setText(gpuSelected.getTamMemoriaKB().toString());
+					controller.txtTipoMemoria.setText(gpuSelected.getTpMemoria());
+					controller.txtTamanhoBanda.setText(gpuSelected.getTamBanda().toString());
+					controller.txtTDP.setText(gpuSelected.getTdp().toString());
+					controller.txtGpuClock.setText(gpuSelected.getGpuClock().toString());
+					controller.txtGpuBoostClock.setText(gpuSelected.getBoostClock().toString());
+					controller.txtMemoryClock.setText(gpuSelected.getMemClock().toString());
+					controller.txtMemoryClockEfective.setText(gpuSelected.getMemClockEfetivo().toString());
+					controller.txtBusInterface.setText(gpuSelected.getBusInterface());
+					controller.txtDtLancto.setText(sdf.format(gpuSelected.getDtLancto()));
+					controller.setGpuSelected(gpuSelected);
+					
+					controller.setNewOrEdit('E');
+				});
+	}
+	
+	public void onBtAtualizarAction() {
+		System.out.println("Atualizando Grid...");
+		this.updateTableView();
+	}
+	
+	public void onBtCancelarAction() {
+		Stage stage = (Stage) btCancelar.getScene().getWindow();
+		stage.close();
+	}
+
+	public void onBtSalvarAction() throws NumberFormatException, ParseException {
+		
+		if (procGraficoSelected == null || caracGraficasSelected == null || renderConfigSelected == null) {
+			Alerts.showAlert("IOException", null, "Necessário definir Processador Grafico / Carac. Gráficas / Render Config", 
+					AlertType.ERROR);
+		}
+		else if (!verificaTextos()) {
+			
+		}
+		else {
+			Gpus gpu = new Gpus(null, 
+					procGraficoSelected, 
+					caracGraficasSelected, 
+					renderConfigSelected, 
+					txtNomeFabricante.getText(), 
+					txtDescricaoModelo.getText(), 
+					Integer.parseInt(txtTamanhoMemoria.getText()), 
+					txtTipoMemoria.getText(), 
+					Integer.parseInt(txtTamanhoBanda.getText()), 
+					Double.parseDouble(txtTDP.getText()), 
+					Double.parseDouble(txtGpuClock.getText()), 
+					Double.parseDouble(txtGpuBoostClock.getText()), 
+					Double.parseDouble(txtMemoryClock.getText()), 
+					Double.parseDouble(txtMemoryClockEfective.getText()), 
+					txtBusInterface.getText(), 
+					sdf.parse(txtDtLancto.getText()));
+			
+			service.inserir(gpu);
+			
+			Stage stage = (Stage) btCancelar.getScene().getWindow();
+			stage.close();
+		}
+		
+	}
+	
+	// edit
 
 	public void onCboxCaracGraficasAction() {
-		caracGraficasSelected = cboxCaracGraficas.getSelectionModel().getSelectedItem();
+		//caracGraficasSelected = cboxCaracGraficas.getSelectionModel().getSelectedItem();
+		if (cboxCaracGraficas.getEditor().getText().split(":")[0].equals("")) {
+			caracGraficasSelected = null;
+		}
+		else {
+			caracGraficasSelected = caracGraficasService.findById(Integer.parseInt(cboxCaracGraficas.getEditor().getText().split(":")[0].trim()));
+		}
 		
 		if (caracGraficasSelected != null) {
 			txtDirectX.setText(caracGraficasSelected.getDirectX());
@@ -329,12 +457,27 @@ public class PlacaDeVideoController implements Initializable {
 			txtCudaCores.setText(caracGraficasSelected.getCuda());
 			txtShaderModel.setText(caracGraficasSelected.getShaderModel());
 		}
+		else {
+			txtDirectX.setText(null);
+			txtOpenGL.setText(null);
+			txtOpenCL.setText(null);
+			txtVulkan.setText(null);
+			txtCudaCores.setText(null);
+			txtShaderModel.setText(null);
+		}
 		
+		listaCaracGraficas = FXCollections.observableArrayList(caracGraficasService.findAll());
 	}
 	
 	public void onCboxProcessadorGraficoAction() {
 		Locale.setDefault(Locale.US);
-		procGraficoSelected = cboxProcessadorGrafico.getSelectionModel().getSelectedItem();
+//		procGraficoSelected = cboxProcessadorGrafico.getSelectionModel().getSelectedItem();
+		if (cboxProcessadorGrafico.getEditor().getText().split(":")[0].equals("")) {
+			procGraficoSelected = null;
+		}
+		else {
+			procGraficoSelected = procGraficoService.findById(Integer.parseInt(cboxProcessadorGrafico.getEditor().getText().split(":")[0].trim()));
+		}
 		
 		if (procGraficoSelected != null) {
 			txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
@@ -345,10 +488,28 @@ public class PlacaDeVideoController implements Initializable {
 			txtNroTransistores.setText(String.format("%.02f", procGraficoSelected.getNroTransistors()));
 			txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
 		}
+		else {
+			txtNomeGpu.setText(null);
+			txtVariantGpu.setText(null);
+			txtArquitetura.setText(null);
+			txtFundicao.setText(null);
+			txtLitografia.setText(null);
+			txtNroTransistores.setText(null);
+			txtTamanhoChip.setText(null);
+		}
+		
+		listaProcGrafico = FXCollections.observableArrayList(procGraficoService.findAll());
 	}
 	
 	public void onCboxRenderConfigAction() {
-		renderConfigSelected = cboxRenderConfig.getSelectionModel().getSelectedItem();
+//		renderConfigSelected = cboxRenderConfig.getSelectionModel().getSelectedItem();
+		
+		if (cboxRenderConfig.getEditor().getText().split(":")[0].equals("")) {
+			renderConfigSelected = null;
+		}
+		else {
+			renderConfigSelected = renderConfigService.findById(Integer.parseInt(cboxRenderConfig.getEditor().getText().split(":")[0].trim()));
+		}
 		
 		if (renderConfigSelected != null) {
 			txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
@@ -360,8 +521,103 @@ public class PlacaDeVideoController implements Initializable {
 			txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
 			txtRtCores.setText(renderConfigSelected.getRtCores().toString());
 		}
+		else {
+			txtShadingUnits.setText(null);
+			txtTMUs.setText(null);
+			txtROPs.setText(null);
+			txtSmCount.setText(null);
+			txtL1Cache.setText(null);
+			txtL2Cache.setText(null);
+			txtTensorCores.setText(null);
+			txtRtCores.setText(null);
+		}
+		listaRenderConfig = FXCollections.observableArrayList(renderConfigService.findAll());
+
+	}
+	
+	public void onCboxCaracGraficasKeyPressedAction() {
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxCaracGraficas, listaCaracGraficas, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 
+	public void onCboxProcessadorGraficoKeyPressedAction() {
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxProcessadorGrafico, listaProcGrafico, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+	}
+
+	public void onCboxCboxRenderConfigKeyPressedAction() {
+		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxRenderConfig, listaRenderConfig, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
+	}
+	
+	public void onBtNovoCaracGraficaAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Inserir Nova Característica Gráfica",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.setNewOrEdit('N');
+				});
+	}
+
+	public void onBtEditarCaracGraficaAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar Característica Gráfica",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
+					controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
+					controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
+					controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
+					controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
+					controller.txtShaderModel.setText(caracGraficasSelected.getShaderModel());
+					controller.setCaracGraficasSelected(caracGraficasSelected);
+					controller.setNewOrEdit('E');
+				});
+	}
+
+	public void onBtNovoProcessadorGraficoAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Inserir Novo Processador Gráfico",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.setNewOrEdit('N');
+				});
+	}
+
+	public void onBtEditarProcessadorGraficoAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador Gráfico",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
+					controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
+					controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
+					controller.txtFundicao.setText(procGraficoSelected.getFundicao());
+					controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
+					controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
+					controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
+					controller.setProcGraficoSelected(procGraficoSelected);
+					controller.setNewOrEdit('E');
+				});
+	}
+	
+	public void onBtNovoRenderConfigAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Inserir Novo Render Config",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.setNewOrEdit('N');
+				});
+		
+		listaRenderConfig = FXCollections.observableArrayList(renderConfigService.findAll());
+		cboxRenderConfig.setItems(listaRenderConfig);;
+	}
+
+	public void onBtEditarRenderConfigAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Editar Render Config",
+				(PlacaDeVideoCaracsController controller) -> {
+					controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
+					controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
+					controller.txtROPs.setText(renderConfigSelected.getRops().toString());
+					controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
+					controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
+					controller.txtL2Cache.setText(renderConfigSelected.getL2Cache().toString());
+					controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
+					controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
+					controller.setRenderConfigSelected(renderConfigSelected);
+					controller.setNewOrEdit('E');
+				});
+	}
+	
+	// getters / setters
+	
 	public char getNewOrEdit() {
 		return newOrEdit;
 	}
@@ -369,8 +625,6 @@ public class PlacaDeVideoController implements Initializable {
 	public void setNewOrEdit(char newOrEdit) {
 		this.newOrEdit = newOrEdit;
 	}
-	
-	
 
 	public CaracteristicasGraficas getCaracGraficasSelected() {
 		return caracGraficasSelected;
@@ -395,6 +649,14 @@ public class PlacaDeVideoController implements Initializable {
 	public void setRenderConfigSelected(RenderConfig renderConfigSelected) {
 		this.renderConfigSelected = renderConfigSelected;
 	}
+	
+	public Gpus getGpuSelected() {
+		return gpuSelected;
+	}
+
+	public void setGpuSelected(Gpus gpuSelected) {
+		this.gpuSelected = gpuSelected;
+	}
 
 	public void updateTableView() {
 		if (service == null) {
@@ -405,5 +667,65 @@ public class PlacaDeVideoController implements Initializable {
 		tvPlacaDeVideo.setItems(FXCollections.observableArrayList(lista));
 	}
 
+	private Boolean verificaTextos() {
+		
+		String txts = "";
+		
+		if (txtNomeFabricante.getText() == null || txtNomeFabricante.getText().equals("")) {
+			txts += "NomeFabricante";
+		}
+		if (txtDescricaoModelo.getText() == null || txtDescricaoModelo.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "DescricaoModelo";
+		}
+		if (txtTamanhoMemoria.getText() == null || txtTamanhoMemoria.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "TamanhoMemoria";
+		}
+		if (txtTipoMemoria.getText() == null || txtTipoMemoria.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "TipoMemoria";
+		}
+		if (txtTamanhoBanda.getText() == null || txtTamanhoBanda.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "TamanhoBanda";
+		}
+		if (txtTDP.getText() == null || txtTDP.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "TDP";
+		}
+		if (txtGpuClock.getText() == null || txtGpuClock.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "GpuClock";
+		}
+		if (txtGpuBoostClock.getText() == null || txtGpuBoostClock.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "GpuBoostClock";
+		}
+		if (txtMemoryClock.getText() == null || txtMemoryClock.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "MemoryClock";
+		}
+		if (txtMemoryClockEfective.getText() == null || txtMemoryClockEfective.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "MemoryClockEfective";
+		}
+		if (txtBusInterface.getText() == null || txtBusInterface.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "BusInterface";
+		}
+		if (txtDtLancto.getText() == null || txtDtLancto.getText().equals("")) {
+			if (txts.length() > 0) txts += " / ";
+			txts += "DtLancto";
+		}
+		 
+		if (txts.length() > 0) {
+			Alerts.showAlert("IOException", null, "Os campos " + txts + " estão sem informação", AlertType.ERROR);
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
 }
