@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.sun.marlin.CollinearSimplifier;
+import com.sun.prism.paint.Paint;
 
 import application.Main;
 import gui.util.ComboBoxAutoComplete;
@@ -20,13 +20,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesJogosService;
-import models.entities.services.ConfiguracoesService;
 import models.entities.services.DadosTesteService;
 import models.entities.services.PlacaDeVideoService;
 import models.entities.services.ProcessadorService;
@@ -49,6 +49,7 @@ public class DadosTesteController implements Initializable {
 	private ConfiguracoesJogosW configuracoesJogosSelected;
 	private PlacaDeVideo placaDeVideoSelected;
 	private Processador processadorSelected;
+	private DadosTeste dadosTesteSelected;
 	
 	private ObservableList<PlacaDeVideo> placasDeVideoLista;
 	private ObservableList<Processador> processadoresLista;
@@ -120,6 +121,8 @@ public class DadosTesteController implements Initializable {
 	@FXML
 	private Button btExcluir;
 	
+	@FXML
+	private Label lbTitulo;
 	
 	// edit
 	
@@ -310,6 +313,34 @@ public class DadosTesteController implements Initializable {
 				});
 	}
 	
+	public void onBtEditarAction() {
+		LoadSeparatedScenne.loadSeparatedView("/gui/TestesEdit.fxml", 750, 650, "Editar Teste",
+				(DadosTesteController controller) -> {
+					controller.cboxConfiguracoesJogos.setItems(configuracoesJogosLista);
+					controller.cboxPlacaDeVideo.setItems(placasDeVideoLista);
+					controller.cboxProcessador.setItems(processadoresLista);
+					
+					controller.setConfiguracoesJogosSelected(configuracoesJogosSelected);
+					controller.setPlacaDeVideoSelected(placaDeVideoSelected);
+					controller.setProcessadorSelected(processadorSelected);
+					controller.setDadosTesteSelected(dadosTesteSelected);
+					
+					controller.cboxConfiguracoesJogos.getSelectionModel().select(configuracoesJogosSelected);
+					controller.cboxPlacaDeVideo.getSelectionModel().select(placaDeVideoSelected);
+					controller.cboxProcessador.getSelectionModel().select(processadorSelected);
+					
+					controller.cboxConfiguracoesJogos.getEditor().setText(configuracoesJogosSelected.toString());
+					controller.cboxPlacaDeVideo.getEditor().setText(placaDeVideoSelected.toString());
+					controller.cboxProcessador.getEditor().setText(processadorSelected.toString());
+					
+					controller.onCBoxConfiguracoesJogosAction();
+					controller.onCBoxPlacaDeVideoAction();
+					controller.onCBoxProcessadorAction();
+					
+					controller.setNewOrEdit('E');
+				});
+	}
+	
 	public void onCBoxConfiguracoesJogosPressed() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoesJogos, configuracoesJogosLista, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
@@ -357,7 +388,7 @@ public class DadosTesteController implements Initializable {
 			txtNVidiaTec.setText(null);
 		}
 		
-		configuracoesJogosLista = FXCollections.observableArrayList(configuracoesJogosService.findAll());
+		atualiazarComboBox();
 	}
 
 	public void onCBoxProcessadorAction() {
@@ -389,7 +420,7 @@ public class DadosTesteController implements Initializable {
 			txtCpuTdp.setText(null);
 		}
 		
-		processadoresLista = FXCollections.observableArrayList(processadorService.findAll());
+		atualiazarComboBox();
 
 	}
 
@@ -436,8 +467,13 @@ public class DadosTesteController implements Initializable {
 			txtGpuDtLancto.setText(null);
 		}
 		
-		placasDeVideoLista = FXCollections.observableArrayList(placaDeVideoService.findAll());
-
+		atualiazarComboBox();
+		
+//		cboxPlacaDeVideo.getEditor().textProperty().addListener(new ChangeListener<String>() {
+//		    
+//		    }
+//		});
+//
 	}
 	
 	public void onBtCancelarAction() {
@@ -449,7 +485,7 @@ public class DadosTesteController implements Initializable {
 		service = new DadosTesteService();
 		
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 		
 		TestesGpu teste = new TestesGpu(null, 
@@ -462,12 +498,22 @@ public class DadosTesteController implements Initializable {
 			    sdf.parse(txtDtTeste.getText()), 
 			    txtNomeTester.getText());
 	
-		service.inserir(teste);
+		if (this.NewOrEdit == 'N') {
+			service.inserir(teste);
+		}
+		else {
+//			teste.setIdTesteGpu();
+			teste.setIdTesteGpu(dadosTesteSelected.getIdConfiguracao());
+			service.atualizar(teste);
+		}
+		
+		lbTitulo.setStyle("-fx-background-color: green;");
+		lbTitulo.setText("Novo Teste - <<Salvo>>");
 	}
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 		
 		List<DadosTeste> lista = service.findAll();
@@ -512,5 +558,13 @@ public class DadosTesteController implements Initializable {
 		this.processadorSelected = processadorSelected;
 	}
 	
+	public DadosTeste getDadosTesteSelected() {
+		return dadosTesteSelected;
+	}
+
+	public void setDadosTesteSelected(DadosTeste dadosTesteSelected) {
+		this.dadosTesteSelected = dadosTesteSelected;
+	}
+
 	
 }
