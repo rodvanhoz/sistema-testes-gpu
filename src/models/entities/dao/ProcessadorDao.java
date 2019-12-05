@@ -2,14 +2,21 @@ package models.entities.dao;
 
 import java.util.List;
 
+import models.entities.tables.Gpus;
+import models.entities.tables.Processadores;
 import models.entities.views.Processador;
 
 public interface ProcessadorDao {
 	
 	List<Processador> findAll();
-	List<Processador> findByModelo();
-	List<Processador> findByFabricante();
-	List<Processador> findByCodename();
-	List<Processador> findByGraficoIntegrado();
+	List<Processador> findByModelo(String modelo);
+	List<Processador> findByFabricante(String fabricante);
+	List<Processador> findByCodename(String codename);
+	List<Processador> findByGraficoIntegrado(Gpus graficoIntegrado);
+	Processador findById(int idProcessador);
+	Processadores findByIdProcessadores(int idProcessador);
+	void inserir(Processador processador);
+	void atualizar(Processador processador);
+	void remover(Processador processador);
 
 }

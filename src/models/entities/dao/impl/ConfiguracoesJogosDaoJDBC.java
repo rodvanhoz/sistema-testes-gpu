@@ -11,6 +11,8 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import models.entities.dao.ConfiguracoesJogosDao;
+import models.entities.services.ConfiguracoesService;
+import models.entities.services.JogoService;
 import models.entities.tables.Configuracoes;
 import models.entities.tables.ConfiguracoesJogos;
 import models.entities.tables.Jogos;
@@ -305,6 +307,41 @@ public class ConfiguracoesJogosDaoJDBC implements ConfiguracoesJogosDao {
 			throw new DbException(e.getMessage());
 		}
 		finally {
+			DB.closeStatement(st);
+		}
+	}
+
+	@Override
+	public ConfiguracoesJogos findByConfiguracaoJogos(int idConfiguracaoJogos) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		JogoService jogoService = new JogoService();
+		ConfiguracoesService configuracoesService = new ConfiguracoesService();
+
+		try {
+			ConfiguracoesJogosW c = findById(idConfiguracaoJogos);
+			
+			st = conn.prepareStatement("select * from ConfiguracoesJogosW a "
+					+ "where a.idConfiguracaoJogo = ?");
+			
+			st.setInt(1, idConfiguracaoJogos);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				ConfiguracoesJogos configuracaoJogo = new ConfiguracoesJogos(rs.getInt("idConfiguracaoJogo"),
+													jogoService.findById(c.getIdJogo()),
+													configuracoesService.findById(c.getIdConfiguracao()));
+
+				return configuracaoJogo;
+			}
+
+			return null;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
 	}

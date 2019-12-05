@@ -13,6 +13,7 @@ public interface ConfiguracoesJogosDao {
 	ConfiguracoesJogosW findById(int idConfiguracaoJogos);
 	ConfiguracoesJogosW findByJogo(Jogos jogo);
 	ConfiguracoesJogosW findByConfiguracao(Configuracoes configuracao);
+	ConfiguracoesJogos findByConfiguracaoJogos(int idConfiguracaoJogos);
 	void inserir(ConfiguracoesJogos configuracaoJogo);
 	void atualizar(ConfiguracoesJogos configuracaoJogo);
 	void remover(ConfiguracoesJogos configuracaoJogo);

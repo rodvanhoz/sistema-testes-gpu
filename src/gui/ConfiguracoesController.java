@@ -1,15 +1,12 @@
 package gui;
 
-import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
-import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.LoadSeparatedScenne;
 import javafx.collections.FXCollections;
@@ -27,9 +24,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesService;
-import models.entities.services.JogoService;
 import models.entities.tables.Configuracoes;
-import models.entities.tables.Jogos;
 
 public class ConfiguracoesController implements Initializable {
 	

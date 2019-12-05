@@ -23,10 +23,17 @@ public class DadosTeste implements Serializable {
 	private String nomeTester;
 	private Date dtTeste;
 	private String nomeDriverGpu;
+	private Integer idTesteGpu;
+	private Integer idJogo; 
+	private Integer idConfiguracao; 
+	private Integer idConfiguracaoJogo; 
+	private Integer idGpu; 
+	private Integer idProcessador;
 	
 	public DadosTeste(String nomeModeloGpu, String nomeModeloProcessador, String nomeJogo, Integer resolucaoAbrev,
 			String qualidadeGrafica, String api, String fxaa, String ssao, String aa, String rt, String taa,
-			String nVidiaTec, Double avgFps, Double minFps, String nomeTester, Date dtTeste, String nomeDriverGpu) {
+			String nVidiaTec, Double avgFps, Double minFps, String nomeTester, Date dtTeste, String nomeDriverGpu,
+			Integer idTesteGpu, Integer idJogo, Integer idConfiguracao, Integer idConfiguracaoJogo, Integer idGpu, Integer idProcessador) {
 		this.nomeModeloGpu = nomeModeloGpu;
 		this.nomeModeloProcessador = nomeModeloProcessador;
 		this.nomeJogo = nomeJogo;
@@ -44,6 +51,12 @@ public class DadosTeste implements Serializable {
 		this.nomeTester = nomeTester;
 		this.dtTeste = dtTeste;
 		this.nomeDriverGpu = nomeDriverGpu;
+		this.idTesteGpu = idTesteGpu;
+		this.idJogo = idJogo; 
+		this.idConfiguracao = idConfiguracao; 
+		this.idConfiguracaoJogo = idConfiguracaoJogo; 
+		this.idGpu = idGpu; 
+		this.idProcessador = idProcessador;
 	}
 
 	public String getNomeModeloGpu() {
@@ -184,6 +197,54 @@ public class DadosTeste implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer getIdTesteGpu() {
+		return idTesteGpu;
+	}
+
+	public void setIdTesteGpu(Integer idTesteGpu) {
+		this.idTesteGpu = idTesteGpu;
+	}
+
+	public Integer getIdJogo() {
+		return idJogo;
+	}
+
+	public void setIdJogo(Integer idJogo) {
+		this.idJogo = idJogo;
+	}
+
+	public Integer getIdConfiguracao() {
+		return idConfiguracao;
+	}
+
+	public void setIdConfiguracao(Integer idConfiguracao) {
+		this.idConfiguracao = idConfiguracao;
+	}
+
+	public Integer getIdConfiguracaoJogo() {
+		return idConfiguracaoJogo;
+	}
+
+	public void setIdConfiguracaoJogo(Integer idConfiguracaoJogo) {
+		this.idConfiguracaoJogo = idConfiguracaoJogo;
+	}
+
+	public Integer getIdGpu() {
+		return idGpu;
+	}
+
+	public void setIdGpu(Integer idGpu) {
+		this.idGpu = idGpu;
+	}
+
+	public Integer getIdProcessador() {
+		return idProcessador;
+	}
+
+	public void setIdProcessador(Integer idProcessador) {
+		this.idProcessador = idProcessador;
 	}
 
 	@Override

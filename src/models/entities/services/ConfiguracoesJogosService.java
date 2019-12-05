@@ -21,6 +21,10 @@ public class ConfiguracoesJogosService {
 		return dao.findById(idConfiguracaoJogos);
 	}
 	
+	public ConfiguracoesJogos findByConfiguracaoJogos(int idConfiguracaoJogos) {
+		return dao.findByConfiguracaoJogos(idConfiguracaoJogos);
+	}
+	
 	public ConfiguracoesJogosW findByJogo(Jogos jogo) {
 		return dao.findByJogo(jogo);
 	}

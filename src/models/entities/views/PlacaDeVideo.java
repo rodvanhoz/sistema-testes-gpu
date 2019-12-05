@@ -19,6 +19,9 @@ public class PlacaDeVideo implements Serializable {
 	private Double gpuClock;
 	private Double boostClock;
 	private String directX;
+	private String openGL;
+	private String openCL;
+	private String vulkan;
 	private Double memClock;
 	private Double memClockEfetivo;
 	private Integer tamBanda;
@@ -28,8 +31,8 @@ public class PlacaDeVideo implements Serializable {
 	
 	public PlacaDeVideo(Integer idGpu, String nomeFabricante, String nomeModelo, String nomeGpu, String arquitetura,
 			Integer shadingUnits, Integer rops, Integer tmus, Integer tamMemoriaKB, String tpMemoria, Double gpuClock,
-			Double boostClock, String directX, Double memClock, Double memClockEfetivo, Integer tamBanda, Double tdp,
-			String busInterface, Date dtLancto) {
+			Double boostClock, String directX, String openGL, String openCL, String vulkan, Double memClock, Double memClockEfetivo, 
+			Integer tamBanda, Double tdp, String busInterface, Date dtLancto) {
 		this.idGpu = idGpu;
 		this.nomeFabricante = nomeFabricante;
 		this.nomeModelo = nomeModelo;
@@ -43,6 +46,9 @@ public class PlacaDeVideo implements Serializable {
 		this.gpuClock = gpuClock;
 		this.boostClock = boostClock;
 		this.directX = directX;
+		this.openGL = openGL;
+		this.openCL = openCL;
+		this.vulkan = vulkan;
 		this.memClock = memClock;
 		this.memClockEfetivo = memClockEfetivo;
 		this.tamBanda = tamBanda;
@@ -202,17 +208,34 @@ public class PlacaDeVideo implements Serializable {
 	public void setDtLancto(Date dtLancto) {
 		this.dtLancto = dtLancto;
 	}
+	
+	public String getOpenGL() {
+		return openGL;
+	}
+
+	public void setOpenGL(String openGL) {
+		this.openGL = openGL;
+	}
+
+	public String getOpenCL() {
+		return openCL;
+	}
+
+	public void setOpenCL(String openCL) {
+		this.openCL = openCL;
+	}
+
+	public String getVulkan() {
+		return vulkan;
+	}
+
+	public void setVulkan(String vulkan) {
+		this.vulkan = vulkan;
+	}
 
 	@Override
 	public String toString() {
-		return "PlacaDeVideo [idGpu=" + idGpu + ", nomeFabricante=" + nomeFabricante + ", nomeModelo=" + nomeModelo
-				+ ", nomeGpu=" + nomeGpu + ", arquitetura=" + arquitetura + ", shadingUnits=" + shadingUnits + ", rops="
-				+ rops + ", tmus=" + tmus + ", tamMemoriaKB=" + tamMemoriaKB + ", tpMemoria=" + tpMemoria
-				+ ", gpuClock=" + gpuClock + ", boostClock=" + boostClock + ", directX=" + directX + ", memClock="
-				+ memClock + ", memClockEfetivo=" + memClockEfetivo + ", tamBanda=" + tamBanda + ", tdp=" + tdp
-				+ ", busInterface=" + busInterface + ", dtLancto=" + dtLancto + "]";
+		return idGpu + ": " + nomeFabricante + " " + nomeModelo + " - " + tamMemoriaKB + " MB " + tpMemoria;
 	}
 
-	
-	
 }

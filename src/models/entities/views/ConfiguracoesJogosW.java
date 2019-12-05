@@ -168,11 +168,8 @@ public class ConfiguracoesJogosW implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ConfiguracoesJogosW [nomeJogo=" + nomeJogo + ", dtLancto=" + dtLancto + ", resolucaoAbrev="
-				+ resolucaoAbrev + ", resolucaoDetalhe=" + resolucaoDetalhe + ", api=" + api + ", qualidadeGrafica="
-				+ qualidadeGrafica + ", ssao=" + ssao + ", fxaa=" + fxaa + ", taa=" + taa + ", rt=" + rt + ", aa=" + aa
-				+ ", NVidiaTec=" + NVidiaTec + ", idJogo=" + idJogo + ", idConfiguracao=" + idConfiguracao
-				+ ", idConfiguracaoJogo=" + idConfiguracaoJogo + "]";
+		return idConfiguracaoJogo + ": " + nomeJogo + " " + resolucaoAbrev + "p " + api + " - " + qualidadeGrafica + " / "
+				+ ssao + fxaa + taa + " " + aa + " " + NVidiaTec;
 	}
 	
 }

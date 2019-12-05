@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -11,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="532.0" prefWidth="863.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<VBox prefHeight="640.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DadosTesteController">
    <children>
       <Label text="Editar Teste">
          <font>
@@ -29,53 +29,19 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="381.0" promptText="Placa de Vídeo">
+                  <ComboBox fx:id="cboxPlacaDeVideo" editable="true" onAction="#onCBoxPlacaDeVideoAction" onKeyReleased="#onCBoxPlacaDeVideoPressed" prefHeight="25.0" prefWidth="381.0" promptText="Placa de Vídeo">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </ComboBox>
                   <HBox prefHeight="23.0" prefWidth="831.0">
                      <children>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="213.0" promptText="Fabricante">
+                        <TextField fx:id="txtGpuFabricante" editable="false" prefHeight="25.0" prefWidth="213.0" promptText="Fabricante">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="609.0" promptText="Modelo">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="26.0" prefWidth="831.0">
-                     <children>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="172.0" promptText="DirextX">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="165.0" promptText="OpenGL">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="137.0" promptText="OpenCL">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="128.0" promptText="Vulkan">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="100.0" promptText="Bus Interface">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="73.0" promptText="TDP">
+                        <TextField fx:id="txtGpuModelo" editable="false" prefHeight="25.0" prefWidth="609.0" promptText="Modelo">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -84,37 +50,71 @@
                   </HBox>
                   <HBox prefHeight="26.0" prefWidth="831.0">
                      <children>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="172.0" promptText="Memória">
+                        <TextField fx:id="txtDirectX" editable="false" prefHeight="25.0" prefWidth="172.0" promptText="DirextX">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="102.0" promptText="Tipo Memória">
+                        <TextField fx:id="txtOpenGL" editable="false" prefHeight="25.0" prefWidth="165.0" promptText="OpenGL">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="91.0" promptText="Gpu Clock">
+                        <TextField fx:id="txtOpenCL" editable="false" prefHeight="25.0" prefWidth="137.0" promptText="OpenCL">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="101.0" promptText="Gpu Clock Boost">
+                        <TextField fx:id="txtVulkan" editable="false" prefHeight="25.0" prefWidth="128.0" promptText="Vulkan">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="100.0" promptText="Clock Memória">
+                        <TextField fx:id="txtBusInterface" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="Bus Interface">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="89.0" promptText="Clock Memória Efetivo">
+                        <TextField fx:id="txtGpuTdp" editable="false" prefHeight="25.0" prefWidth="73.0" promptText="TDP">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="110.0" promptText="Dt. Lançamento">
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="26.0" prefWidth="831.0">
+                     <children>
+                        <TextField fx:id="txtTamanhoMemoria" editable="false" prefHeight="25.0" prefWidth="172.0" promptText="Memória">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtTipoMemoria" editable="false" prefHeight="25.0" prefWidth="102.0" promptText="Tipo Memória">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtGpuClock" editable="false" prefHeight="25.0" prefWidth="91.0" promptText="Gpu Clock">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtGpuBoostClock" editable="false" prefHeight="25.0" prefWidth="101.0" promptText="Gpu Clock Boost">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryGpuClock" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="Clock Memória">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtMemoryGpuClockEfective" editable="false" prefHeight="25.0" prefWidth="89.0" promptText="Clock Memória Efetivo">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtGpuDtLancto" editable="false" prefHeight="25.0" prefWidth="110.0" promptText="Dt. Lançamento">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -127,60 +127,33 @@
       </TitledPane>
       <HBox prefHeight="170.0" prefWidth="863.0">
          <children>
-            <TitledPane animated="false" prefHeight="160.0" prefWidth="425.0" text="Processador">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
+            <TitledPane prefHeight="156.0" prefWidth="430.0" text="Dados do Teste">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="109.0" prefWidth="851.0">
                      <children>
-                        <ComboBox editable="true" prefHeight="25.0" prefWidth="381.0" promptText="Processador">
+                        <TextField fx:id="txtNomeTester" prefHeight="25.0" prefWidth="283.0" promptText="Nome do Tester">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
-                        </ComboBox>
+                        </TextField>
+                        <TextField fx:id="txtDriverGpu" prefHeight="25.0" prefWidth="547.0" promptText="Driver da GPU">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
                         <HBox prefHeight="23.0" prefWidth="831.0">
                            <children>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="135.0" promptText="Fabricante">
+                              <TextField fx:id="txtAvgFps" prefHeight="25.0" prefWidth="90.0" promptText="Avg. FPS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="305.0" promptText="Modelo">
+                              <TextField fx:id="txtMinFps" prefHeight="25.0" prefWidth="93.0" promptText="Min. FPS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="23.0" prefWidth="831.0">
-                           <children>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="51.0" promptText="Cores">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="46.0" promptText="Threads">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="60.0" promptText="Freq.">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="61.0" promptText="Turbo Freq.">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="81.0" promptText="Socket">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <TextField editable="false" prefHeight="25.0" prefWidth="75.0" promptText="TDP">
+                              <TextField fx:id="txtDtTeste" prefHeight="25.0" prefWidth="175.0" promptText="Data do Teste">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -190,29 +163,70 @@
                      </children>
                   </VBox>
                </content>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
             </TitledPane>
-            <TitledPane animated="false" prefHeight="160.0" prefWidth="417.0" text="Configuração do Jogo">
+            <TitledPane animated="false" prefHeight="176.0" prefWidth="425.0" text="Processador">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="151.0" prefWidth="423.0">
                      <children>
-                        <ComboBox editable="true" prefHeight="25.0" prefWidth="262.0" promptText="Relação Configuração / Jogo">
+                        <ComboBox fx:id="cboxProcessador" editable="true" onAction="#onCBoxProcessadorAction" onKeyReleased="#onCBoxProcessadorPressed" prefHeight="25.0" prefWidth="381.0" promptText="Processador">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="135.0" promptText="Jogo">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="305.0" promptText="Configuração">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </TextField>
+                        <HBox prefHeight="23.0" prefWidth="831.0">
+                           <children>
+                              <TextField fx:id="txtCpuFabricante" editable="false" prefHeight="25.0" prefWidth="135.0" promptText="Fabricante">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtCpuModelo" editable="false" prefHeight="25.0" prefWidth="305.0" promptText="Modelo">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="23.0" prefWidth="831.0">
+                           <children>
+                              <TextField fx:id="txtNroCores" editable="false" prefHeight="25.0" prefWidth="50.0" promptText="Cores">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtNroThreads" editable="false" prefHeight="25.0" prefWidth="50.0" promptText="Threads">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtCpuFrequencia" editable="false" prefHeight="25.0" prefWidth="65.0" promptText="Freq.">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtCpuTurboFrequencia" editable="false" prefHeight="25.0" prefWidth="65.0" promptText="Turbo Freq.">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtSocket" editable="false" prefHeight="25.0" prefWidth="85.0" promptText="Socket">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="txtCpuTdp" editable="false" prefHeight="25.0" prefWidth="70.0" promptText="TDP">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </content>
@@ -222,54 +236,92 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <TitledPane prefHeight="134.0" prefWidth="853.0" text="Dados do Teste">
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
+      <TitledPane animated="false" prefHeight="160.0" prefWidth="417.0" text="Configuração do Jogo">
          <content>
-            <VBox prefHeight="109.0" prefWidth="851.0">
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox prefHeight="23.0" prefWidth="831.0">
+                  <ComboBox fx:id="cboxConfiguracoesJogos" editable="true" onAction="#onCBoxConfiguracoesJogosAction" onKeyReleased="#onCBoxConfiguracoesJogosPressed" prefHeight="25.0" prefWidth="408.0" promptText="Relação Configuração / Jogo">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <TextField fx:id="txtNomeJogo" editable="false" promptText="Jogo">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="txtQualidadeGrafica" editable="false" promptText="Qualiade Gráfica">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="283.0" promptText="Nome do Tester">
+                        <TextField fx:id="txtResolucaoDetalhe" editable="false" prefHeight="25.0" prefWidth="112.0" promptText="Resolução Detalhe">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="547.0" promptText="Driver da GPU">
+                        <TextField fx:id="txtResolucaoAbrev" editable="false" prefHeight="25.0" prefWidth="81.0" promptText="Resolução Abrev.">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtApi" editable="false" prefHeight="25.0" prefWidth="81.0" promptText="API">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtAaliasing" editable="false" prefHeight="25.0" prefWidth="163.0" promptText="Anti Aliasing">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtNVidiaTec" editable="false" promptText="NVidia Tec.">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </TextField>
                      </children>
                   </HBox>
-                  <HBox prefHeight="23.0" prefWidth="831.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="381.0">
                      <children>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="90.0" promptText="Avg. FPS">
+                        <CheckBox fx:id="cbSsao" disable="true" mnemonicParsing="false" text="SSAO">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="93.0" promptText="Min. FPS">
+                        </CheckBox>
+                        <CheckBox fx:id="cbFxaa" disable="true" mnemonicParsing="false" text="FXAA">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
-                        </TextField>
-                        <TextField editable="false" prefHeight="25.0" prefWidth="175.0" promptText="Data do Teste">
+                        </CheckBox>
+                        <CheckBox fx:id="cbTaa" disable="true" mnemonicParsing="false" text="TAA">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
-                        </TextField>
+                        </CheckBox>
+                        <CheckBox fx:id="cbRt" disable="true" mnemonicParsing="false" text="Ray Tracing">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </CheckBox>
                      </children>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </VBox>
          </content>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </TitledPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Salvar" />
-            <Button mnemonicParsing="false" text="Cancelar" />
+          <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" />
         </buttons>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

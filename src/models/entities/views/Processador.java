@@ -16,11 +16,11 @@ public class Processador implements Serializable {
 	private String codeName;
 	private String socket;
 	private String graficoIntegrado;
+	private int idDadosProcessador;
 	
 	public Processador(Integer idProcessador, String nomeFabricante, String nomeModelo, Integer nroCores,
 			Integer nroThreads, Double tdp, Double frequencia, Double turboFrequencia, String codeName, String socket,
-			String graficoIntegrado) {
-		super();
+			String graficoIntegrado, int idDadosProcessador) {
 		this.idProcessador = idProcessador;
 		this.nomeFabricante = nomeFabricante;
 		this.nomeModelo = nomeModelo;
@@ -32,7 +32,18 @@ public class Processador implements Serializable {
 		this.codeName = codeName;
 		this.socket = socket;
 		this.graficoIntegrado = graficoIntegrado;
+		this.idDadosProcessador = idDadosProcessador;
 	}
+
+	public int getIdDadosProcessador() {
+		return idDadosProcessador;
+	}
+
+
+	public void setIdDadosProcessador(int idDadosProcessador) {
+		this.idDadosProcessador = idDadosProcessador;
+	}
+
 
 	public Integer getIdProcessador() {
 		return idProcessador;
@@ -124,10 +135,7 @@ public class Processador implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Processador [idProcessador=" + idProcessador + ", nomeFabricante=" + nomeFabricante + ", nomeModelo="
-				+ nomeModelo + ", nroCores=" + nroCores + ", nroThreads=" + nroThreads + ", tdp=" + tdp
-				+ ", frequencia=" + frequencia + ", turboFrequencia=" + turboFrequencia + ", codeName=" + codeName
-				+ ", socket=" + socket + ", graficoIntegrado=" + graficoIntegrado + "]";
+		return idProcessador + ": " + nomeFabricante + " " + nomeModelo + " " + nroCores + " cores / " + nroThreads + " threads";
 	}
 	
 }

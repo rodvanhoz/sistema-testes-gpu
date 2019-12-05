@@ -4,6 +4,7 @@ import db.DB;
 import models.entities.dao.impl.CaracteristicasGraficasDaoJDBC;
 import models.entities.dao.impl.ConfiguracoesDaoJDBC;
 import models.entities.dao.impl.ConfiguracoesJogosDaoJDBC;
+import models.entities.dao.impl.DadosProcessadorDaoJDBC;
 import models.entities.dao.impl.DadosTesteDaoJDBC;
 import models.entities.dao.impl.JogoDaoJDBC;
 import models.entities.dao.impl.PlacaDeVideoDaoJDBC;
@@ -47,5 +48,9 @@ public class DaoFactory {
 	
 	public static RenderConfigDao createRenderConfigDao() {
 		return new RenderConfigDaoJDBC(DB.getConnection());
+	}
+	
+	public static DadosProcessadorDao createDadosProcessadorDao() {
+		return new DadosProcessadorDaoJDBC(DB.getConnection());
 	}
 }
