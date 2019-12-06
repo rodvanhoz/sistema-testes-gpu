@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.sun.prism.paint.Paint;
@@ -17,13 +18,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.entities.services.ConfiguracoesJogosService;
@@ -314,16 +318,28 @@ public class DadosTesteController implements Initializable {
 	}
 	
 	public void onBtEditarAction() {
+		
+		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
+		configuracoesJogosSelected = configuracoesJogosService.findById(dadosTesteSelected.getIdConfiguracaoJogo());
+		placaDeVideoSelected = placaDeVideoService.findById(dadosTesteSelected.getIdGpu());
+		processadorSelected = processadorService.findById(dadosTesteSelected.getIdProcessador());
+		
 		LoadSeparatedScenne.loadSeparatedView("/gui/TestesEdit.fxml", 750, 650, "Editar Teste",
 				(DadosTesteController controller) -> {
 					controller.cboxConfiguracoesJogos.setItems(configuracoesJogosLista);
 					controller.cboxPlacaDeVideo.setItems(placasDeVideoLista);
 					controller.cboxProcessador.setItems(processadoresLista);
 					
+					controller.setDadosTesteSelected(dadosTesteSelected);
 					controller.setConfiguracoesJogosSelected(configuracoesJogosSelected);
 					controller.setPlacaDeVideoSelected(placaDeVideoSelected);
 					controller.setProcessadorSelected(processadorSelected);
-					controller.setDadosTesteSelected(dadosTesteSelected);
+					
+					controller.txtNomeTester.setText(dadosTesteSelected.getNomeJogo());
+					controller.txtDriverGpu.setText(dadosTesteSelected.getNomeDriverGpu());
+					controller.txtAvgFps.setText(dadosTesteSelected.getAvgFps().toString());
+					controller.txtMinFps.setText(dadosTesteSelected.getMinFps().toString());
+					controller.txtDtTeste.setText(sdf.format(dadosTesteSelected.getDtTeste()));
 					
 					controller.cboxConfiguracoesJogos.getSelectionModel().select(configuracoesJogosSelected);
 					controller.cboxPlacaDeVideo.getSelectionModel().select(placaDeVideoSelected);
@@ -339,6 +355,31 @@ public class DadosTesteController implements Initializable {
 					
 					controller.setNewOrEdit('E');
 				});
+	}
+	
+	public void onBtAtualizarAction() {
+		this.updateTableView();
+	}
+	
+	public void onBtExcluirAction() {
+		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Deletar Jogo");
+		alert.setHeaderText(null);
+		alert.setContentText("Deseja realmente excluir o jogo " + dadosTesteSelected.getNomeModeloGpu() + " - " 
+		                     + dadosTesteSelected.getNomeJogo() + "???");
+		
+		ButtonType btSim = new ButtonType("Sim");
+		ButtonType btNao = new ButtonType("Não");
+		alert.getButtonTypes().setAll(btSim, btNao);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == btSim){
+		    service.remover(service.findByIdTesteGpu(dadosTesteSelected.getIdTesteGpu()));
+		} 
+
 	}
 	
 	public void onCBoxConfiguracoesJogosPressed() {
@@ -485,7 +526,7 @@ public class DadosTesteController implements Initializable {
 		service = new DadosTesteService();
 		
 		if (service == null) {
-			throw new IllegalStateException("Service estï¿½ null");
+			throw new IllegalStateException("Service está null");
 		}
 		
 		TestesGpu teste = new TestesGpu(null, 
@@ -502,18 +543,18 @@ public class DadosTesteController implements Initializable {
 			service.inserir(teste);
 		}
 		else {
-//			teste.setIdTesteGpu();
-			teste.setIdTesteGpu(dadosTesteSelected.getIdConfiguracao());
+			teste.setIdTesteGpu(dadosTesteSelected.getIdTesteGpu());
+			System.out.println(teste.toString());
 			service.atualizar(teste);
 		}
 		
-		lbTitulo.setStyle("-fx-background-color: green;");
-		lbTitulo.setText("Novo Teste - <<Salvo>>");
+//		lbTitulo.setStyle("-fx-background-color: green;");
+//		lbTitulo.setText("Novo Teste - <<Salvo>>");
 	}
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service estï¿½ null");
+			throw new IllegalStateException("Service está null");
 		}
 		
 		List<DadosTeste> lista = service.findAll();

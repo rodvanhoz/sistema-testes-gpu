@@ -432,9 +432,9 @@ public class DadosTesteDaoJDBC implements DadosTesteDao {
 		try {
 			
 			st = conn.prepareStatement("update a set a.idConfiguracaoJogo = ?, a.idGpu = ?, a.idProcessador = ?, a.nomeDriverGpu = ?, "
-					+ "a.avgFps = ?, a.minFps = ?, a.dtTeste = ?, a.nomeTester = ?) "
+					+ "a.avgFps = ?, a.minFps = ?, a.dtTeste = ?, a.nomeTester = ? "
 					+ "from TestesGpu a "
-					+ "where a.idTesteGpu = ?", Statement.NO_GENERATED_KEYS);
+					+ "where a.idTesteGpu = ?", Statement.RETURN_GENERATED_KEYS);
 			
 			st.setInt(1, testeGpu.getConfiguracaoJogo().getIdConfiguracaoJogo());
 			st.setInt(2, testeGpu.getGpu().getIdGpu());
