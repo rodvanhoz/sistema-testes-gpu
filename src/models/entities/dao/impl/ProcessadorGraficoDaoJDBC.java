@@ -247,7 +247,7 @@ public class ProcessadorGraficoDaoJDBC implements ProcessadorGraficoDao {
 			st = conn.prepareStatement("update a set a.nomeGpu = ?, a.variantGpu = ?, a.arquitetura = ?, a.fundicao = ?, "
 					+ "a.nnProcessador = ?, a.nroTransistors = ?, a.mmProcessador = ? "
 					+ "from ProcessadorGrafico a "
-					+ "where idProcessadorGrafico = ?", Statement.RETURN_GENERATED_KEYS);
+					+ "where a.idProcGrafico = ?", Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, processadorGrafico.getNomeGpu());
 			st.setString(2, processadorGrafico.getVariantGpu());

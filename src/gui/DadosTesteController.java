@@ -540,6 +540,7 @@ public class DadosTesteController implements Initializable {
 			    txtNomeTester.getText());
 	
 		if (this.NewOrEdit == 'N') {
+			System.out.println(teste.toString());
 			service.inserir(teste);
 		}
 		else {

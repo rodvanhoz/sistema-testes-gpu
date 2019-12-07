@@ -479,7 +479,7 @@ public class DadosTesteDaoJDBC implements DadosTesteDao {
 			
 			st = conn.prepareStatement("delete a "
 					+ "from TestesGpu a "
-					+ "where a.idTesteGpu = ?", Statement.NO_GENERATED_KEYS);
+					+ "where a.idTesteGpu = ?", Statement.RETURN_GENERATED_KEYS);
 			
 			st.setInt(1, testeGpu.getIdTesteGpu());
 			
