@@ -40,15 +40,15 @@ public class ProcessadorService {
 		return dao.findByIdProcessadores(idProcessador);
 	}
 
-	public void inserir(Processador processador) {
+	public void inserir(Processadores processador) {
 		dao.inserir(processador);
 	}
 	
-	public void atualizar(Processador processador) {
+	public void atualizar(Processadores processador) {
 		dao.atualizar(processador);
 	}
 	
-	public void remover(Processador processador) {
+	public void remover(Processadores processador) {
 		dao.remover(processador);
 	}
 	

@@ -486,7 +486,7 @@ public class PlacaDeVideoDaoJDBC implements PlacaDeVideoDao {
 	}
 
 	@Override
-	public void alterar(Gpus gpu) {
+	public void atualizar(Gpus gpu) {
 		
 		PreparedStatement st = null;
 		
@@ -547,7 +547,7 @@ public class PlacaDeVideoDaoJDBC implements PlacaDeVideoDao {
 		
 		try {
 			
-			st = conn.prepareStatement("delete a"
+			st = conn.prepareStatement("delete a "
 					+ "from Gpus a "
 					+ "where a.idGpu = ?", Statement.RETURN_GENERATED_KEYS);
 			

@@ -3,11 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gui.util.Constraints;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.entities.services.CaracteristicasGraficasService;
@@ -148,13 +146,13 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				txtCudaCores.getText(), 
 				txtShaderModel.getText());
 		
-		System.out.println(caracGraficasSelected);
-		
 		if (caracGraficasSelected != null) {
 			caracGraficas.setIdCaracGrafica(caracGraficasSelected.getIdCaracGrafica());
+			System.out.println(caracGraficasSelected);
 			caracGraficasService.atualizar(caracGraficas);
 		}
 		else {
+			System.out.println(caracGraficasSelected);
 			caracGraficasService.inserir(caracGraficas);
 		}
 
@@ -174,13 +172,13 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				Integer.parseInt(txtTensorCores.getText()), 
 				Integer.parseInt(txtRtCores.getText()));
 		
-		System.out.println(renderConfigSelected);
-		
 		if (renderConfigSelected != null) {
 			renderConfig.setIdRenderConfig(renderConfigSelected.getIdRenderConfig());
+			System.out.println(renderConfigSelected);
 			renderConfigService.atualizar(renderConfig);
 		}
 		else {
+			System.out.println(renderConfigSelected);
 			renderConfigService.inserir(renderConfig);
 		}
 
@@ -199,13 +197,13 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				Double.parseDouble(txtNroTransistores.getText()), 
 				Integer.parseInt(txtTamanhoChip.getText()));
 		
-		System.out.println(procGraficoSelected);
-		
 		if (procGraficoSelected != null) {
 			procGrafico.setIdProcGrafico(procGraficoSelected.getIdProcGrafico());
+			System.out.println(procGraficoSelected);
 			procGraficoService.atualizar(procGrafico);
 		}
 		else {
+			System.out.println(procGraficoSelected);
 			procGraficoService.inserir(procGrafico);
 		}
 		

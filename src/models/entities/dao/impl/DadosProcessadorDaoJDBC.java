@@ -38,7 +38,7 @@ public class DadosProcessadorDaoJDBC implements DadosProcessadorDao {
 						rs.getString("foundry"), 
 						rs.getInt("processSize"), 
 						rs.getDouble("transistors"), 
-						rs.getString("packag"), 
+						rs.getString("package"), 
 						rs.getDouble("tCaseMax"));
 
 				lista.add(dt);
@@ -131,7 +131,7 @@ public class DadosProcessadorDaoJDBC implements DadosProcessadorDao {
 		
 		try {
 			
-			st = conn.prepareStatement("update a set a.socket = ?, a.foundry = ?, a.processSize = ?, a.transistors = ?, a.package = ?, a.tCaseMax = ?"
+			st = conn.prepareStatement("update a set a.socket = ?, a.foundry = ?, a.processSize = ?, a.transistors = ?, a.package = ?, a.tCaseMax = ? "
 					+ "from DadosProcessador a "
 					+ "where a.idDadosProcessador = ?", Statement.RETURN_GENERATED_KEYS);
 			

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -18,7 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -429,14 +432,46 @@ public class PlacaDeVideoController implements Initializable {
 					Double.parseDouble(txtMemoryClockEfective.getText()), 
 					txtBusInterface.getText(), 
 					sdf.parse(txtDtLancto.getText()));
-			
-			service.inserir(gpu);
+
+			if (newOrEdit == 'N') {
+				System.out.println(gpu.toString());
+				service.inserir(gpu);
+			}
+			else {
+				gpu.setIdGpu(gpuSelected.getIdGpu());;
+				System.out.println(gpu.toString());
+				service.atualizar(gpu);
+			}
+
 			
 			Stage stage = (Stage) btCancelar.getScene().getWindow();
 			stage.close();
 		}
 		
 	}
+	
+	public void onBtExcluirAction() {
+		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Deletar Jogo");
+		alert.setHeaderText(null);
+		alert.setContentText("Deseja realmente excluir a Placa de Video " + gpuSelected.getIdGpu() + ": " 
+		                     + gpuSelected.getNomeFabricante() + " - " 
+		                     + gpuSelected.getNomeModelo() + "???");
+		
+		ButtonType btSim = new ButtonType("Sim");
+		ButtonType btNao = new ButtonType("Não");
+		alert.getButtonTypes().setAll(btSim, btNao);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == btSim){
+		    service.remover(gpuSelected);
+		} 
+
+	}
+
 	
 	// edit
 
@@ -555,17 +590,19 @@ public class PlacaDeVideoController implements Initializable {
 	}
 
 	public void onBtEditarCaracGraficaAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar Característica Gráfica",
-				(PlacaDeVideoCaracsController controller) -> {
-					controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
-					controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
-					controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
-					controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
-					controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
-					controller.txtShaderModel.setText(caracGraficasSelected.getShaderModel());
-					controller.setCaracGraficasSelected(caracGraficasSelected);
-					controller.setNewOrEdit('E');
-				});
+		if (caracGraficasSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar Característica Gráfica",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
+						controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
+						controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
+						controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
+						controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
+						controller.txtShaderModel.setText(caracGraficasSelected.getShaderModel());
+						controller.setCaracGraficasSelected(caracGraficasSelected);
+						controller.setNewOrEdit('E');
+					});
+		}
 	}
 
 	public void onBtNovoProcessadorGraficoAction() {
@@ -576,18 +613,20 @@ public class PlacaDeVideoController implements Initializable {
 	}
 
 	public void onBtEditarProcessadorGraficoAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador Gráfico",
-				(PlacaDeVideoCaracsController controller) -> {
-					controller.txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
-					controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
-					controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
-					controller.txtFundicao.setText(procGraficoSelected.getFundicao());
-					controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
-					controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
-					controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
-					controller.setProcGraficoSelected(procGraficoSelected);
-					controller.setNewOrEdit('E');
-				});
+		if (procGraficoSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador Gráfico",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
+						controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
+						controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
+						controller.txtFundicao.setText(procGraficoSelected.getFundicao());
+						controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
+						controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
+						controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
+						controller.setProcGraficoSelected(procGraficoSelected);
+						controller.setNewOrEdit('E');
+					});
+		}
 	}
 	
 	public void onBtNovoRenderConfigAction() {
@@ -601,19 +640,21 @@ public class PlacaDeVideoController implements Initializable {
 	}
 
 	public void onBtEditarRenderConfigAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Editar Render Config",
-				(PlacaDeVideoCaracsController controller) -> {
-					controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
-					controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
-					controller.txtROPs.setText(renderConfigSelected.getRops().toString());
-					controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
-					controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
-					controller.txtL2Cache.setText(renderConfigSelected.getL2Cache().toString());
-					controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
-					controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
-					controller.setRenderConfigSelected(renderConfigSelected);
-					controller.setNewOrEdit('E');
-				});
+		if (renderConfigSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Editar Render Config",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
+						controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
+						controller.txtROPs.setText(renderConfigSelected.getRops().toString());
+						controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
+						controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
+						controller.txtL2Cache.setText(renderConfigSelected.getL2Cache().toString());
+						controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
+						controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
+						controller.setRenderConfigSelected(renderConfigSelected);
+						controller.setNewOrEdit('E');
+					});
+		}
 	}
 	
 	// getters / setters

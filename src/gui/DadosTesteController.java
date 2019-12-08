@@ -358,6 +358,7 @@ public class DadosTesteController implements Initializable {
 	}
 	
 	public void onBtAtualizarAction() {
+		System.out.println("Atualizando Grid...");
 		this.updateTableView();
 	}
 	

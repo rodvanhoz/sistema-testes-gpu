@@ -16,7 +16,7 @@ public interface PlacaDeVideoDao {
 	PlacaDeVideo findById(int idGpu);
 	Gpus findByIdGpu(int idGpu);
 	void inserir(Gpus gpu);
-	void alterar(Gpus gpu);
+	void atualizar(Gpus gpu);
 	void remover(Gpus gpu);
 	
 }

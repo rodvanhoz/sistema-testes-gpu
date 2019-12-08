@@ -15,8 +15,8 @@ public interface ProcessadorDao {
 	List<Processador> findByGraficoIntegrado(Gpus graficoIntegrado);
 	Processador findById(int idProcessador);
 	Processadores findByIdProcessadores(int idProcessador);
-	void inserir(Processador processador);
-	void atualizar(Processador processador);
-	void remover(Processador processador);
+	void inserir(Processadores processador);
+	void atualizar(Processadores processador);
+	void remover(Processadores processador);
 
 }

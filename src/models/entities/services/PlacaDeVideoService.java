@@ -47,8 +47,8 @@ public class PlacaDeVideoService {
 		dao.inserir(gpu);
 	}
 	
-	public void alterar(Gpus gpu) {
-		dao.alterar(gpu);
+	public void atualizar(Gpus gpu) {
+		dao.atualizar(gpu);
 	}
 	
 	public void remover(Gpus gpu) {

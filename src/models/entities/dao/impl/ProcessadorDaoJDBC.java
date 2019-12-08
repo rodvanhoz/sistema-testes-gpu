@@ -1,18 +1,18 @@
 package models.entities.dao.impl;
 
-import java.security.Provider.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import db.DB;
 import db.DbException;
 import models.entities.dao.ProcessadorDao;
 import models.entities.services.DadosProcessadorService;
 import models.entities.services.PlacaDeVideoService;
-import models.entities.services.ProcessadorService;
 import models.entities.tables.DadosProcessador;
 import models.entities.tables.Gpus;
 import models.entities.tables.Processadores;
@@ -251,21 +251,176 @@ public class ProcessadorDaoJDBC implements ProcessadorDao {
 	}
 
 	@Override
-	public void inserir(Processador processador) {
-		// TODO Auto-generated method stub
+	public void inserir(Processadores processador) {
+		PreparedStatement st = null;
 		
+		DadosProcessadorService dadosProcService = new DadosProcessadorService();
+		PlacaDeVideoService gpuService = new PlacaDeVideoService();
+		
+		DadosProcessador dadosProcessador = dadosProcService.findById(processador.getDadosProcessador().getIdDadosProcessador());
+		PlacaDeVideo gpu = null;
+		
+		if (processador.getGpu() != null) {
+			gpu = gpuService.findById(processador.getGpu().getIdGpu());
+		}
+		
+		try {
+			st = conn.prepareStatement("insert into Processadores (idDadosProcessador, nomeFabricante, nomeModelo, market, released, codename, "
+					+ "generation, memorySupport, frequencia, turbofrequencia, baseClock, multiplicador, multiplDesbloqueado, "
+					+ "nroCores, nroThreads, smp, idGpu, tdp) "
+					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, dadosProcessador.getIdDadosProcessador());
+			st.setString(2, processador.getNomeFabricante());
+			st.setString(3, processador.getNomeModelo());
+			st.setString(4, processador.getMarket());
+			st.setDate(5, new java.sql.Date(processador.getReleased().getTime()));
+			st.setString(6, processador.getCodename());
+			st.setString(7, processador.getGeneration());
+			st.setString(8, processador.getMemorySupport());
+			st.setDouble(9, processador.getFrequencia());
+			st.setDouble(10, processador.getTurbofrequencia());
+			st.setDouble(11, processador.getBaseClock());
+			st.setDouble(12, processador.getMultiplicador());
+			st.setString(13, processador.getMultiplDesbloqueado());
+			st.setInt(14, processador.getNroCores());
+			st.setInt(15, processador.getNroThreads());
+			st.setInt(16, processador.getSmp());
+			st.setInt(17, (gpu != null) ? gpu.getIdGpu() : null);
+			st.setDouble(18, processador.getTdp());
+			
+			if (st.executeUpdate() > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				
+				if (rs.next()) {
+					System.out.println("Inserido! Id: " + rs.getInt(1));
+				}
+				DB.closeResultSet(rs);
+				conn.commit();
+			}
+			else {
+				try {
+					conn.rollback();
+				}
+				catch (SQLException e1) {
+					throw new DbException("Erro inexperado ao fazer o rollback: " + e1.getMessage());
+				}
+				throw new DbException("Erro inexperado ao inserir o processador");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
-	public void atualizar(Processador processador) {
-		// TODO Auto-generated method stub
+	public void atualizar(Processadores processador) {
+		PreparedStatement st = null;
 		
+		DadosProcessadorService dadosProcService = new DadosProcessadorService();
+		PlacaDeVideoService gpuService = new PlacaDeVideoService();
+		
+		DadosProcessador dadosProcessador = dadosProcService.findById(processador.getDadosProcessador().getIdDadosProcessador());
+		PlacaDeVideo gpu = null;
+		
+		if (processador.getGpu() != null) {
+			gpu = gpuService.findById(processador.getGpu().getIdGpu());
+		}
+		
+		try {
+			st = conn.prepareStatement("update a set a.idDadosProcessador = ?, a.nomeFabricante = ?, a.nomeModelo = ?, a.market = ?, "
+					+ "a.released = ?, a.codename = ?, a.generation = ?, a.memorySupport = ?, a.frequencia = ?, a.turbofrequencia = ?, "
+					+ "a.baseClock = ?, a.multiplicador = ?, a.multiplDesbloqueado = ?, a.nroCores = ?, a.nroThreads = ?, a.smp = ?, "
+					+ "a.idGpu = ?, a.tdp = ? "
+					+ "from Processadores a "
+					+ "where a.idProcessador = ?", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, dadosProcessador.getIdDadosProcessador());
+			st.setString(2, processador.getNomeFabricante());
+			st.setString(3, processador.getNomeModelo());
+			st.setString(4, processador.getMarket());
+			st.setDate(5, new java.sql.Date(processador.getReleased().getTime()));
+			st.setString(6, processador.getCodename());
+			st.setString(7, processador.getGeneration());
+			st.setString(8, processador.getMemorySupport());
+			st.setDouble(9, processador.getFrequencia());
+			st.setDouble(10, processador.getTurbofrequencia());
+			st.setDouble(11, processador.getBaseClock());
+			st.setDouble(12, processador.getMultiplicador());
+			st.setString(13, processador.getMultiplDesbloqueado());
+			st.setInt(14, processador.getNroCores());
+			st.setInt(15, processador.getNroThreads());
+			st.setInt(16, processador.getSmp());
+			st.setInt(17, (gpu != null) ? gpu.getIdGpu() : null);
+			st.setDouble(18, processador.getTdp());
+			st.setInt(19, processador.getIdProcessador());
+			
+			if (st.executeUpdate() > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				
+				if (rs.next()) {
+					System.out.println("Alterado! Id: " + processador.getIdProcessador());
+				}
+				DB.closeResultSet(rs);
+				conn.commit();
+			}
+			else {
+				try {
+					conn.rollback();
+				}
+				catch (SQLException e1) {
+					throw new DbException("Erro inexperado ao fazer o rollback: " + e1.getMessage());
+				}
+				throw new DbException("Erro inexperado ao atualizar o processador");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
-	public void remover(Processador processador) {
-		// TODO Auto-generated method stub
+	public void remover(Processadores processador) {
+		PreparedStatement st = null;
 		
+		try {
+			st = conn.prepareStatement("delete a "
+					+ "from Processadores a "
+					+ "where a.idProcessador = ?", Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, processador.getIdProcessador());
+			
+			if (st.executeUpdate() > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				
+				if (rs.next()) {
+					System.out.println("Deletado! Id: " + processador.getIdProcessador());
+				}
+				DB.closeResultSet(rs);
+				conn.commit();
+			}
+			else {
+				try {
+					conn.rollback();
+				}
+				catch (SQLException e1) {
+					throw new DbException("Erro inexperado ao fazer o rollback: " + e1.getMessage());
+				}
+				throw new DbException("Erro inexperado ao deletar o processador");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override

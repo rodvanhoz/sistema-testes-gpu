@@ -86,7 +86,7 @@ public class DadosProcessador implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DadosProcessador [idDadosProcessador=" + idDadosProcessador + ", socket=" + socket + ", foundry="
+		return idDadosProcessador + ": " + socket + ", foundry="
 				+ foundry + ", processSize=" + processSize + ", transistors=" + transistors + ", packag=" + packag
 				+ ", tCaseMax=" + tCaseMax + "]";
 	}
