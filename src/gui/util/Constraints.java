@@ -45,5 +45,9 @@ public class Constraints {
 			return "N";
 		}
 	}
+	
+	public static boolean isNumeric(String s) {  
+	    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
+	}  
 
 }

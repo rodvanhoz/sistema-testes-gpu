@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import com.sun.prism.paint.Paint;
 
 import application.Main;
+import gui.util.Alerts;
 import gui.util.ComboBoxAutoComplete;
 import gui.util.Constraints;
 import gui.util.LoadSeparatedScenne;
@@ -372,7 +373,7 @@ public class DadosTesteController implements Initializable {
 		                     + dadosTesteSelected.getNomeJogo() + "???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("N„o");
+		ButtonType btNao = new ButtonType("N√£o");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -527,7 +528,20 @@ public class DadosTesteController implements Initializable {
 		service = new DadosTesteService();
 		
 		if (service == null) {
-			throw new IllegalStateException("Service est· null");
+			throw new IllegalStateException("Service est√° null");
+		}
+		
+		if (txtAvgFps.getText() == "" || txtAvgFps.getText() == null) {
+			 Alerts.showAlert("IOException", null, "Por favor, insira um valor em AvgFPS",
+			 AlertType.WARNING);
+			return;
+		}
+		else {
+			if (!Constraints.isNumeric(txtAvgFps.getText())) {
+				 Alerts.showAlert("IOException", null, "Valor '" + txtAvgFps.getText() + "' √© inv√°lido.",
+						 AlertType.ERROR);
+				return;
+			}
 		}
 		
 		TestesGpu teste = new TestesGpu(null, 
@@ -550,13 +564,16 @@ public class DadosTesteController implements Initializable {
 			service.atualizar(teste);
 		}
 		
+		txtAvgFps.setText(null);
+		txtMinFps.setText(null);
+		
 //		lbTitulo.setStyle("-fx-background-color: green;");
 //		lbTitulo.setText("Novo Teste - <<Salvo>>");
 	}
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service est· null");
+			throw new IllegalStateException("Service est√° null");
 		}
 		
 		List<DadosTeste> lista = service.findAll();

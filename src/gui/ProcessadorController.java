@@ -290,7 +290,7 @@ public class ProcessadorController implements Initializable {
 		                     + processadorSelected.getNomeModelo() + "???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("N„o");
+		ButtonType btNao = new ButtonType("NÔøΩo");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -305,7 +305,7 @@ public class ProcessadorController implements Initializable {
 		service = new ProcessadorService();
 		
 		if (dadosProcessadorSelected == null ) {
-			Alerts.showAlert("IOException", null, "Necess·rio definir Dados Processador", 
+			Alerts.showAlert("IOException", null, "Necess√°rio definir Dados Processador", 
 					AlertType.ERROR);
 		}
 		else if (!verificaTextos()) {
@@ -425,7 +425,7 @@ public class ProcessadorController implements Initializable {
 	
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service est· null");
+			throw new IllegalStateException("Service est√° null");
 		}
 		
 		List<Processador> lista = service.findAll();
@@ -484,7 +484,7 @@ public class ProcessadorController implements Initializable {
 		}
 
 		if (txts.length() > 0) {
-			Alerts.showAlert("IOException", null, "Os campos " + txts + " est„o sem informaÁ„o", AlertType.ERROR);
+			Alerts.showAlert("IOException", null, "Os campos " + txts + " est√£o sem informa√ß√£o", AlertType.ERROR);
 			return false;
 		}
 		else {
