@@ -124,6 +124,9 @@ public class PlacaDeVideoController implements Initializable {
 	private Button btEditar;
 	
 	@FXML
+	private Button btCopiar;
+	
+	@FXML
 	private Button btAtualizar;
 	
 	@FXML
@@ -202,7 +205,7 @@ public class PlacaDeVideoController implements Initializable {
 	private Button btExcluirRenderConfig;
 	
 
-	// Processador Gráfico
+	// Processador Grï¿½fico
 	
 	@FXML
 	private ComboBox<ProcessadorGrafico> cboxProcessadorGrafico;
@@ -325,7 +328,7 @@ public class PlacaDeVideoController implements Initializable {
 	
 	
 	public void onBtNovoAction() { 
-		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de Vídeo",
+		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de VÃ­deo",
 				(PlacaDeVideoController controller) -> {
 					controller.cboxProcessadorGrafico.setItems(listaProcGrafico);
 					controller.cboxCaracGraficas.setItems(listaCaracGraficas);
@@ -342,7 +345,7 @@ public class PlacaDeVideoController implements Initializable {
 		procGraficoSelected = procGraficoService.findById(gpuSelected.getProcessadorGrafico().getIdProcGrafico());
 		renderConfigSelected = renderConfigService.findById(gpuSelected.getRenderConfig().getIdRenderConfig());
 		
-		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de Vídeo",
+		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de VÃ­deo",
 				(PlacaDeVideoController controller) -> {
 					controller.cboxProcessadorGrafico.setItems(listaProcGrafico);
 					controller.cboxCaracGraficas.setItems(listaCaracGraficas);
@@ -396,6 +399,67 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 	
+	public void onBtCopiarAction() {
+		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
+		
+		caracGraficasSelected = caracGraficasService.findById(gpuSelected.getCaracteristicasGraficas().getIdCaracGrafica());
+		procGraficoSelected = procGraficoService.findById(gpuSelected.getProcessadorGrafico().getIdProcGrafico());
+		renderConfigSelected = renderConfigService.findById(gpuSelected.getRenderConfig().getIdRenderConfig());
+		
+		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Copiar Nova Placa de VÃ­deo",
+				(PlacaDeVideoController controller) -> {
+					controller.cboxProcessadorGrafico.setItems(listaProcGrafico);
+					controller.cboxCaracGraficas.setItems(listaCaracGraficas);
+					controller.cboxRenderConfig.setItems(listaRenderConfig);
+					
+					controller.txtDirectX.setText(procGraficoSelected.getNomeGpu());
+					controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
+					controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
+					controller.txtFundicao.setText(procGraficoSelected.getFundicao());
+					controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
+					controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
+					controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
+					controller.cboxProcessadorGrafico.getSelectionModel().select(procGraficoSelected);
+					controller.setProcGraficoSelected(procGraficoSelected);
+					
+					controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
+					controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
+					controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
+					controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
+					controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
+					controller.txtTensorCores.setText(caracGraficasSelected.getShaderModel());
+					controller.cboxCaracGraficas.getSelectionModel().select(caracGraficasSelected);
+					controller.setCaracGraficasSelected(caracGraficasSelected);
+					
+					controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
+					controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
+					controller.txtROPs.setText(renderConfigSelected.getRops().toString());
+					controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
+					controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
+					controller.txtL2Cache.setText(renderConfigSelected.getL1Cache().toString());
+					controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
+					controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
+					controller.cboxRenderConfig.getSelectionModel().select(renderConfigSelected);
+					controller.setRenderConfigSelected(renderConfigSelected);
+					
+					controller.txtNomeFabricante.setText(gpuSelected.getNomeFabricante());
+					controller.txtDescricaoModelo.setText(gpuSelected.getNomeModelo());
+					controller.txtTamanhoMemoria.setText(gpuSelected.getTamMemoriaKB().toString());
+					controller.txtTipoMemoria.setText(gpuSelected.getTpMemoria());
+					controller.txtTamanhoBanda.setText(gpuSelected.getTamBanda().toString());
+					controller.txtTDP.setText(gpuSelected.getTdp().toString());
+					controller.txtGpuClock.setText(gpuSelected.getGpuClock().toString());
+					controller.txtGpuBoostClock.setText(gpuSelected.getBoostClock().toString());
+					controller.txtMemoryClock.setText(gpuSelected.getMemClock().toString());
+					controller.txtMemoryClockEfective.setText(gpuSelected.getMemClockEfetivo().toString());
+					controller.txtBusInterface.setText(gpuSelected.getBusInterface());
+					controller.txtDtLancto.setText(sdf.format(gpuSelected.getDtLancto()));
+					controller.setGpuSelected(gpuSelected);
+					
+					controller.setNewOrEdit('C');
+				});
+	}
+	
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
@@ -409,7 +473,7 @@ public class PlacaDeVideoController implements Initializable {
 	public void onBtSalvarAction() throws NumberFormatException, ParseException {
 		
 		if (procGraficoSelected == null || caracGraficasSelected == null || renderConfigSelected == null) {
-			Alerts.showAlert("IOException", null, "Necessário definir Processador Grafico / Carac. Gráficas / Render Config", 
+			Alerts.showAlert("IOException", null, "NecessÃ¡rio definir Processador Grafico / Carac. GrÃ¡ficas / Render Config", 
 					AlertType.ERROR);
 		}
 		else if (!verificaTextos()) {
@@ -433,14 +497,17 @@ public class PlacaDeVideoController implements Initializable {
 					txtBusInterface.getText(), 
 					sdf.parse(txtDtLancto.getText()));
 
-			if (newOrEdit == 'N') {
+			if (newOrEdit == 'N' || this.newOrEdit == 'C') {
 				System.out.println(gpu.toString());
 				service.inserir(gpu);
 			}
-			else {
+			else if (newOrEdit == 'E') {
 				gpu.setIdGpu(gpuSelected.getIdGpu());;
 				System.out.println(gpu.toString());
 				service.atualizar(gpu);
+			}
+			else {
+				throw new IllegalStateException("Variavel newOrEdit estÃ¡ null");
 			}
 
 			
@@ -456,12 +523,12 @@ public class PlacaDeVideoController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Deletar Jogo");
 		alert.setHeaderText(null);
-		alert.setContentText("Deseja realmente excluir a Placa de Video " + gpuSelected.getIdGpu() + ": " 
+		alert.setContentText("Deseja realmente excluir a Placa de VÃ­deo " + gpuSelected.getIdGpu() + ": " 
 		                     + gpuSelected.getNomeFabricante() + " - " 
 		                     + gpuSelected.getNomeModelo() + "???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("Não");
+		ButtonType btNao = new ButtonType("NÃ£o");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -583,7 +650,7 @@ public class PlacaDeVideoController implements Initializable {
 	}
 	
 	public void onBtNovoCaracGraficaAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Inserir Nova Característica Gráfica",
+		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Inserir Nova CaracterÃ­stica GrÃ¡fica",
 				(PlacaDeVideoCaracsController controller) -> {
 					controller.setNewOrEdit('N');
 				});
@@ -591,7 +658,7 @@ public class PlacaDeVideoController implements Initializable {
 
 	public void onBtEditarCaracGraficaAction() {
 		if (caracGraficasSelected != null) {
-			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar Característica Gráfica",
+			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar CaracterÃ­stica GrÃ¡fica",
 					(PlacaDeVideoCaracsController controller) -> {
 						controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
 						controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
@@ -606,7 +673,7 @@ public class PlacaDeVideoController implements Initializable {
 	}
 
 	public void onBtNovoProcessadorGraficoAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Inserir Novo Processador Gráfico",
+		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Inserir Novo Processador GrÃ¡fico",
 				(PlacaDeVideoCaracsController controller) -> {
 					controller.setNewOrEdit('N');
 				});
@@ -614,7 +681,7 @@ public class PlacaDeVideoController implements Initializable {
 
 	public void onBtEditarProcessadorGraficoAction() {
 		if (procGraficoSelected != null) {
-			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador Gráfico",
+			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador GrÃ¡fico",
 					(PlacaDeVideoCaracsController controller) -> {
 						controller.txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
 						controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
@@ -701,7 +768,7 @@ public class PlacaDeVideoController implements Initializable {
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 		
 		List<PlacaDeVideo> lista = service.findAll();
@@ -761,7 +828,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 		 
 		if (txts.length() > 0) {
-			Alerts.showAlert("IOException", null, "Os campos " + txts + " estão sem informação", AlertType.ERROR);
+			Alerts.showAlert("IOException", null, "Os campos " + txts + " estÃ£o sem informaÃ§Ã£o", AlertType.ERROR);
 			return false;
 		}
 		else {

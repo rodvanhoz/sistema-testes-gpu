@@ -57,6 +57,9 @@ public class JogoController implements Initializable {
 
 	@FXML
 	private Button btEditar;
+	
+	@FXML
+	private Button btCopiar;
 
 	@FXML
 	private Button btAtualizar;
@@ -109,7 +112,7 @@ public class JogoController implements Initializable {
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 
 		List<Jogos> lista = service.findAll();
@@ -153,6 +156,23 @@ public class JogoController implements Initializable {
 		}
 	}
 
+	public void onBtCopiarAction() {
+		jogoSelected = tvJogo.getSelectionModel().getSelectedItem();
+
+		if (jogoSelected != null) {
+			System.out.println(jogoSelected.toString());
+
+			LoadSeparatedScenne.loadSeparatedView("/gui/JogosEdit.fxml", 400, 130, "Copiar Jogo",
+					(JogoController controller) -> {
+						controller.setJogoService(new JogoService());
+						controller.txtNomeJogo.setText(jogoSelected.getNomeJogo());
+						controller.txtDtLancto.setText(sdf.format(jogoSelected.getDtLancto()));
+						controller.setJogoSelected(this.jogoSelected);
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
+	
 	public void onBtExcluirAction() {
 		jogoSelected = tvJogo.getSelectionModel().getSelectedItem();
 
@@ -162,7 +182,7 @@ public class JogoController implements Initializable {
 		alert.setContentText("Deseja realmente excluir o jogo " + jogoSelected.getNomeJogo() + "???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("Não");
+		ButtonType btNao = new ButtonType("NÃ£o");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -180,7 +200,7 @@ public class JogoController implements Initializable {
 	public void onBtSalvarAction() {
 		service = new JogoService();
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estÃ¡ null");
 		}
 
 		try {
@@ -188,13 +208,13 @@ public class JogoController implements Initializable {
 					.println("Nome: " + txtNomeJogo.getText() + " - Data Lancto: " + sdf.parse(txtDtLancto.getText()));
 			Jogos jogo = new Jogos(null, txtNomeJogo.getText(), sdf.parse(txtDtLancto.getText()));
 
-			if (this.newOrEdit == 'N') {
+			if (this.newOrEdit == 'N' || this.newOrEdit == 'C') {
 				service.inserir(jogo);
 			} else if (this.newOrEdit == 'E') {
 				jogo.setIdJogo(this.jogoSelected.getIdJogo());
 				service.atualizar(jogo);
 			} else {
-				throw new IllegalStateException("Variavel newOrEdit esta null");
+				throw new IllegalStateException("Variavel newOrEdit estÃ¡ null");
 			}
 
 			Stage stage = (Stage) btSalvar.getScene().getWindow();

@@ -92,6 +92,9 @@ public class ProcessadorController implements Initializable {
 
 	@FXML
 	private Button btEditar;
+	
+	@FXML
+	private Button btCopiar;
 
 	@FXML
 	private Button btAtualizar;
@@ -274,6 +277,57 @@ public class ProcessadorController implements Initializable {
 				});
 	}
 	
+	public void onBtCopiarAction() {
+		
+		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
+		dadosProcessadorSelected = dadosProcessadorService.findById(processadorSelected.getIdDadosProcessador());
+		
+		Processadores proc = service.findByIdProcessadores(processadorSelected.getIdProcessador());
+		Gpus graficoIntegrado = (proc.getGpu() != null) ? proc.getGpu() : null; 
+		
+		gpuSelected = gpuService.findById(graficoIntegrado.getIdGpu());
+		
+		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadoresEdit.fxml", 660, 460, "Editar Processador",
+				(ProcessadorController controller) -> {
+					controller.cboxDadosProcessador.setItems(listaDadosProcessador);
+					controller.cboxGraficoIntegrado.setItems(listaGpus);
+					
+					controller.setProcessadorSelected(processadorSelected);
+					controller.setDadosProcessadorSelected(dadosProcessadorSelected);
+					
+					controller.cboxDadosProcessador.getSelectionModel().select(dadosProcessadorSelected);
+					controller.cboxDadosProcessador.getEditor().setText(dadosProcessadorSelected.toString());
+					controller.cboxGraficoIntegrado.getSelectionModel().select(gpuSelected);
+					controller.cboxGraficoIntegrado.getEditor().setText(gpuSelected.toString());
+					
+					controller.txtSocket.setText(dadosProcessadorSelected.getSocket());
+					controller.txtFoundry.setText(dadosProcessadorSelected.getFoundry());
+					controller.txtTamanhoChip.setText(dadosProcessadorSelected.getProcessSize().toString());
+					controller.txtTransistors.setText(dadosProcessadorSelected.getTransistors().toString());
+					controller.txtPackage.setText(dadosProcessadorSelected.getPackag());
+					controller.txtTCaseMax.setText(dadosProcessadorSelected.gettCaseMax().toString());
+					
+					controller.txtNomeFabricante.setText(proc.getNomeFabricante());
+					controller.txtDescrModelo.setText(proc.getNomeModelo());
+					controller.txtMarket.setText(proc.getMarket());
+					controller.txtReleased.setText(sdf.format(proc.getReleased()));
+					controller.txtCodename.setText(proc.getCodename());
+					controller.txtGeneration.setText(proc.getGeneration());
+					controller.txtMemorySupport.setText(proc.getMemorySupport());
+					controller.txtFrequencia.setText(proc.getFrequencia().toString());
+					controller.txtTurboFrequencia.setText(proc.getTurbofrequencia().toString());
+					controller.txtBaseClock.setText(proc.getBaseClock().toString());
+					controller.txtMultiplicador.setText(proc.getMultiplicador().toString());
+					controller.txtEhDesbloqueado.setText(proc.getMultiplDesbloqueado());
+					controller.txtCores.setText(proc.getNroCores().toString());
+					controller.txtThreads.setText(proc.getNroThreads().toString());
+					controller.txtSMP.setText(proc.getSmp().toString());
+					controller.txtTDP.setText(proc.getTdp().toString());
+					
+					controller.setNewOrEdit('C');
+				});
+	}
+	
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
@@ -290,7 +344,7 @@ public class ProcessadorController implements Initializable {
 		                     + processadorSelected.getNomeModelo() + "???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("N�o");
+		ButtonType btNao = new ButtonType("Não");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -332,14 +386,17 @@ public class ProcessadorController implements Initializable {
 					(gpuSelected != null) ? gpuService.findByIdGpu(gpuSelected.getIdGpu()) : null, 
 					Double.parseDouble(txtTDP.getText()));
 			
-			if (newOrEdit == 'N') {
+			if (newOrEdit == 'N' || this.newOrEdit == 'C') {
 				System.out.println(proc.toString());
 				service.inserir(proc);
 			}
-			else {
+			else if (newOrEdit == 'E') {
 				proc.setIdProcessador(processadorSelected.getIdProcessador());
 				System.out.println(proc.toString());
 				service.atualizar(proc);
+			}
+			else {
+				throw new IllegalStateException("Variavel newOrEdit está null");
 			}
 			
 			Stage stage = (Stage) btSalvar.getScene().getWindow();

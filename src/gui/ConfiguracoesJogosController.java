@@ -104,6 +104,9 @@ public class ConfiguracoesJogosController implements Initializable {
 	private Button btEditar;
 	
 	@FXML
+	private Button btCopiar;
+	
+	@FXML
 	private Button btAtualizar;
 	
 	@FXML
@@ -133,7 +136,7 @@ public class ConfiguracoesJogosController implements Initializable {
 	
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 		
 		List<ConfiguracoesJogosW> lista = service.findAll();
@@ -163,7 +166,7 @@ public class ConfiguracoesJogosController implements Initializable {
 	}
 	
 	public void onBtNovoAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Inserir Nova Relação Configuração / Jogo",
+		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Inserir Nova RelaÃ§Ã£o ConfiguraÃ§Ã£o / Jogo",
 				(ConfiguracoesJogosController controller) -> {
 					controller.cboxConfiguracoes.setItems(configuracoesList);
 					controller.cboxJogos.setItems(jogosList);
@@ -178,7 +181,7 @@ public class ConfiguracoesJogosController implements Initializable {
 		if (configuracaoJogosSelected != null) {
 			System.out.println(configuracaoJogosSelected.toString());
 			
-			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Editar Relação Configuração / Jogo",
+			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Editar RelaÃ§Ã£o ConfiguraÃ§Ã£o / Jogo",
 					(ConfiguracoesJogosController controller) -> {
 						controller.setConfiguracaoJogoSelected(configuracaoJogosSelected);
 						controller.cboxJogos.setItems(jogosList);
@@ -192,6 +195,26 @@ public class ConfiguracoesJogosController implements Initializable {
 		}
 	}
 	
+	public void onBtCopiarAction() {
+		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
+		
+		if (configuracaoJogosSelected != null) {
+			System.out.println(configuracaoJogosSelected.toString());
+			
+			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Copiar RelaÃ§Ã£o ConfiguraÃ§Ã£o / Jogo",
+					(ConfiguracoesJogosController controller) -> {
+						controller.setConfiguracaoJogoSelected(configuracaoJogosSelected);
+						controller.cboxJogos.setItems(jogosList);
+						controller.cboxJogos.getSelectionModel().select(jogoService.findById(configuracaoJogosSelected.getIdJogo()));
+						controller.cboxJogos.getSelectionModel().select(jogosList.indexOf(jogoService.findById(configuracaoJogosSelected.getIdJogo())));
+						controller.cboxConfiguracoes.getSelectionModel().select(configuracaoService.findById(configuracaoJogosSelected.getIdConfiguracao()));
+						controller.cboxConfiguracoes.setItems(configuracoesList);
+						controller.cboxConfiguracoes.getSelectionModel().select(configuracoesList.indexOf(configuracaoService.findById(configuracaoJogosSelected.getIdConfiguracaoJogo())));
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
+	
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
@@ -201,15 +224,15 @@ public class ConfiguracoesJogosController implements Initializable {
 		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Deletar Configuração de Jogo");
+		alert.setTitle("Deletar ConfiguraÃ§Ã£o de Jogo");
 		alert.setHeaderText(null);
-		alert.setContentText("Deseja realmente excluir a Relação Jogo / Configuração de jogo " 
+		alert.setContentText("Deseja realmente excluir a RelaÃ§Ã£o Jogo / ConfiguraÃ§Ã£o de jogo " 
 		        + configuracaoJogosSelected.getNomeJogo() + " - " 
 		        + configuracaoJogosSelected.getResolucaoAbrev().toString() + "p - "
 				+ configuracaoJogosSelected.getQualidadeGrafica() + " ???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("Não");
+		ButtonType btNao = new ButtonType("NÃ£o");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -223,31 +246,15 @@ public class ConfiguracoesJogosController implements Initializable {
 	public void onBtSalvarAction() {
 		service = new ConfiguracoesJogosService();
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estÃ¡ null");
 		}
-		
-//		Jogos j = new Jogos(cboxJogos.getSelectionModel().getSelectedItem().getIdJogo(),
-//				cboxJogos.getSelectionModel().getSelectedItem().getNomeJogo(),
-//				cboxJogos.getSelectionModel().getSelectedItem().getDtLancto());
-//		
-//		Configuracoes conf = new Configuracoes(cboxConfiguracoes.getSelectionModel().getSelectedItem().getIdConfiguracao(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getResolucaoAbrev(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getResolucaoDetalhe(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getApi(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getQualidadeGrafica(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getSsao(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getFxaa(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getTaa(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getRt(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getAa(), 
-//				cboxConfiguracoes.getSelectionModel().getSelectedItem().getNVidiaTec());
 		
 		Jogos j = jogoService.findById(Integer.parseInt(cboxJogos.getEditor().getText().split("-")[0].trim()));
 		Configuracoes conf = configuracaoService.findById(Integer.parseInt(cboxConfiguracoes.getEditor().getText().split("-")[0].trim()));
 
 		ConfiguracoesJogos c = new ConfiguracoesJogos(null, j, conf);
 		
-		if (this.newOrEdit == 'N') {
+		if (this.newOrEdit == 'N' || this.newOrEdit == 'C') {
 			System.out.println(c.toString());
 			service.inserir(c);
 		} else if (this.newOrEdit == 'E') {

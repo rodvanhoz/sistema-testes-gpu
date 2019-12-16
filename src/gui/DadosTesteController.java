@@ -121,6 +121,9 @@ public class DadosTesteController implements Initializable {
 	private Button btEditar;
 	
 	@FXML
+	private Button btCopiar;
+	
+	@FXML
 	private Button btAtualizar;
 	
 	@FXML
@@ -358,6 +361,46 @@ public class DadosTesteController implements Initializable {
 				});
 	}
 	
+	public void onBtCopiarAction() {
+		
+		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
+		configuracoesJogosSelected = configuracoesJogosService.findById(dadosTesteSelected.getIdConfiguracaoJogo());
+		placaDeVideoSelected = placaDeVideoService.findById(dadosTesteSelected.getIdGpu());
+		processadorSelected = processadorService.findById(dadosTesteSelected.getIdProcessador());
+		
+		LoadSeparatedScenne.loadSeparatedView("/gui/TestesEdit.fxml", 750, 650, "Copiar Teste",
+				(DadosTesteController controller) -> {
+					controller.cboxConfiguracoesJogos.setItems(configuracoesJogosLista);
+					controller.cboxPlacaDeVideo.setItems(placasDeVideoLista);
+					controller.cboxProcessador.setItems(processadoresLista);
+					
+					controller.setDadosTesteSelected(dadosTesteSelected);
+					controller.setConfiguracoesJogosSelected(configuracoesJogosSelected);
+					controller.setPlacaDeVideoSelected(placaDeVideoSelected);
+					controller.setProcessadorSelected(processadorSelected);
+					
+					controller.txtNomeTester.setText(dadosTesteSelected.getNomeJogo());
+					controller.txtDriverGpu.setText(dadosTesteSelected.getNomeDriverGpu());
+					controller.txtAvgFps.setText(dadosTesteSelected.getAvgFps().toString());
+					controller.txtMinFps.setText(dadosTesteSelected.getMinFps().toString());
+					controller.txtDtTeste.setText(sdf.format(dadosTesteSelected.getDtTeste()));
+					
+					controller.cboxConfiguracoesJogos.getSelectionModel().select(configuracoesJogosSelected);
+					controller.cboxPlacaDeVideo.getSelectionModel().select(placaDeVideoSelected);
+					controller.cboxProcessador.getSelectionModel().select(processadorSelected);
+					
+					controller.cboxConfiguracoesJogos.getEditor().setText(configuracoesJogosSelected.toString());
+					controller.cboxPlacaDeVideo.getEditor().setText(placaDeVideoSelected.toString());
+					controller.cboxProcessador.getEditor().setText(processadorSelected.toString());
+					
+					controller.onCBoxConfiguracoesJogosAction();
+					controller.onCBoxPlacaDeVideoAction();
+					controller.onCBoxProcessadorAction();
+					
+					controller.setNewOrEdit('C');
+				});
+	}
+	
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
@@ -512,11 +555,6 @@ public class DadosTesteController implements Initializable {
 		
 		atualiazarComboBox();
 		
-//		cboxPlacaDeVideo.getEditor().textProperty().addListener(new ChangeListener<String>() {
-//		    
-//		    }
-//		});
-//
 	}
 	
 	public void onBtCancelarAction() {
@@ -554,21 +592,21 @@ public class DadosTesteController implements Initializable {
 			    sdf.parse(txtDtTeste.getText()), 
 			    txtNomeTester.getText());
 	
-		if (this.NewOrEdit == 'N') {
+		if (this.NewOrEdit == 'N' || this.NewOrEdit == 'C') {
 			System.out.println(teste.toString());
 			service.inserir(teste);
 		}
-		else {
+		else if (this.NewOrEdit == 'E') {
 			teste.setIdTesteGpu(dadosTesteSelected.getIdTesteGpu());
 			System.out.println(teste.toString());
 			service.atualizar(teste);
+		} else {
+			throw new IllegalStateException("Variavel newOrEdit está null");
 		}
 		
 		txtAvgFps.setText(null);
 		txtMinFps.setText(null);
 		
-//		lbTitulo.setStyle("-fx-background-color: green;");
-//		lbTitulo.setText("Novo Teste - <<Salvo>>");
 	}
 
 	public void updateTableView() {

@@ -82,6 +82,9 @@ public class ConfiguracoesController implements Initializable {
 
 	@FXML
 	private Button btEditar;
+	
+	@FXML
+	private Button btCopiar;
 
 	@FXML
 	private Button btAtualizar;
@@ -153,7 +156,7 @@ public class ConfiguracoesController implements Initializable {
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estï¿½ null");
 		}
 		
 		List<Configuracoes> lista = service.findAll();
@@ -161,7 +164,7 @@ public class ConfiguracoesController implements Initializable {
 	}
 	
 	public void onBtNovoAction() {
-		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Inserir Nova Configuração",
+		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Inserir Nova ConfiguraÃ§Ã£o",
 				(ConfiguracoesController controller) -> {
 					controller.setNewOrEdit('N');
 				});
@@ -173,7 +176,7 @@ public class ConfiguracoesController implements Initializable {
 		if (configuracaoSelected != null) {
 			System.out.println(configuracaoSelected.toString());
 
-			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Editar Nova Configuração",
+			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Editar Nova ConfiguraÃ§Ã£o",
 					(ConfiguracoesController controller) -> {
 						controller.setConfiguracoesService(new ConfiguracoesService());
 						controller.txtResolucao.setText(configuracaoSelected.getResolucaoDetalhe());
@@ -191,18 +194,43 @@ public class ConfiguracoesController implements Initializable {
 					});
 		}
 	}
+	
+	public void onBtCopiarAction() {
+		configuracaoSelected = tvConfiguracoes.getSelectionModel().getSelectedItem();
+
+		if (configuracaoSelected != null) {
+			System.out.println(configuracaoSelected.toString());
+
+			LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Copiar Nova ConfiguraÃ§Ã£o",
+					(ConfiguracoesController controller) -> {
+						controller.setConfiguracoesService(new ConfiguracoesService());
+						controller.txtResolucao.setText(configuracaoSelected.getResolucaoDetalhe());
+						controller.txtResolucaoAbrev.setText(configuracaoSelected.getResolucaoAbrev().toString());
+						controller.txtApi.setText(configuracaoSelected.getApi());
+						controller.txtQualidadeGrafica.setText(configuracaoSelected.getQualidadeGrafica());
+						controller.txtAaliasing.setText(configuracaoSelected.getAa());
+						controller.cbSsao.setSelected(Constraints.isChecked(configuracaoSelected.getSsao()));
+						controller.cbFxaa.setSelected(Constraints.isChecked(configuracaoSelected.getFxaa()));
+						controller.cbTaa.setSelected(Constraints.isChecked(configuracaoSelected.getTaa()));
+						controller.cbRt.setSelected(Constraints.isChecked(configuracaoSelected.getRt()));
+						controller.cbNVidiaTec.setSelected(Constraints.isChecked(configuracaoSelected.getNVidiaTec()));
+						controller.setConfiguracaoSelected(this.configuracaoSelected);
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
 
 	public void onBtExcluirAction() {
 		configuracaoSelected = tvConfiguracoes.getSelectionModel().getSelectedItem();
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Deletar Configuração de Jogo");
+		alert.setTitle("Deletar ConfiguraÃ§Ã£o de Jogo");
 		alert.setHeaderText(null);
-		alert.setContentText("Deseja realmente excluir a configuração de jogo " + configuracaoSelected.getResolucaoAbrev().toString() + "p - "
+		alert.setContentText("Deseja realmente excluir a configuraÃ§Ã£o de jogo " + configuracaoSelected.getResolucaoAbrev().toString() + "p - "
 				+ configuracaoSelected.getQualidadeGrafica() + " ???");
 		
 		ButtonType btSim = new ButtonType("Sim");
-		ButtonType btNao = new ButtonType("Não");
+		ButtonType btNao = new ButtonType("NÃ£o");
 		alert.getButtonTypes().setAll(btSim, btNao);
 
 		Optional<ButtonType> result = alert.showAndWait();
@@ -220,7 +248,7 @@ public class ConfiguracoesController implements Initializable {
 	public void onBtSalvarAction() {
 		service = new ConfiguracoesService();
 		if (service == null) {
-			throw new IllegalStateException("Service está null");
+			throw new IllegalStateException("Service estÃ¡ null");
 		}
 
 		System.out.println("ResolucaoAbrev: " + txtResolucaoAbrev.getText() + " - Q. Grafica: " + txtQualidadeGrafica.getText());
@@ -237,13 +265,13 @@ public class ConfiguracoesController implements Initializable {
 				txtAaliasing.getText(), 
 				Constraints.isSelected(cbNVidiaTec.isSelected()));
 		
-		if (this.newOrEdit == 'N') {
+		if (this.newOrEdit == 'N' || this.newOrEdit == 'C') {
 			service.inserir(configuracao);
 		} else if (this.newOrEdit == 'E') {
 			configuracao.setIdConfiguracao(this.configuracaoSelected.getIdConfiguracao());
 			service.atualizar(configuracao);
 		} else {
-			throw new IllegalStateException("Variavel newOrEdit esta null");
+			throw new IllegalStateException("Variavel newOrEdit estÃ¡ null");
 		}
 
 		Stage stage = (Stage) btSalvar.getScene().getWindow();
