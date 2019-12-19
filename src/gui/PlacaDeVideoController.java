@@ -161,6 +161,9 @@ public class PlacaDeVideoController implements Initializable {
 
 	@FXML
 	private Button btEditarCaracGrafica;
+	
+	@FXML
+	private Button btCopiarCaracGrafica;
 
 	@FXML
 	private Button btExcluirCaracGrafica;
@@ -202,6 +205,9 @@ public class PlacaDeVideoController implements Initializable {
 	private Button btEditarRenderConfig;
 	
 	@FXML
+	private Button btCopiarRenderConfig;
+	
+	@FXML
 	private Button btExcluirRenderConfig;
 	
 
@@ -236,6 +242,9 @@ public class PlacaDeVideoController implements Initializable {
 
 	@FXML
 	private Button btEditarProcessadorGrafico;
+	
+	@FXML
+	private Button btCopiarProcessadorGrafico;
 
 	@FXML
 	private Button btExcluirProcessadorGrafico;
@@ -672,6 +681,22 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 
+	public void onBtCopiarCaracGraficaAction() {
+		if (caracGraficasSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Copiar Característica Gráfica",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtDirectX.setText(caracGraficasSelected.getDirectX());
+						controller.txtOpenGL.setText(caracGraficasSelected.getOpenGL());
+						controller.txtOpenCL.setText(caracGraficasSelected.getOpenCL());
+						controller.txtVulkan.setText(caracGraficasSelected.getVulkan());
+						controller.txtCudaCores.setText(caracGraficasSelected.getCuda());
+						controller.txtShaderModel.setText(caracGraficasSelected.getShaderModel());
+						controller.setCaracGraficasSelected(caracGraficasSelected);
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
+	
 	public void onBtNovoProcessadorGraficoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Inserir Novo Processador Gráfico",
 				(PlacaDeVideoCaracsController controller) -> {
@@ -695,7 +720,24 @@ public class PlacaDeVideoController implements Initializable {
 					});
 		}
 	}
-	
+
+	public void onBtCopiarProcessadorGraficoAction() {
+		if (procGraficoSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Copiar Processador Gráfico",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtNomeGpu.setText(procGraficoSelected.getNomeGpu());
+						controller.txtVariantGpu.setText(procGraficoSelected.getVariantGpu());
+						controller.txtArquitetura.setText(procGraficoSelected.getArquitetura());
+						controller.txtFundicao.setText(procGraficoSelected.getFundicao());
+						controller.txtLitografia.setText(procGraficoSelected.getNnProcessador().toString());
+						controller.txtNroTransistores.setText(procGraficoSelected.getNroTransistors().toString());
+						controller.txtTamanhoChip.setText(procGraficoSelected.getMmProcessador().toString());
+						controller.setProcGraficoSelected(procGraficoSelected);
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
+
 	public void onBtNovoRenderConfigAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Inserir Novo Render Config",
 				(PlacaDeVideoCaracsController controller) -> {
@@ -723,7 +765,25 @@ public class PlacaDeVideoController implements Initializable {
 					});
 		}
 	}
-	
+
+	public void onBtCopiarRenderConfigAction() {
+		if (renderConfigSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Copiar Render Config",
+					(PlacaDeVideoCaracsController controller) -> {
+						controller.txtShadingUnits.setText(renderConfigSelected.getShadingUnits().toString());
+						controller.txtTMUs.setText(renderConfigSelected.getTmus().toString());
+						controller.txtROPs.setText(renderConfigSelected.getRops().toString());
+						controller.txtSmCount.setText(renderConfigSelected.getSmCount().toString());
+						controller.txtL1Cache.setText(renderConfigSelected.getL1Cache().toString());
+						controller.txtL2Cache.setText(renderConfigSelected.getL2Cache().toString());
+						controller.txtTensorCores.setText(renderConfigSelected.getTensorCores().toString());
+						controller.txtRtCores.setText(renderConfigSelected.getRtCores().toString());
+						controller.setRenderConfigSelected(renderConfigSelected);
+						controller.setNewOrEdit('C');
+					});
+		}
+	}
+
 	// getters / setters
 	
 	public char getNewOrEdit() {

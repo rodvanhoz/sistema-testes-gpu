@@ -87,7 +87,7 @@ public class PlacaDeVideoCaracsController implements Initializable {
 	private Button btCancelarRenderConfig;
 	
 
-	// Processador Gr�fico
+	// Processador Gr�fico
 	
 	@FXML
 	protected TextField txtNomeGpu;
@@ -138,6 +138,10 @@ public class PlacaDeVideoCaracsController implements Initializable {
 
 	public void onBtSalvarCaracGraficaAction() {
 	
+		if (caracGraficasSelected != null) {
+			throw new IllegalStateException("caracGraficasSelected está null");
+		}
+		
 		CaracteristicasGraficas caracGraficas = new CaracteristicasGraficas(null, 
 				txtDirectX.getText(), 
 				txtOpenGL.getText(), 
@@ -146,22 +150,30 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				txtCudaCores.getText(), 
 				txtShaderModel.getText());
 		
-		if (caracGraficasSelected != null) {
+		if (this.newOrEdit == 'E') {
 			caracGraficas.setIdCaracGrafica(caracGraficasSelected.getIdCaracGrafica());
 			System.out.println(caracGraficasSelected);
 			caracGraficasService.atualizar(caracGraficas);
 		}
-		else {
+		else if (this.newOrEdit == 'N' || this.newOrEdit == 'C') {
 			System.out.println(caracGraficasSelected);
 			caracGraficasService.inserir(caracGraficas);
 		}
+		else {
+			throw new IllegalStateException("Variavel newOrEdit está null");
+		}
+		
 
 		Stage stage = (Stage) btSalvarCaracGrafica.getScene().getWindow();
 		stage.close();
 	}
 	
 	public void onBtSalvarRenderConfigAction() {
-		
+
+		if (renderConfigSelected != null) {
+			throw new IllegalStateException("renderConfigSelected está null");
+		}
+
 		RenderConfig renderConfig = new RenderConfig(null, 
 				Integer.parseInt(txtShadingUnits.getText()), 
 				Integer.parseInt(txtTMUs.getText()), 
@@ -172,14 +184,17 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				Integer.parseInt(txtTensorCores.getText()), 
 				Integer.parseInt(txtRtCores.getText()));
 		
-		if (renderConfigSelected != null) {
+		if (this.getNewOrEdit() == 'E') {
 			renderConfig.setIdRenderConfig(renderConfigSelected.getIdRenderConfig());
 			System.out.println(renderConfigSelected);
 			renderConfigService.atualizar(renderConfig);
 		}
-		else {
+		else if (this.getNewOrEdit() == 'N' || this.newOrEdit == 'E') {
 			System.out.println(renderConfigSelected);
 			renderConfigService.inserir(renderConfig);
+		}
+		else {
+			throw new IllegalStateException("Variavel newOrEdit está null");
 		}
 
 		Stage stage = (Stage) btSalvarRenderConfig.getScene().getWindow();
@@ -187,6 +202,10 @@ public class PlacaDeVideoCaracsController implements Initializable {
 	}
 	
 	public void onBtSalvarProcessadorGraficoAction() {
+		
+		if (procGraficoSelected != null) {
+			throw new IllegalStateException("procGraficoSelected está null");
+		}
 		
 		ProcessadorGrafico procGrafico = new ProcessadorGrafico(null, 
 				txtNomeGpu.getText(), 
@@ -197,14 +216,17 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				Double.parseDouble(txtNroTransistores.getText()), 
 				Integer.parseInt(txtTamanhoChip.getText()));
 		
-		if (procGraficoSelected != null) {
+		if (this.getNewOrEdit() == 'E') {
 			procGrafico.setIdProcGrafico(procGraficoSelected.getIdProcGrafico());
 			System.out.println(procGraficoSelected);
 			procGraficoService.atualizar(procGrafico);
 		}
-		else {
+		else if (this.getNewOrEdit() == 'N' || this.newOrEdit == 'E') {
 			System.out.println(procGraficoSelected);
 			procGraficoService.inserir(procGrafico);
+		}
+		else {
+			throw new IllegalStateException("Variavel newOrEdit está null");
 		}
 		
 		Stage stage = (Stage) btSalvarProcessadorGrafico.getScene().getWindow();

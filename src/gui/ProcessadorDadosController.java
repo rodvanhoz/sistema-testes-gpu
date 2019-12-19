@@ -48,6 +48,10 @@ public class ProcessadorDadosController implements Initializable {
 	
 	public void onBtSalvarAction() {
 		
+		if (dadosProcessadorSelected != null) {
+			throw new IllegalStateException("dadosProcessadorSelected está null");
+		}
+		
 		DadosProcessador dadosProcessador = new DadosProcessador(null, 
 				txtSocket.getText(), 
 				txtFoundry.getText(), 
@@ -56,14 +60,17 @@ public class ProcessadorDadosController implements Initializable {
 				txtPackage.getText(), 
 				Double.parseDouble(txtTCaseMax.getText()));
 		
-		if (dadosProcessadorSelected != null) {
+		if (this.getNewOrEdit() == 'E') {
 			dadosProcessador.setIdDadosProcessador(dadosProcessadorSelected.getIdDadosProcessador());
 			System.out.println(dadosProcessador.toString());
 			dadosProcessadorService.atualizar(dadosProcessador);
 		}
-		else {
+		else if (this.getNewOrEdit() == 'N' || this.newOrEdit == 'E') {
 			System.out.println(dadosProcessador.toString());
 			dadosProcessadorService.inserir(dadosProcessador);
+		}
+		else {
+			throw new IllegalStateException("Variavel newOrEdit está null");
 		}
 	}
 	

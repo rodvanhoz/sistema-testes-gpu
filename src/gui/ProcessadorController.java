@@ -135,6 +135,8 @@ public class ProcessadorController implements Initializable {
 	@FXML
 	private Button btDadosEditar;
 	
+	@FXML
+	private Button btDadosCopiar;
 
 	// processador
 
@@ -476,6 +478,22 @@ public class ProcessadorController implements Initializable {
 						controller.txtPackage.setText(dadosProcessadorSelected.getPackag());
 						controller.txtTCaseMax.setText(dadosProcessadorSelected.gettCaseMax().toString());
 						controller.setNewOrEdit('E');
+					});
+		}
+	}
+	
+	public void onBtDadosCopiarAction() {
+		if (dadosProcessadorSelected != null) {
+			LoadSeparatedScenne.loadSeparatedView("/gui/DadosProcessadorEdit.fxml", 440, 150, "Copiar Dados Processador",
+					(ProcessadorDadosController controller) -> {
+						controller.setDadosProcessadorSelected(dadosProcessadorSelected);
+						controller.txtSocket.setText(dadosProcessadorSelected.getSocket());
+						controller.txtFoundry.setText(dadosProcessadorSelected.getFoundry());
+						controller.txtTamanhoChip.setText(dadosProcessadorSelected.getProcessSize().toString());
+						controller.txtTransistors.setText(dadosProcessadorSelected.getTransistors().toString());
+						controller.txtPackage.setText(dadosProcessadorSelected.getPackag());
+						controller.txtTCaseMax.setText(dadosProcessadorSelected.gettCaseMax().toString());
+						controller.setNewOrEdit('C');
 					});
 		}
 	}
