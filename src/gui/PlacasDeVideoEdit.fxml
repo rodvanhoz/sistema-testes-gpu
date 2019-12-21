@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="598.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PlacaDeVideoController">
+<VBox prefHeight="598.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PlacaDeVideoController">
    <children>
       <Label text="Editar Placa de Video">
          <font>
@@ -73,7 +73,7 @@
                           <buttons>
                             <Button fx:id="btNovoCaracGrafica" mnemonicParsing="false" onAction="#onBtNovoCaracGraficaAction" text="Novo" />
                               <Button fx:id="btEditarCaracGrafica" mnemonicParsing="false" onAction="#onBtEditarCaracGraficaAction" text="Editar" />
-                              <Button fx:id="btExcluirCaracGrafica" mnemonicParsing="false" text="Excluir" />
+                              <Button fx:id="btCopiarCaracGrafica" mnemonicParsing="false" onAction="#onBtCopiarCaracGraficaAction" text="Copiar" />
                           </buttons>
                         </ButtonBar>
                      </children>
@@ -140,7 +140,7 @@
                            <buttons>
                               <Button fx:id="btNovoRenderConfig" mnemonicParsing="false" onAction="#onBtNovoRenderConfigAction" text="Novo" />
                               <Button fx:id="btEditarRenderConfig" mnemonicParsing="false" onAction="#onBtEditarRenderConfigAction" text="Editar" />
-                              <Button fx:id="btExcluirRenderConfig" mnemonicParsing="false" text="Excluir" />
+                              <Button fx:id="btCopiarRenderConfig" mnemonicParsing="false" onAction="#onBtCopiarRenderConfigAction" text="Copiar" />
                            </buttons>
                         </ButtonBar>
                      </children>
@@ -208,7 +208,7 @@
                     <buttons>
                       <Button fx:id="btNovoProcessadorGrafico" mnemonicParsing="false" onAction="#onBtNovoProcessadorGraficoAction" text="Novo" />
                         <Button fx:id="btEditarProcessadorGrafico" mnemonicParsing="false" onAction="#onBtEditarProcessadorGraficoAction" text="Editar" />
-                        <Button fx:id="btExcluirProcessadorGrafico" mnemonicParsing="false" text="Excluir" />
+                        <Button fx:id="btCopiarProcessadorGrafico" mnemonicParsing="false" onAction="#onBtCopiarProcessadorGraficoAction" text="Copiar" />
                     </buttons>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

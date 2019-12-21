@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="475.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DadosTesteController">
+<VBox prefHeight="475.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DadosTesteController">
    <children>
       <Label text="Testes">
          <font>
@@ -24,7 +24,8 @@
           <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
             <Button fx:id="btEditar" mnemonicParsing="false" onAction="#onBtEditarAction" text="Editar" />
             <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="Atualizar" />
-            <Button fx:id="btExcluir" mnemonicParsing="false" onAction="#onBtExcluirAction" text="Excluir" />
+            <Button fx:id="btCopiar" mnemonicParsing="false" onAction="#onBtCopiarAction" text="Copiar" />
+            <Button fx:id="btExcluir1" mnemonicParsing="false" onAction="#onBtExcluirAction" text="Excluir" />
         </items>
       </ToolBar>
       <TableView fx:id="tvDadosTeste" prefHeight="200.0" prefWidth="200.0">
