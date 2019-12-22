@@ -209,13 +209,9 @@ public class Processadores implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Processadores [idProcessador=" + idProcessador + ", DadosProcessador=" + DadosProcessador.getIdDadosProcessador()
-				+ ", nomeFabricante=" + nomeFabricante + ", nomeModelo=" + nomeModelo + ", market=" + market
-				+ ", released=" + released + ", codename=" + codename + ", generation=" + generation
-				+ ", memorySupport=" + memorySupport + ", frequencia=" + frequencia + ", turbofrequencia="
-				+ turbofrequencia + ", baseClock=" + baseClock + ", multiplicador=" + multiplicador
-				+ ", multiplDesbloqueado=" + multiplDesbloqueado + ", nroCores=" + nroCores + ", nroThreads="
-				+ nroThreads + ", smp=" + smp + ", Gpu=" + Gpu.getNomeModelo() + ", tdp=" + tdp + "]";
+		return "Id: " + idProcessador + " - " + nomeFabricante + " - " + nomeModelo + " - " + nroCores + " Cores / "
+				+ nroThreads + " Threads" 
+				+ ", Gpu: " + ((Gpu != null) ? Gpu.getNomeModelo() : "") + ", tdp=" + tdp + "]";
 	}
 
 

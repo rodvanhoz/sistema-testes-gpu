@@ -231,12 +231,23 @@ public class ProcessadorController implements Initializable {
 	public void onBtEditarAction() {
 		
 		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
+		
+		if (processadorSelected == null) {
+			return;
+		}
+		
 		dadosProcessadorSelected = dadosProcessadorService.findById(processadorSelected.getIdDadosProcessador());
 		
 		Processadores proc = service.findByIdProcessadores(processadorSelected.getIdProcessador());
-		Gpus graficoIntegrado = (proc.getGpu() != null) ? proc.getGpu() : null; 
 		
-		gpuSelected = gpuService.findById(graficoIntegrado.getIdGpu());
+		Gpus graficoIntegrado = null;
+		if (proc.getGpu() != null) {
+			graficoIntegrado = proc.getGpu(); 
+			gpuSelected = gpuService.findById(graficoIntegrado.getIdGpu());
+		}
+		else {
+			gpuSelected = null;
+		}
 		
 		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadoresEdit.fxml", 660, 460, "Editar Processador",
 				(ProcessadorController controller) -> {
@@ -249,7 +260,7 @@ public class ProcessadorController implements Initializable {
 					controller.cboxDadosProcessador.getSelectionModel().select(dadosProcessadorSelected);
 					controller.cboxDadosProcessador.getEditor().setText(dadosProcessadorSelected.toString());
 					controller.cboxGraficoIntegrado.getSelectionModel().select(gpuSelected);
-					controller.cboxGraficoIntegrado.getEditor().setText(gpuSelected.toString());
+					controller.cboxGraficoIntegrado.getEditor().setText((gpuSelected != null) ? gpuSelected.toString() : "");
 					
 					controller.txtSocket.setText(dadosProcessadorSelected.getSocket());
 					controller.txtFoundry.setText(dadosProcessadorSelected.getFoundry());
@@ -365,7 +376,7 @@ public class ProcessadorController implements Initializable {
 					AlertType.ERROR);
 		}
 		else if (!verificaTextos()) {
-			
+			return;
 		}
 		else {
 			Processadores proc = new Processadores(null, 

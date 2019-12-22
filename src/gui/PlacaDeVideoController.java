@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -348,7 +349,17 @@ public class PlacaDeVideoController implements Initializable {
 	}
 	
 	public void onBtEditarAction() {
-		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
+		PlacaDeVideo placa = tvPlacaDeVideo.getSelectionModel().getSelectedItem();
+		
+		if (placa == null) {
+			return;
+		}
+		
+		gpuSelected = service.findByIdGpu(placa.getIdGpu());
+		
+		if (gpuSelected == null) {
+			throw new IllegalStateException("gpuSelected está null");
+		}
 		
 		caracGraficasSelected = caracGraficasService.findById(gpuSelected.getCaracteristicasGraficas().getIdCaracGrafica());
 		procGraficoSelected = procGraficoService.findById(gpuSelected.getProcessadorGrafico().getIdProcGrafico());
@@ -828,7 +839,7 @@ public class PlacaDeVideoController implements Initializable {
 
 	public void updateTableView() {
 		if (service == null) {
-			throw new IllegalStateException("Service est� null");
+			throw new IllegalStateException("Service está null");
 		}
 		
 		List<PlacaDeVideo> lista = service.findAll();

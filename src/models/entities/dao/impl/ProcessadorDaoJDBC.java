@@ -316,6 +316,7 @@ public class ProcessadorDaoJDBC implements ProcessadorDao {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void atualizar(Processadores processador) {
 		PreparedStatement st = null;
@@ -354,7 +355,14 @@ public class ProcessadorDaoJDBC implements ProcessadorDao {
 			st.setInt(14, processador.getNroCores());
 			st.setInt(15, processador.getNroThreads());
 			st.setInt(16, processador.getSmp());
-			st.setInt(17, (gpu != null) ? gpu.getIdGpu() : null);
+			
+			if (gpu !=  null) {
+				st.setInt(17, gpu.getIdGpu());
+			}
+			else {
+				st.setNull(17, java.sql.Types.INTEGER);
+			}
+			
 			st.setDouble(18, processador.getTdp());
 			st.setInt(19, processador.getIdProcessador());
 			
