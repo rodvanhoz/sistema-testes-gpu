@@ -9,6 +9,7 @@ public interface JogoDao {
 	
 	List<Jogos> findAll();
 	List<Jogos> findByDtLancto(Date dtLancto);
+	List<Jogos> findByNomeJogo(String nomeJogo);
 	Jogos findById(int idJogo);
 	void inserir(Jogos jogo);
 	void atualizar(Jogos jogo);

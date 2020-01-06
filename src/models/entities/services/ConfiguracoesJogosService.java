@@ -2,6 +2,7 @@ package models.entities.services;
 
 import java.util.List;
 
+import db.DbException;
 import models.entities.dao.ConfiguracoesJogosDao;
 import models.entities.dao.DaoFactory;
 import models.entities.tables.Configuracoes;
@@ -34,15 +35,30 @@ public class ConfiguracoesJogosService {
 	}
 	
 	public void inserir(ConfiguracoesJogos configuracaoJogo) {
+		checaCamposConfiguracoesJogos(configuracaoJogo);
 		dao.inserir(configuracaoJogo);
 	}
 	
 	public void atualizar(ConfiguracoesJogos configuracaoJogo) {
+		if (configuracaoJogo.getIdConfiguracaoJogo() == null || configuracaoJogo.getIdConfiguracaoJogo() == 0) {
+			throw new DbException("ERRO: IdConfiguracaoJogo não informado para o update");
+		}
+		
+		checaCamposConfiguracoesJogos(configuracaoJogo);
 		dao.atualizar(configuracaoJogo);
 	}
 	
 	public void remover(ConfiguracoesJogos configuracaoJogo) {
 		dao.remover(configuracaoJogo);
+	}
+	
+	private void checaCamposConfiguracoesJogos(ConfiguracoesJogos config) {
+		if (config.getConfiguracao() == null) {
+			throw new DbException("Configuração é obrigatório");
+		}
+		if (config.getJogo() == null) {
+			throw new DbException("Jogo é obrigatório");
+		}
 	}
 
 }

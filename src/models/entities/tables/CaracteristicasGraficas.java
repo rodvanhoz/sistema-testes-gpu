@@ -83,6 +83,7 @@ public class CaracteristicasGraficas implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 
 	@Override
 	public String toString() {

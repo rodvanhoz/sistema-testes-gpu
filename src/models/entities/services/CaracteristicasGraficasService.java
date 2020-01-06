@@ -2,6 +2,7 @@ package models.entities.services;
 
 import java.util.List;
 
+import db.DbException;
 import models.entities.dao.CaracteristicasGraficasDao;
 import models.entities.dao.DaoFactory;
 import models.entities.tables.CaracteristicasGraficas;
@@ -43,14 +44,35 @@ public class CaracteristicasGraficasService {
 	}
 	
 	public void inserir(CaracteristicasGraficas caracGrafica) {
+		checaCamposCaracteristicasGraficas(caracGrafica);
 		dao.inserir(caracGrafica);
 	}
 	
 	public void atualizar(CaracteristicasGraficas caracGrafica) {
+		if (caracGrafica.getIdCaracGrafica() == null || caracGrafica.getIdCaracGrafica() == 0) {
+			throw new DbException("ERRO: IdCaracGrafica não informado para o update");
+		}
+		
+		checaCamposCaracteristicasGraficas(caracGrafica);
 		dao.atualizar(caracGrafica);
 	}
 	
 	public void remover(CaracteristicasGraficas caracGrafica) {
 		dao.remover(caracGrafica);
+	}
+	
+	private void checaCamposCaracteristicasGraficas(CaracteristicasGraficas caracs) {
+		if (caracs.getDirectX() == null || caracs.getDirectX() == "") {
+			throw new DbException("Versão do DirectX é obrigatório");
+		}
+		if (caracs.getOpenCL() == null || caracs.getOpenCL() == "") {
+			throw new DbException("Versão do OpenCL é obrigatório");
+		}
+		if (caracs.getOpenGL() == null || caracs.getOpenGL() == "") {
+			throw new DbException("Versão do OpenGL é obrigatório");
+		}
+		if (caracs.getShaderModel() == null || caracs.getShaderModel() == "") {
+			throw new DbException("Versão do Shader Model é obrigatório");
+		}
 	}
 }

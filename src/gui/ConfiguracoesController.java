@@ -135,6 +135,9 @@ public class ConfiguracoesController implements Initializable {
 		if (Constraints.getArqFXML(location.getFile()).toLowerCase().equals("configuracoesview.fxml")) {
 			iniciarNodes();
 		}
+		if (Constraints.getArqFXML(location.getFile()).toLowerCase().equals("configuracoesedit.fxml")) {
+			Constraints.setTextFieldInteger(txtResolucaoAbrev);
+		}
 	}
 
 	private void iniciarNodes() {
@@ -163,6 +166,7 @@ public class ConfiguracoesController implements Initializable {
 		tvConfiguracoes.setItems(FXCollections.observableArrayList(lista));
 	}
 	
+	@FXML
 	public void onBtNovoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesEdit.fxml", 384, 229, "Inserir Nova Configuração",
 				(ConfiguracoesController controller) -> {
@@ -170,6 +174,7 @@ public class ConfiguracoesController implements Initializable {
 				});
 	}
 
+	@FXML
 	public void onBtEditarAction() {
 		configuracaoSelected = tvConfiguracoes.getSelectionModel().getSelectedItem();
 
@@ -195,6 +200,7 @@ public class ConfiguracoesController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtCopiarAction() {
 		configuracaoSelected = tvConfiguracoes.getSelectionModel().getSelectedItem();
 
@@ -220,6 +226,7 @@ public class ConfiguracoesController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtExcluirAction() {
 		configuracaoSelected = tvConfiguracoes.getSelectionModel().getSelectedItem();
 
@@ -240,11 +247,13 @@ public class ConfiguracoesController implements Initializable {
 		} 
 	}
 	
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtSalvarAction() {
 		service = new ConfiguracoesService();
 		if (service == null) {
@@ -278,7 +287,11 @@ public class ConfiguracoesController implements Initializable {
 		stage.close();
 	}
 
-
+	@FXML
+	public void onBtAtualizarAction() {
+		this.updateTableView();
+	}
+	
 	public char getNewOrEdit() {
 		return newOrEdit;
 	}
@@ -294,9 +307,5 @@ public class ConfiguracoesController implements Initializable {
 
 	public void setConfiguracaoSelected(Configuracoes configuracaoSelected) {
 		this.configuracaoSelected = configuracaoSelected;
-	}
-
-	public void onBtAtualizarAction() {
-		this.updateTableView();
 	}
 }

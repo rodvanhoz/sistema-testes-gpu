@@ -218,6 +218,7 @@ public class ProcessadorController implements Initializable {
 		tvProcessador.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
+	@FXML
 	public void onBtNovoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadoresEdit.fxml", 660, 460, "Inserir Novo Processador",
 				(ProcessadorController controller) -> {
@@ -228,6 +229,7 @@ public class ProcessadorController implements Initializable {
 				});
 	}
 
+	@FXML
 	public void onBtEditarAction() {
 		
 		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
@@ -290,6 +292,8 @@ public class ProcessadorController implements Initializable {
 				});
 	}
 	
+	
+	@FXML
 	public void onBtCopiarAction() {
 		
 		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
@@ -341,11 +345,13 @@ public class ProcessadorController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
 	}
 	
+	@FXML
 	public void onBtExcluirAction() {
 		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
 		
@@ -368,15 +374,13 @@ public class ProcessadorController implements Initializable {
 
 	}
 
+	@FXML
 	public void onBtSalvarAction() throws NumberFormatException, ParseException {
 		service = new ProcessadorService();
 		
 		if (dadosProcessadorSelected == null ) {
 			Alerts.showAlert("IOException", null, "Necessário definir Dados Processador", 
 					AlertType.ERROR);
-		}
-		else if (!verificaTextos()) {
-			return;
 		}
 		else {
 			Processadores proc = new Processadores(null, 
@@ -417,11 +421,13 @@ public class ProcessadorController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 	
+	@FXML
 	public void onCboxDadosProcessadorAction() {
 		if (cboxDadosProcessador.getEditor().getText().split(":")[0].equals("")) {
 			dadosProcessadorSelected = null;
@@ -450,6 +456,7 @@ public class ProcessadorController implements Initializable {
 		listaDadosProcessador = FXCollections.observableArrayList(dadosProcessadorService.findAll());
 	}
 	
+	@FXML
 	public void onCboxGraficoIntegradoAction() {
 		if (cboxGraficoIntegrado.getEditor().getText().split(":")[0].equals("")) {
 			gpuSelected = null;
@@ -459,16 +466,19 @@ public class ProcessadorController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onCboxDadosProcessadorKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxDadosProcessador, listaDadosProcessador, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 
+	@FXML
 	public void onCboxGraficoIntegradoKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxGraficoIntegrado, listaGpus, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
 	// dados processador
 	
+	@FXML
 	public void onBtDadosNovoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/DadosProcessadorEdit.fxml", 440, 149, "Editar Dados Processador",
 				(ProcessadorDadosController controller) -> {
@@ -477,6 +487,7 @@ public class ProcessadorController implements Initializable {
 		
 	}
 	
+	@FXML
 	public void onBtDadosEditarAction() {
 		if (dadosProcessadorSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/DadosProcessadorEdit.fxml", 440, 150, "Editar Dados Processador",
@@ -493,6 +504,7 @@ public class ProcessadorController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtDadosCopiarAction() {
 		if (dadosProcessadorSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/DadosProcessadorEdit.fxml", 440, 150, "Copiar Dados Processador",
@@ -518,70 +530,21 @@ public class ProcessadorController implements Initializable {
 		tvProcessador.setItems(FXCollections.observableArrayList(lista));
 	}
 	
-	private Boolean verificaTextos() {
-		String txts = "";
-		
-		if (txtNomeFabricante.getText() == null || txtNomeFabricante.getText().equals("")) {
-			txts += "NomeFabricante";
-		}
-		if (txtDescrModelo.getText() == null || txtDescrModelo.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "DescricaoModelo";
-		}
-		if (txtReleased.getText() == null || txtReleased.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtReleased";
-		}
-		if (txtMemorySupport.getText() == null || txtMemorySupport.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtMemorySupport";
-		}
-		if (txtFrequencia.getText() == null || txtFrequencia.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtFrequencia";
-		}
-		if (txtTurboFrequencia.getText() == null || txtTurboFrequencia.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtTurboFrequencia";
-		}
-		if (txtBaseClock.getText() == null || txtBaseClock.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtBaseClock";
-		}
-		if (txtMultiplicador.getText() == null || txtMultiplicador.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtMultiplicador";
-		}
-		if (txtEhDesbloqueado.getText() == null || txtEhDesbloqueado.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtEhDesbloqueado";
-		}
-		if (txtCores.getText() == null || txtCores.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtCores";
-		}
-		if (txtThreads.getText() == null || txtThreads.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtThreads";
-		}
-		if (txtTDP.getText() == null || txtTDP.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "txtTDP";
-		}
-
-		if (txts.length() > 0) {
-			Alerts.showAlert("IOException", null, "Os campos " + txts + " estão sem informação", AlertType.ERROR);
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (Constraints.getArqFXML(location.getFile()).toLowerCase().equals("processadoresview.fxml")) {
 			iniciarNodes();		
+		}
+		
+		if (Constraints.getArqFXML(location.getFile()).toLowerCase().equals("processadoresedit.fxml")) {
+			Constraints.setTextFieldInteger(txtCores);
+			Constraints.setTextFieldInteger(txtThreads);
+			Constraints.setTextFieldInteger(txtSMP);
+			Constraints.setTextFieldDouble(txtFrequencia);
+			Constraints.setTextFieldDouble(txtTurboFrequencia);
+			Constraints.setTextFieldDouble(txtBaseClock);
+			Constraints.setTextFieldDouble(txtMultiplicador);
+			Constraints.setTextFieldDouble(txtCores);
 		}
 	}
 

@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -212,7 +211,7 @@ public class PlacaDeVideoController implements Initializable {
 	private Button btExcluirRenderConfig;
 	
 
-	// Processador Gr�fico
+	// Processador Gráfico
 	
 	@FXML
 	private ComboBox<ProcessadorGrafico> cboxProcessadorGrafico;
@@ -334,9 +333,18 @@ public class PlacaDeVideoController implements Initializable {
 			iniciarNodes();
 		}
 		
+		if (Constraints.getArqFXML(location.getFile()).toLowerCase().equals("placasdevideoedit.fxml")) {
+			Constraints.setTextFieldInteger(txtTamanhoMemoria);
+			Constraints.setTextFieldInteger(txtTamanhoBanda);
+			Constraints.setTextFieldDouble(txtTDP);
+			Constraints.setTextFieldDouble(txtGpuClock);
+			Constraints.setTextFieldDouble(txtGpuBoostClock);
+			Constraints.setTextFieldDouble(txtMemoryClock);
+			Constraints.setTextFieldDouble(txtMemoryClockEfective);
+		}
 	}
 	
-	
+	@FXML
 	public void onBtNovoAction() { 
 		LoadSeparatedScenne.loadSeparatedView("/gui/PlacasDeVideoEdit.fxml", 814, 650, "Inserir Nova Placa de Vídeo",
 				(PlacaDeVideoController controller) -> {
@@ -348,6 +356,7 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtEditarAction() {
 		PlacaDeVideo placa = tvPlacaDeVideo.getSelectionModel().getSelectedItem();
 		
@@ -419,6 +428,7 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtCopiarAction() {
 		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
 		
@@ -480,24 +490,24 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
 	}
 	
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtSalvarAction() throws NumberFormatException, ParseException {
 		
 		if (procGraficoSelected == null || caracGraficasSelected == null || renderConfigSelected == null) {
 			Alerts.showAlert("IOException", null, "Necessário definir Processador Grafico / Carac. Gráficas / Render Config", 
 					AlertType.ERROR);
-		}
-		else if (!verificaTextos()) {
-			
 		}
 		else {
 			Gpus gpu = new Gpus(null, 
@@ -537,6 +547,7 @@ public class PlacaDeVideoController implements Initializable {
 		
 	}
 	
+	@FXML
 	public void onBtExcluirAction() {
 		gpuSelected = service.findByIdGpu(tvPlacaDeVideo.getSelectionModel().getSelectedItem().getIdGpu());
 		
@@ -562,6 +573,7 @@ public class PlacaDeVideoController implements Initializable {
 	
 	// edit
 
+	@FXML
 	public void onCboxCaracGraficasAction() {
 		//caracGraficasSelected = cboxCaracGraficas.getSelectionModel().getSelectedItem();
 		if (cboxCaracGraficas.getEditor().getText().split(":")[0].equals("")) {
@@ -591,6 +603,7 @@ public class PlacaDeVideoController implements Initializable {
 		listaCaracGraficas = FXCollections.observableArrayList(caracGraficasService.findAll());
 	}
 	
+	@FXML
 	public void onCboxProcessadorGraficoAction() {
 		Locale.setDefault(Locale.US);
 //		procGraficoSelected = cboxProcessadorGrafico.getSelectionModel().getSelectedItem();
@@ -623,6 +636,7 @@ public class PlacaDeVideoController implements Initializable {
 		listaProcGrafico = FXCollections.observableArrayList(procGraficoService.findAll());
 	}
 	
+	@FXML
 	public void onCboxRenderConfigAction() {
 //		renderConfigSelected = cboxRenderConfig.getSelectionModel().getSelectedItem();
 		
@@ -657,18 +671,22 @@ public class PlacaDeVideoController implements Initializable {
 
 	}
 	
+	@FXML
 	public void onCboxCaracGraficasKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxCaracGraficas, listaCaracGraficas, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 
+	@FXML
 	public void onCboxProcessadorGraficoKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxProcessadorGrafico, listaProcGrafico, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 
+	@FXML
 	public void onCboxCboxRenderConfigKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxRenderConfig, listaRenderConfig, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
+	@FXML
 	public void onBtNovoCaracGraficaAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Inserir Nova Característica Gráfica",
 				(PlacaDeVideoCaracsController controller) -> {
@@ -676,6 +694,7 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 
+	@FXML
 	public void onBtEditarCaracGraficaAction() {
 		if (caracGraficasSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Editar Característica Gráfica",
@@ -692,6 +711,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtCopiarCaracGraficaAction() {
 		if (caracGraficasSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/CaracteristicasGraficasEdit.fxml", 375, 149, "Copiar Característica Gráfica",
@@ -708,6 +728,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtNovoProcessadorGraficoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Inserir Novo Processador Gráfico",
 				(PlacaDeVideoCaracsController controller) -> {
@@ -715,6 +736,7 @@ public class PlacaDeVideoController implements Initializable {
 				});
 	}
 
+	@FXML
 	public void onBtEditarProcessadorGraficoAction() {
 		if (procGraficoSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Editar Processador Gráfico",
@@ -732,6 +754,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtCopiarProcessadorGraficoAction() {
 		if (procGraficoSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadorGraficoEdit.fxml", 782, 140, "Copiar Processador Gráfico",
@@ -749,6 +772,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtNovoRenderConfigAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Inserir Novo Render Config",
 				(PlacaDeVideoCaracsController controller) -> {
@@ -759,6 +783,7 @@ public class PlacaDeVideoController implements Initializable {
 		cboxRenderConfig.setItems(listaRenderConfig);;
 	}
 
+	@FXML
 	public void onBtEditarRenderConfigAction() {
 		if (renderConfigSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Editar Render Config",
@@ -777,6 +802,7 @@ public class PlacaDeVideoController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtCopiarRenderConfigAction() {
 		if (renderConfigSelected != null) {
 			LoadSeparatedScenne.loadSeparatedView("/gui/RenderConfigEdit.fxml", 375, 140, "Copiar Render Config",
@@ -846,65 +872,5 @@ public class PlacaDeVideoController implements Initializable {
 		tvPlacaDeVideo.setItems(FXCollections.observableArrayList(lista));
 	}
 
-	private Boolean verificaTextos() {
-		
-		String txts = "";
-		
-		if (txtNomeFabricante.getText() == null || txtNomeFabricante.getText().equals("")) {
-			txts += "NomeFabricante";
-		}
-		if (txtDescricaoModelo.getText() == null || txtDescricaoModelo.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "DescricaoModelo";
-		}
-		if (txtTamanhoMemoria.getText() == null || txtTamanhoMemoria.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "TamanhoMemoria";
-		}
-		if (txtTipoMemoria.getText() == null || txtTipoMemoria.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "TipoMemoria";
-		}
-		if (txtTamanhoBanda.getText() == null || txtTamanhoBanda.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "TamanhoBanda";
-		}
-		if (txtTDP.getText() == null || txtTDP.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "TDP";
-		}
-		if (txtGpuClock.getText() == null || txtGpuClock.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "GpuClock";
-		}
-		if (txtGpuBoostClock.getText() == null || txtGpuBoostClock.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "GpuBoostClock";
-		}
-		if (txtMemoryClock.getText() == null || txtMemoryClock.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "MemoryClock";
-		}
-		if (txtMemoryClockEfective.getText() == null || txtMemoryClockEfective.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "MemoryClockEfective";
-		}
-		if (txtBusInterface.getText() == null || txtBusInterface.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "BusInterface";
-		}
-		if (txtDtLancto.getText() == null || txtDtLancto.getText().equals("")) {
-			if (txts.length() > 0) txts += " / ";
-			txts += "DtLancto";
-		}
-		 
-		if (txts.length() > 0) {
-			Alerts.showAlert("IOException", null, "Os campos " + txts + " estão sem informação", AlertType.ERROR);
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 }
+	

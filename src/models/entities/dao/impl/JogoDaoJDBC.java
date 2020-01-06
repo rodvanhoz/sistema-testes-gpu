@@ -231,4 +231,37 @@ public class JogoDaoJDBC implements JogoDao {
 		}
 	}
 
+	@Override
+	public List<Jogos> findByNomeJogo(String nomeJogo) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			st = conn.prepareStatement("select * from Jogos a "
+					+ "where a.dtLancto = ? "
+					+ "order by a.DtLancto desc");
+			st.setString(1, nomeJogo);
+			
+			rs = st.executeQuery();
+
+			List<Jogos> jogos = new ArrayList<>();
+
+			while (rs.next()) {
+				Jogos j = new Jogos(rs.getInt("idJogo"), rs.getString("nomeJogo"), rs.getDate("dtLancto"));
+
+				jogos.add(j);
+			}
+			
+			return jogos;
+		} 
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+
+	}
+
 }

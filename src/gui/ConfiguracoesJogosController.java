@@ -165,6 +165,7 @@ public class ConfiguracoesJogosController implements Initializable {
 		tvConfiguracoesJogos.prefHeightProperty().bind(stage.heightProperty());
 	}
 	
+	@FXML
 	public void onBtNovoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/ConfiguracoesJogosEdit.fxml", 384, 130, "Inserir Nova Relação Configuração / Jogo",
 				(ConfiguracoesJogosController controller) -> {
@@ -175,6 +176,7 @@ public class ConfiguracoesJogosController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtEditarAction() {
 		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
 		
@@ -195,6 +197,7 @@ public class ConfiguracoesJogosController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtCopiarAction() {
 		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
 		
@@ -215,11 +218,13 @@ public class ConfiguracoesJogosController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
 	}
 	
+	@FXML
 	public void onBtExcluirAction() {
 		configuracaoJogosSelected = tvConfiguracoesJogos.getSelectionModel().getSelectedItem();
 
@@ -242,7 +247,7 @@ public class ConfiguracoesJogosController implements Initializable {
 		} 
 	}
 
-	
+	@FXML
 	public void onBtSalvarAction() {
 		service = new ConfiguracoesJogosService();
 		if (service == null) {
@@ -270,15 +275,18 @@ public class ConfiguracoesJogosController implements Initializable {
 		stage.close();
 	}
 	
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 	
+	@FXML
 	public void onCBoxJogosKeyPressedAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxJogos, jogosList, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
+	@FXML
 	public void onCBoxConfiguracoesKeyPressesAction() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoes, configuracoesList, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}

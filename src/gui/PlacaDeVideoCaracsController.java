@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Constraints;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -87,7 +88,7 @@ public class PlacaDeVideoCaracsController implements Initializable {
 	private Button btCancelarRenderConfig;
 	
 
-	// Processador Gr�fico
+	// Processador Gráfico
 	
 	@FXML
 	protected TextField txtNomeGpu;
@@ -118,24 +119,43 @@ public class PlacaDeVideoCaracsController implements Initializable {
 	
 	@Override
 	public void initialize(URL uri, ResourceBundle resources) {
-	
+		
+		// render config
+		Constraints.setTextFieldInteger(txtShadingUnits);
+		Constraints.setTextFieldInteger(txtTMUs);
+		Constraints.setTextFieldInteger(txtROPs);
+		Constraints.setTextFieldInteger(txtSmCount);
+		Constraints.setTextFieldInteger(txtL1Cache);
+		Constraints.setTextFieldInteger(txtL2Cache);
+		Constraints.setTextFieldInteger(txtTensorCores);
+		Constraints.setTextFieldInteger(txtRtCores);
+		
+		// Processador Gráfico
+		Constraints.setTextFieldInteger(txtLitografia);
+		Constraints.setTextFieldDouble(txtNroTransistores);
+		Constraints.setTextFieldInteger(txtTamanhoChip);
+
 	}
 	
+	@FXML
 	public void onBtCancelarCaracGraficaAction() {
 		Stage stage = (Stage) btCancelarCaracGrafica.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtCancelarProcessadorGraficoAction() {
 		Stage stage = (Stage) btCancelarProcessadorGrafico.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtCancelarRenderConfigAction() {
 		Stage stage = (Stage) btCancelarRenderConfig.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtSalvarCaracGraficaAction() {
 	
 		if (caracGraficasSelected != null) {
@@ -168,6 +188,7 @@ public class PlacaDeVideoCaracsController implements Initializable {
 		stage.close();
 	}
 	
+	@FXML
 	public void onBtSalvarRenderConfigAction() {
 
 		if (renderConfigSelected != null) {
@@ -179,10 +200,10 @@ public class PlacaDeVideoCaracsController implements Initializable {
 				Integer.parseInt(txtTMUs.getText()), 
 				Integer.parseInt(txtROPs.getText()), 
 				Integer.parseInt(txtSmCount.getText()), 
-				Integer.parseInt(txtL1Cache.getText()), 
-				Integer.parseInt(txtL2Cache.getText()), 
-				Integer.parseInt(txtTensorCores.getText()), 
-				Integer.parseInt(txtRtCores.getText()));
+				Integer.parseInt((txtL1Cache.getText() == "" || txtL1Cache.getText() == null) ? "0" : txtL1Cache.getText()), 
+				Integer.parseInt((txtL2Cache.getText() == "" || txtL2Cache.getText() == null) ? "0" : txtL2Cache.getText()), 
+				Integer.parseInt((txtTensorCores.getText() == "" || txtTensorCores.getText() == null) ? "0" : txtTensorCores.getText()), 
+				Integer.parseInt((txtRtCores.getText() == "" || txtRtCores.getText() == null) ? "0" : txtRtCores.getText()));
 		
 		if (this.getNewOrEdit() == 'E') {
 			renderConfig.setIdRenderConfig(renderConfigSelected.getIdRenderConfig());
@@ -201,6 +222,7 @@ public class PlacaDeVideoCaracsController implements Initializable {
 		stage.close();
 	}
 	
+	@FXML
 	public void onBtSalvarProcessadorGraficoAction() {
 		
 		if (procGraficoSelected != null) {

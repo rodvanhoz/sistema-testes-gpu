@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.sun.prism.paint.Paint;
-
 import application.Main;
 import gui.util.Alerts;
 import gui.util.ComboBoxAutoComplete;
@@ -283,6 +281,10 @@ public class DadosTesteController implements Initializable {
 			iniciarNodes();
 		}
 		atualiazarComboBox();
+		Constraints.setTextFieldInteger(txtAvgFps);
+		Constraints.setTextFieldInteger(txtMinFps);
+		Constraints.setTextFieldMaxLength(txtAvgFps, 3);
+		Constraints.setTextFieldMaxLength(txtMinFps, 3);
 	}
 
 	private void iniciarNodes() {
@@ -310,6 +312,7 @@ public class DadosTesteController implements Initializable {
 	
 	// navigator da view
 	
+	@FXML
 	public void onBtNovoAction() { 
 		LoadSeparatedScenne.loadSeparatedView("/gui/TestesEdit.fxml", 750, 650, "Inserir Novo Teste",
 				(DadosTesteController controller) -> {
@@ -321,6 +324,7 @@ public class DadosTesteController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtEditarAction() {
 		
 		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
@@ -361,6 +365,7 @@ public class DadosTesteController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtCopiarAction() {
 		
 		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
@@ -401,11 +406,13 @@ public class DadosTesteController implements Initializable {
 				});
 	}
 	
+	@FXML
 	public void onBtAtualizarAction() {
 		System.out.println("Atualizando Grid...");
 		this.updateTableView();
 	}
 	
+	@FXML
 	public void onBtExcluirAction() {
 		dadosTesteSelected = tvDadosTeste.getSelectionModel().getSelectedItem();
 		
@@ -427,18 +434,22 @@ public class DadosTesteController implements Initializable {
 
 	}
 	
+	@FXML
 	public void onCBoxConfiguracoesJogosPressed() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxConfiguracoesJogos, configuracoesJogosLista, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 
+	@FXML
 	public void onCBoxPlacaDeVideoPressed() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxPlacaDeVideo, placasDeVideoLista, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
+	@FXML
 	public void onCBoxProcessadorPressed() {
 		ComboBoxAutoComplete.autoCompleteComboBoxPlus(cboxProcessador, processadoresLista, (typedText, itemToCompare) -> itemToCompare.toString().toLowerCase().contains(typedText.toLowerCase()));
 	}
 	
+	@FXML
 	public void onCBoxConfiguracoesJogosAction() {
 		if (cboxConfiguracoesJogos.getEditor().getText().split(":")[0].equals("")) {
 			configuracoesJogosSelected = null;
@@ -477,6 +488,7 @@ public class DadosTesteController implements Initializable {
 		atualiazarComboBox();
 	}
 
+	@FXML
 	public void onCBoxProcessadorAction() {
 		if (cboxProcessador.getEditor().getText().split(":")[0].equals("")) {
 			processadorSelected = null;
@@ -510,6 +522,7 @@ public class DadosTesteController implements Initializable {
 
 	}
 
+	@FXML
 	public void onCBoxPlacaDeVideoAction() {
 		if (cboxPlacaDeVideo.getEditor().getText().split(":")[0].equals("")) {
 			placaDeVideoSelected = null;
@@ -557,11 +570,13 @@ public class DadosTesteController implements Initializable {
 		
 	}
 	
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 	
+	@FXML
 	public void onBtSalvarAction() throws NumberFormatException, ParseException {
 		service = new DadosTesteService();
 		
@@ -581,14 +596,18 @@ public class DadosTesteController implements Initializable {
 				return;
 			}
 		}
-		
+
+		if (txtMinFps.getText() == "" || txtMinFps.getText() == null) {
+			
+		}
+
 		TestesGpu teste = new TestesGpu(null, 
 				configuracoesJogosService.findByConfiguracaoJogos(configuracoesJogosSelected.getIdConfiguracaoJogo()), 
 				placaDeVideoService.findByIdGpu(placaDeVideoSelected.getIdGpu()), 
 				processadorService.findByIdProcessadores(processadorSelected.getIdProcessador()), 
 			    txtDriverGpu.getText(), 
 			    Double.parseDouble(txtAvgFps.getText()), 
-			    Double.parseDouble(txtMinFps.getText()), 
+			    Double.parseDouble((txtMinFps.getText() == "" || txtMinFps.getText() == null) ? txtMinFps.getText() : "0"), 
 			    sdf.parse(txtDtTeste.getText()), 
 			    txtNomeTester.getText());
 	

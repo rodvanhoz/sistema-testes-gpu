@@ -2,6 +2,7 @@ package models.entities.services;
 
 import java.util.List;
 
+import db.DbException;
 import models.entities.dao.DadosTesteDao;
 import models.entities.dao.DaoFactory;
 import models.entities.tables.Gpus;
@@ -43,14 +44,42 @@ public class DadosTesteService {
 	}
 	
 	public void inserir(TestesGpu testeGpu) {
-		dao.inserir(testeGpu);
+		dao.inserir(checaCamposTestesGpu(testeGpu));
 	}
 	
 	public void atualizar(TestesGpu testeGpu) {
-		dao.atualizar(testeGpu);
+		dao.atualizar(checaCamposTestesGpu(testeGpu));
 	}
 	
 	public void remover(TestesGpu testeGpu) {
 		dao.remover(testeGpu);
+	}
+	
+	private TestesGpu checaCamposTestesGpu(TestesGpu teste) {
+		TestesGpu t = teste;
+		
+		if (teste.getConfiguracaoJogo() == null) {
+			throw new DbException("Configuração do Jogo não foi informado");
+		}
+		if (teste.getGpu() == null) {
+			throw new DbException("Gpu não foi informada");
+		}
+		if (teste.getProcessador() == null) {
+			throw new DbException("Processador não foi informado");
+		}
+		if (teste.getNomeTester() == "" || teste.getNomeTester() == null) {
+			throw new DbException("Nome do Tester é obrigatório");
+		}
+		if (teste.getDtTeste() == null) {
+			throw new DbException("Data do Teste é obrigatório");
+		}
+		if (teste.getMinFps() == null) {
+			t.setMinFps(0.0);
+		}
+		if (teste.getAvgFps() < teste.getMinFps()) {
+			throw new DbException("FpsMim não pode ser maior que FpsAvg");
+		}
+		
+		return t;
 	}
 }

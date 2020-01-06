@@ -120,6 +120,7 @@ public class JogoController implements Initializable {
 
 	}
 
+	@FXML
 	public void onBtNovoAction() {
 		LoadSeparatedScenne.loadSeparatedView("/gui/JogosEdit.fxml", 400, 130, "Inserir Novo Jogo",
 				(JogoController controller) -> {
@@ -135,10 +136,12 @@ public class JogoController implements Initializable {
 		this.newOrEdit = newOrEdit;
 	}
 
+	@FXML
 	public void onBtAtualizarAction() {
 		this.updateTableView();
 	}
 
+	@FXML
 	public void onBtEditarAction() {
 		jogoSelected = tvJogo.getSelectionModel().getSelectedItem();
 
@@ -156,6 +159,7 @@ public class JogoController implements Initializable {
 		}
 	}
 
+	@FXML
 	public void onBtCopiarAction() {
 		jogoSelected = tvJogo.getSelectionModel().getSelectedItem();
 
@@ -173,6 +177,7 @@ public class JogoController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public void onBtExcluirAction() {
 		jogoSelected = tvJogo.getSelectionModel().getSelectedItem();
 
@@ -192,11 +197,13 @@ public class JogoController implements Initializable {
 		} 
 	}
 
+	@FXML
 	public void onBtCancelarAction() {
 		Stage stage = (Stage) btCancelar.getScene().getWindow();
 		stage.close();
 	}
 
+	@FXML
 	public void onBtSalvarAction() {
 		service = new JogoService();
 		if (service == null) {

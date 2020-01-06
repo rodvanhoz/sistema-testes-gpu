@@ -3,6 +3,7 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Constraints;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -46,6 +47,7 @@ public class ProcessadorDadosController implements Initializable {
 		stage.close();
 	}
 	
+	@FXML
 	public void onBtSalvarAction() {
 		
 		if (dadosProcessadorSelected != null) {
@@ -74,6 +76,7 @@ public class ProcessadorDadosController implements Initializable {
 		}
 	}
 	
+	@FXML
 	public DadosProcessador getDadosProcessadorSelected() {
 		return dadosProcessadorSelected;
 	}
@@ -92,7 +95,9 @@ public class ProcessadorDadosController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		Constraints.setTextFieldInteger(txtTamanhoChip);
+		Constraints.setTextFieldDouble(txtTransistors);
+		Constraints.setTextFieldDouble(txtTCaseMax);		
 	}
 
 }
