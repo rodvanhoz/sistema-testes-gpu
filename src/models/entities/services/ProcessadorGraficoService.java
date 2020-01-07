@@ -51,16 +51,16 @@ public class ProcessadorGraficoService {
 		
 		ProcessadorGrafico p = proc;
 		
-		if (proc.getNomeGpu() == null || proc.getNomeGpu() == "") {
+		if (proc.getNomeGpu() == null || proc.getNomeGpu().compareTo("") == 0) {
 			throw new DbException("Nome do Processador Gráfico é obrigatório");
 		}
-		if (proc.getVariantGpu() == null || proc.getVariantGpu() == "") {
+		if (proc.getVariantGpu() == null || proc.getVariantGpu().compareTo("") == 0) {
 			throw new DbException("Nome da Variant GPU é obrigatório");
 		}
-		if (proc.getFundicao() == null || proc.getFundicao() == "") {
+		if (proc.getFundicao() == null || proc.getFundicao().compareTo("") == 0) {
 			throw new DbException("Fundição é obrigatório");
 		}
-		if (proc.getArquitetura() == null || proc.getArquitetura() == "") {
+		if (proc.getArquitetura() == null || proc.getArquitetura().compareTo("") == 0) {
 			throw new DbException("Arquitetura é obrigatório");
 		}
 		if (proc.getNnProcessador() == null || proc.getMmProcessador() == 0) {

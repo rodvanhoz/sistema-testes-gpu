@@ -297,12 +297,23 @@ public class ProcessadorController implements Initializable {
 	public void onBtCopiarAction() {
 		
 		processadorSelected = tvProcessador.getSelectionModel().getSelectedItem();
+		
+		if (processadorSelected == null) {
+			return;
+		}
+		
 		dadosProcessadorSelected = dadosProcessadorService.findById(processadorSelected.getIdDadosProcessador());
 		
 		Processadores proc = service.findByIdProcessadores(processadorSelected.getIdProcessador());
-		Gpus graficoIntegrado = (proc.getGpu() != null) ? proc.getGpu() : null; 
 		
-		gpuSelected = gpuService.findById(graficoIntegrado.getIdGpu());
+		Gpus graficoIntegrado = null;
+		if (proc.getGpu() != null) {
+			graficoIntegrado = proc.getGpu(); 
+			gpuSelected = gpuService.findById(graficoIntegrado.getIdGpu());
+		}
+		else {
+			gpuSelected = null;
+		}
 		
 		LoadSeparatedScenne.loadSeparatedView("/gui/ProcessadoresEdit.fxml", 660, 460, "Editar Processador",
 				(ProcessadorController controller) -> {
@@ -315,7 +326,7 @@ public class ProcessadorController implements Initializable {
 					controller.cboxDadosProcessador.getSelectionModel().select(dadosProcessadorSelected);
 					controller.cboxDadosProcessador.getEditor().setText(dadosProcessadorSelected.toString());
 					controller.cboxGraficoIntegrado.getSelectionModel().select(gpuSelected);
-					controller.cboxGraficoIntegrado.getEditor().setText(gpuSelected.toString());
+					controller.cboxGraficoIntegrado.getEditor().setText((gpuSelected != null) ? gpuSelected.toString() : "");
 					
 					controller.txtSocket.setText(dadosProcessadorSelected.getSocket());
 					controller.txtFoundry.setText(dadosProcessadorSelected.getFoundry());
@@ -392,16 +403,16 @@ public class ProcessadorController implements Initializable {
 					txtCodename.getText(), 
 					txtGeneration.getText(), 
 					txtMemorySupport.getText(), 
-					Double.parseDouble(txtFrequencia.getText()), 
-					Double.parseDouble(txtTurboFrequencia.getText()), 
-					Double.parseDouble(txtBaseClock.getText()), 
-					Double.parseDouble(txtMultiplicador.getText()), 
+					(txtFrequencia.getText().compareTo("") == 0) ? null : Double.parseDouble(txtFrequencia.getText()), 
+					(txtTurboFrequencia.getText().compareTo("") == 0) ? null : Double.parseDouble(txtTurboFrequencia.getText()), 
+					(txtBaseClock.getText().compareTo("") == 0) ? null : Double.parseDouble(txtBaseClock.getText()), 
+					(txtMultiplicador.getText().compareTo("") == 0) ? null : Double.parseDouble(txtMultiplicador.getText()), 
 					txtEhDesbloqueado.getText(), 
-					Integer.parseInt(txtCores.getText()), 
-					Integer.parseInt(txtThreads.getText()), 
-					Integer.parseInt(txtSMP.getText()), 
+					(txtCores.getText().compareTo("") == 0) ? null : Integer.parseInt(txtCores.getText()), 
+					(txtThreads.getText().compareTo("") == 0) ? null : Integer.parseInt(txtThreads.getText()), 
+					(txtSMP.getText().compareTo("") == 0) ? null : Integer.parseInt(txtSMP.getText()), 
 					(gpuSelected != null) ? gpuService.findByIdGpu(gpuSelected.getIdGpu()) : null, 
-					Double.parseDouble(txtTDP.getText()));
+					(txtTDP.getText().compareTo("") == 0) ? null : Double.parseDouble(txtTDP.getText()));
 			
 			if (newOrEdit == 'N' || this.newOrEdit == 'C') {
 				System.out.println(proc.toString());

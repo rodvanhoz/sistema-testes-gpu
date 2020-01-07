@@ -516,16 +516,16 @@ public class PlacaDeVideoController implements Initializable {
 					renderConfigSelected, 
 					txtNomeFabricante.getText(), 
 					txtDescricaoModelo.getText(), 
-					Integer.parseInt(txtTamanhoMemoria.getText()), 
+					(txtTamanhoMemoria.getText().compareTo("") == 0) ? null : Integer.parseInt(txtTamanhoMemoria.getText()), 
 					txtTipoMemoria.getText(), 
-					Integer.parseInt(txtTamanhoBanda.getText()), 
-					Double.parseDouble(txtTDP.getText()), 
-					Double.parseDouble(txtGpuClock.getText()), 
-					Double.parseDouble(txtGpuBoostClock.getText()), 
-					Double.parseDouble(txtMemoryClock.getText()), 
-					Double.parseDouble(txtMemoryClockEfective.getText()), 
+					(txtTamanhoBanda.getText().compareTo("") == 0) ? null : Integer.parseInt(txtTamanhoBanda.getText()), 
+					(txtTDP.getText().compareTo("") == 0) ? null : Double.parseDouble(txtTDP.getText()), 
+					(txtGpuClock.getText().compareTo("") == 0) ? null : Double.parseDouble(txtGpuClock.getText()), 
+					(txtGpuBoostClock.getText().compareTo("") == 0) ? null : Double.parseDouble(txtGpuBoostClock.getText()), 
+					(txtMemoryClock.getText().compareTo("") == 0) ? null : Double.parseDouble(txtMemoryClock.getText()), 
+					(txtMemoryClockEfective.getText().compareTo("") == 0) ? null : Double.parseDouble(txtMemoryClockEfective.getText()), 
 					txtBusInterface.getText(), 
-					sdf.parse(txtDtLancto.getText()));
+					(txtDtLancto.getText().compareTo("") == 0) ? null : sdf.parse(txtDtLancto.getText()));
 
 			if (newOrEdit == 'N' || this.newOrEdit == 'C') {
 				System.out.println(gpu.toString());

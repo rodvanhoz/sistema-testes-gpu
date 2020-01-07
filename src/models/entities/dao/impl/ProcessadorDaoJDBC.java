@@ -286,7 +286,14 @@ public class ProcessadorDaoJDBC implements ProcessadorDao {
 			st.setInt(14, processador.getNroCores());
 			st.setInt(15, processador.getNroThreads());
 			st.setInt(16, processador.getSmp());
-			st.setInt(17, (gpu != null) ? gpu.getIdGpu() : null);
+			
+			if (gpu !=  null) {
+				st.setInt(17, gpu.getIdGpu());
+			}
+			else {
+				st.setNull(17, java.sql.Types.INTEGER);
+			}
+			
 			st.setDouble(18, processador.getTdp());
 			
 			if (st.executeUpdate() > 0) {

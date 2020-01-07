@@ -42,7 +42,7 @@ public class JogoService {
 	}
 	
 	private void checaCamposJogos(Jogos jogo) {
-		if (jogo.getNomeJogo() == "" || jogo.getNomeJogo() == null) {
+		if (jogo.getNomeJogo().compareTo("") == 0 || jogo.getNomeJogo() == null) {
 			throw new DbException("Nome do Jogo é obrigatório");
 		}
 		if (jogo.getDtLancto() == null) {

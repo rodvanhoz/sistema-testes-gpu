@@ -51,7 +51,7 @@ public class ConfiguracoesService {
 		if (configuracoes.getResolucaoAbrev() == null || configuracoes.getResolucaoAbrev() == 0) {
 			throw new DbException("Resolução Abreviada é obrigatório");
 		}
-		if (configuracoes.getResolucaoDetalhe() == null || configuracoes.getResolucaoDetalhe() == "") {
+		if (configuracoes.getResolucaoDetalhe() == null || configuracoes.getResolucaoDetalhe().compareTo("") == 0) {
 			throw new DbException("Resolução é obrigatório");
 		}
 		if (configuracoes.getResolucaoDetalhe().indexOf("x") <= 0) {

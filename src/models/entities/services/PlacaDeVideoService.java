@@ -64,10 +64,10 @@ public class PlacaDeVideoService {
 		
 		Gpus g = gpu;
 		
-		if (gpu.getNomeFabricante() == "" || gpu.getNomeFabricante() == null) {
+		if (gpu.getNomeFabricante().compareTo("") == 0 || gpu.getNomeFabricante() == null) {
 			throw new DbException("Nome do Fabricante é obrigatório");
 		}
-		if (gpu.getNomeModelo() == "" || gpu.getNomeModelo() == null) {
+		if (gpu.getNomeModelo().compareTo("") == 0 || gpu.getNomeModelo() == null) {
 			throw new DbException("Descrição do modelo é obrigatório");
 		}
 		if (gpu.getGpuClock() == null || gpu.getGpuClock() == 0) {
@@ -83,7 +83,7 @@ public class PlacaDeVideoService {
 			g.setMemClockEfetivo(gpu.getMemClock());
 		}
 		if (gpu.getTamMemoriaKB() == null) {
-			throw new DbException("Tamanho da VRam é obrigatório (Caso for Integrada informar 0");
+			throw new DbException("Tamanho da VRam é obrigatório (Caso for Integrada informar 0)");
 		}
 		if (gpu.getTamBanda() == null) {
 			throw new DbException("Tamanho da Banda de memória é obrigatório (Caso for integrada informar 0)");

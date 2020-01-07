@@ -67,7 +67,7 @@ public class DadosTesteService {
 		if (teste.getProcessador() == null) {
 			throw new DbException("Processador não foi informado");
 		}
-		if (teste.getNomeTester() == "" || teste.getNomeTester() == null) {
+		if (teste.getNomeTester().compareTo("") == 0 || teste.getNomeTester() == null) {
 			throw new DbException("Nome do Tester é obrigatório");
 		}
 		if (teste.getDtTeste() == null) {

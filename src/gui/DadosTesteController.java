@@ -281,10 +281,10 @@ public class DadosTesteController implements Initializable {
 			iniciarNodes();
 		}
 		atualiazarComboBox();
-		Constraints.setTextFieldInteger(txtAvgFps);
-		Constraints.setTextFieldInteger(txtMinFps);
-		Constraints.setTextFieldMaxLength(txtAvgFps, 3);
-		Constraints.setTextFieldMaxLength(txtMinFps, 3);
+		Constraints.setTextFieldDouble(txtAvgFps);
+		Constraints.setTextFieldDouble(txtMinFps);
+		Constraints.setTextFieldMaxLength(txtAvgFps, 5);
+		Constraints.setTextFieldMaxLength(txtMinFps, 5);
 	}
 
 	private void iniciarNodes() {
@@ -343,7 +343,7 @@ public class DadosTesteController implements Initializable {
 					controller.setPlacaDeVideoSelected(placaDeVideoSelected);
 					controller.setProcessadorSelected(processadorSelected);
 					
-					controller.txtNomeTester.setText(dadosTesteSelected.getNomeJogo());
+					controller.txtNomeTester.setText(dadosTesteSelected.getNomeTester());
 					controller.txtDriverGpu.setText(dadosTesteSelected.getNomeDriverGpu());
 					controller.txtAvgFps.setText(dadosTesteSelected.getAvgFps().toString());
 					controller.txtMinFps.setText(dadosTesteSelected.getMinFps().toString());
@@ -384,7 +384,7 @@ public class DadosTesteController implements Initializable {
 					controller.setPlacaDeVideoSelected(placaDeVideoSelected);
 					controller.setProcessadorSelected(processadorSelected);
 					
-					controller.txtNomeTester.setText(dadosTesteSelected.getNomeJogo());
+					controller.txtNomeTester.setText(dadosTesteSelected.getNomeTester());
 					controller.txtDriverGpu.setText(dadosTesteSelected.getNomeDriverGpu());
 					controller.txtAvgFps.setText(dadosTesteSelected.getAvgFps().toString());
 					controller.txtMinFps.setText(dadosTesteSelected.getMinFps().toString());

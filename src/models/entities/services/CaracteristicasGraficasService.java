@@ -62,16 +62,16 @@ public class CaracteristicasGraficasService {
 	}
 	
 	private void checaCamposCaracteristicasGraficas(CaracteristicasGraficas caracs) {
-		if (caracs.getDirectX() == null || caracs.getDirectX() == "") {
+		if (caracs.getDirectX() == null || caracs.getDirectX().compareTo("") == 0) {
 			throw new DbException("Versão do DirectX é obrigatório");
 		}
-		if (caracs.getOpenCL() == null || caracs.getOpenCL() == "") {
+		if (caracs.getOpenCL() == null || caracs.getOpenCL().compareTo("") == 0) {
 			throw new DbException("Versão do OpenCL é obrigatório");
 		}
-		if (caracs.getOpenGL() == null || caracs.getOpenGL() == "") {
+		if (caracs.getOpenGL() == null || caracs.getOpenGL().compareTo("") == 0) {
 			throw new DbException("Versão do OpenGL é obrigatório");
 		}
-		if (caracs.getShaderModel() == null || caracs.getShaderModel() == "") {
+		if (caracs.getShaderModel() == null || caracs.getShaderModel().compareTo("") == 0) {
 			throw new DbException("Versão do Shader Model é obrigatório");
 		}
 	}

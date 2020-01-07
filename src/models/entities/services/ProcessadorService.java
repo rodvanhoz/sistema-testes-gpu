@@ -60,16 +60,16 @@ public class ProcessadorService {
 	private Processadores checaCamposProcessadores(Processadores processador) {
 		Processadores p = processador;
 		
-		if (processador.getNomeFabricante() == "" || processador.getNomeFabricante() == null) {
+		if (processador.getNomeFabricante().compareTo("") == 0 || processador.getNomeFabricante() == null) {
 			throw new DbException("Nome do Fabricante é obrigatório");
 		}
-		if (processador.getNomeModelo() == "" || processador.getNomeModelo() == null) {
+		if (processador.getNomeModelo().compareTo("") == 0 || processador.getNomeModelo() == null) {
 			throw new DbException("Descrição do modelo é obrigatório");
 		}
 		if (processador.getReleased() == null) {
 			throw new DbException("Data de Lancto. é obrigatório");
 		}
-		if (processador.getMemorySupport() == "" || processador.getMemorySupport() == null) {
+		if (processador.getMemorySupport().compareTo("") == 0 || processador.getMemorySupport() == null) {
 			throw new DbException("Memory Suport é obrigatório");
 		}
 		if (processador.getFrequencia()  == null || processador.getFrequencia() == 0) {
@@ -84,7 +84,7 @@ public class ProcessadorService {
 		if (processador.getMultiplicador() == null || processador.getMultiplicador() == 0) {
 			throw new DbException("Valor do Multiplicador é obrigatório");
 		}
-		if (processador.getMultiplDesbloqueado() == "" || processador.getMultiplDesbloqueado() == null) {
+		if (processador.getMultiplDesbloqueado().compareTo("") == 0 || processador.getMultiplDesbloqueado() == null) {
 			throw new DbException("Informar se o Multiplicador é desbloqueado (Y/N)");
 		}
 		if (processador.getNroCores() == null || processador.getNroCores() == 0) {
